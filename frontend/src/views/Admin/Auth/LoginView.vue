@@ -9,7 +9,7 @@
           <el-input placeholder="Email Address" v-model="email" size="large" />
         </el-form-item>
 
-        <el-form-item :error="nameError" class="mt-8">
+        <el-form-item :error="nameError" class="">
           <p>Password</p>
           <el-input placeholder="Your Password" v-model="password" size="large" type="password" />
         </el-form-item>
