@@ -2,17 +2,19 @@
 <template>
   <div class="flex items-center justify-center min-h-screen bg-gray-100">
     <el-card class="w-full max-w-md shadow-lg">
-      <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
+      <h2 class="text-2xl font-bold mb-6 text-center">Login Account</h2>
       <el-form @submit="onSubmit">
+        <p>Email</p>
         <el-form-item :error="emailError">
           <el-input placeholder="Email Address" v-model="email" size="large" />
         </el-form-item>
 
         <el-form-item :error="nameError" class="mt-8">
-          <el-input placeholder="Password" v-model="password" size="large" type="password" />
+          <p>Password</p>
+          <el-input placeholder="Your Password" v-model="password" size="large" type="password" />
         </el-form-item>
-
         <div>
+          <a href="#">Forgot password</a>
           <el-button
             size="large"
             class="mt-3 w-full"
@@ -23,6 +25,7 @@
           >
         </div>
       </el-form>
+      <p class="mt-4 text-center">Already the register? <a href="#">Login now</a></p>
     </el-card>
   </div>
 </template>
