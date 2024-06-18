@@ -25,7 +25,7 @@
           >
         </div>
       </el-form>
-      <p class="mt-4 text-center">Already the register? <a href="#">Login now</a></p>
+      <p class="mt-4 text-center">Already the register? <a href="#">register now</a></p>
     </el-card>
   </div>
 </template>
