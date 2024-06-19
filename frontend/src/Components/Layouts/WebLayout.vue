@@ -1,13 +1,42 @@
 <script setup lang="ts">
-import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
+  import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
+  import 'bootstrap/dist/css/bootstrap.css'
+  import 'bootstrap/dist/js/bootstrap.bundle.js'
 </script>
 <template>
   <WebHeaderMenu />
-  <div class="md:px-50 h-full">
-    <div class="h-full">
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="https://picsum.photos/id/6/200/60" class="d-block w-100" alt="">
+      </div>
+      <div class="carousel-item">
+        <img src="https://picsum.photos/id/2/200/60" class="d-block w-100" alt="">
+      </div>
+      <div class="carousel-item">
+        <img src="https://picsum.photos/id/3/200/60" class="d-block w-100" alt="">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+  <div class="md:px-25 h-full header">
+    <div class="h-full ">
       <slot />
     </div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+</script>
