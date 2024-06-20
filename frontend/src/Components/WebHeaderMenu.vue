@@ -2,7 +2,7 @@
 import { Icon } from '@iconify/vue'
 </script>
 <template>
-  <header class="flex justify-between px-50 py-3 bg-white items-center">
+  <header class="flex justify-between px-15 py-2 bg-light items-center">
     <!-- Logo -->
     <div class="flex items-center space-x-2">
       <Icon icon="skill-icons:devto-dark" style="font-size: 45px" />
@@ -10,32 +10,17 @@ import { Icon } from '@iconify/vue'
     </div>
 
     <!-- Menu Items -->
-    <nav class="flex justify-center space-x-4">
-      <a
-        href="/post"
-        class="font-bold px-3 py-2 text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900"
-        >Post</a
-      >
-      <a
-        href="/team"
-        class="font-bold px-3 py-2 text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900"
-        >Team</a
-      >
-      <a
-        href="/projects"
-        class="font-bold px-3 py-2 text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900"
-        >Projects</a
-      >
-      <a
-        href="/reports"
-        class="font-bold px-3 py-2 text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900"
-        >Reports</a
-      >
+    <nav class="navbar navbar-default flex justify-center space-x-4">
+      <router-link class="font-bold px-3 py-2 text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900 nav-link" aria-current="page" to="/">Home</router-link>
+      <router-link class="font-bold px-3 py-2 text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900 nav-link" to="/post">Post</router-link>
+      <router-link class="font-bold px-3 py-2 text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900 nav-link" to="/team"> Team</router-link>
+      <router-link class="font-bold px-3 py-2 text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900 nav-link" to="/projects">Project</router-link>
+      <router-link class="font-bold px-3 py-2 text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900 nav-link" to="/reports">Report</router-link>
     </nav>
 
     <!-- Sign In -->
     <div>
-      <div class="px-4 py-2 rounded font-semibold">Sign In</div>
+      <router-link class="px-4 py-2 rounded font-semibold" to="/login">Login now</router-link>
     </div>
   </header>
 </template>

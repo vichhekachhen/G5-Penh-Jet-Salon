@@ -19,8 +19,8 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      // component: () => import('../views/Admin/Auth/LoginView.vue')
-      component: () => import('../views/Users/Registers/RegisterView.vue')
+      component: () => import('../views/Admin/Auth/LoginView.vue')
+      // component: () => import('../views/Users/Registers/RegisterView.vue')
     },
     {
       path: '/',
@@ -37,12 +37,12 @@ const router = createRouter({
       name: 'register',
       component: () => import('../views/Users/Registers/RegisterView.vue')
     }
-
-  ]
+  ],
+  linkExactActiveClass: 'bg-danger text-white border-bottom',
 })
 
 router.beforeEach(async (to, from, next) => {
-  const publicPages = ['/login']
+  const publicPages = ['/']
   const authRequired = !publicPages.includes(to.path)
   const store = useAuthStore()
 
@@ -68,7 +68,8 @@ router.beforeEach(async (to, from, next) => {
   }
 
   if (authRequired && !store.isAuthenticated) {
-    next('/login')
+    next()
+    
   } else {
     next()
   }
