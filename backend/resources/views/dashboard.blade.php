@@ -10,6 +10,7 @@
                     @foreach(auth()->user()->roles as $role)
                         {{ $role->name }}
                     @endforeach 
+                    <!-- {{auth()->user()->roles}} -->
                 </b> </p>
   
             </div>
