@@ -4,6 +4,7 @@ import SlineShow from '@/Components/UserPage/SlineShow/SlineShowComponent.vue'
 import CardImageComponentVue from '@/Components/UserPage/UserCard/CardImageComponents.vue'
 </script>
 <template>
+  <!-- yes -->
   <WebLayout></WebLayout>
   <SlineShow></SlineShow>
   <CardImageComponentVue></CardImageComponentVue>
