@@ -10,12 +10,12 @@ use App\Http\Controllers\Front\Auth\RegisteredUserController;
 use App\Http\Controllers\Front\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/register', [RegisteredUserController::class, 'create'])
-                ->middleware('guest:front')
-                ->name('register');
+// Route::get('/register', [RegisteredUserController::class, 'create'])
+//                 ->middleware('guest:front')
+//                 ->name('register');
 
-Route::post('/register', [RegisteredUserController::class, 'store'])
-                ->middleware('guest:front');
+// Route::post('/register', [RegisteredUserController::class, 'store'])
+//                 ->middleware('guest:front');
 
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])
                 ->middleware('guest:front')
