@@ -20,7 +20,7 @@ import { Icon } from '@iconify/vue'
 
     <!-- Sign In -->
     <div>
-      <router-link class="px-4 py-2 rounded font-semibold" to="/login">Login now</router-link>
+      <!-- <router-link class="px-4 py-2 rounded font-semibold" to="/login">Login now</router-link> -->
     </div>
   </header>
 </template>

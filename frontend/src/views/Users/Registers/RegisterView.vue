@@ -1,4 +1,3 @@
-<!-- src/components/Login.vue -->
 <template>
   <div class="flex items-center justify-center min-h-screen bg-gray-100 p-3">
     <el-card class="w-full max-w-md shadow-lg">
