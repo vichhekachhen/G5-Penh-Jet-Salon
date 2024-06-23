@@ -21,19 +21,29 @@ class AdminSeeder extends Seeder
             'name'=>'Admin',
             'email'=>'admin@gmail.com',
             'password'=>bcrypt('password'),
-            'profile' => 'user.avif'
+            'profile' => 'user.avif',
+            'store_id' => 0
         ]);
 
         $writer = User::create([
             'name'=>'User',
             'email'=>'user@gmail.com',
-            'password'=>bcrypt('password')
+            'password'=>bcrypt('password'),
+            'store_id' => 0
+        ]);
+
+        $owner = User::create([
+            'name'=>'Owner',
+            'email'=>'owner@gmail.com',
+            'password'=>bcrypt('password'),
+            'store_id' => 0
         ]);
         
 
 
         $admin_role = Role::create(['name' => 'admin']);
         $writer_role = Role::create(['name' => 'user']);
+        $owner_role = Role::create(['name' => 'owner']);
 
         $permission = Permission::create(['name' => 'Post access']);
         $permission = Permission::create(['name' => 'Post edit']);
@@ -50,6 +60,11 @@ class AdminSeeder extends Seeder
         $permission = Permission::create(['name' => 'User create']);
         $permission = Permission::create(['name' => 'User delete']);
 
+        $permission = Permission::create(['name' => 'Province access']);
+        $permission = Permission::create(['name' => 'Province edit']);
+        $permission = Permission::create(['name' => 'Province create']);
+        $permission = Permission::create(['name' => 'Province delete']);
+
         $permission = Permission::create(['name' => 'Permission access']);
         $permission = Permission::create(['name' => 'Permission edit']);
         $permission = Permission::create(['name' => 'Permission create']);
@@ -62,6 +77,7 @@ class AdminSeeder extends Seeder
 
         $admin->assignRole($admin_role);
         $writer->assignRole($writer_role);
+        $owner->assignRole($owner_role);
 
 
         $admin_role->givePermissionTo(Permission::all());
