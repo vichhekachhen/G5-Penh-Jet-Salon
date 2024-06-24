@@ -1,10 +1,8 @@
-
 <template>
   <header class="flex justify-between px-15 py-2 bg-light items-center">
     <!-- Logo -->
     <div class="flex items-center space-x-2">
-      <Icon icon="skill-icons:devto-dark" style="font-size: 45px" />
-      <span class="text-xl font-bold">I-KNOW</span>
+      <img class="w-15" src="../views/Logo/Salon.png" alt=""> <b>SALON</b> 
     </div>
 
     <!-- Menu Items -->

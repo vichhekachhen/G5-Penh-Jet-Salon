@@ -1,30 +1,28 @@
-
 <template>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <footer class="footer">
-        <div class="group">
-            <img src="./download (6).png" style="height: 60px;">
-            <div class="FooterLeft">
+<!-- <div>Hello</div> -->
+<div class="card">
+    <footer class="bg-#e4a4b0">
+        <div class="d-flex">
+            <img class="image" src="./download (6).png" style="height: 60px;">
+            <div class="w-50 mt-3">
                 <h3>Logo</h3>
                 <h5>Welcom to salaon penh jit</h5>
                 <p>Becutifull Penh jit salon </p>
             </div>
-            <div class="FooterCenter">
+            <div class="w-50 mt-4">
                 <h3>Hours</h3>
                 <p>Mon to Fri: 7am - 7pm </p>
                 <p>Sat: 9am to 9pm </p>
                 <p>Sun: 9am to 7pm </p>
             </div>
             <hr>
-            <div class="FooterRight">
+            <div class="w-50 mt-4">
                 <h3>Contact Us</h3>
                 <p> Phone: 0962590414</p>
                 <p>Email:Salon@gmail.com </p>
                 <p>Address:PNC </p>
             </div>
-            <div class="FooterEnd">
+            <div class="w-50 mt-4">
                 <h3>Serviece</h3>
                 <p>Masa</p>
                 <p>hari</p>
@@ -40,49 +38,11 @@
         </div>
         <p class="text-center">PENH JIT SALON * 2024</p>
     </footer>
+</div>
 </template>
 <style>
-.footer {
-    background-color: #e4a4b0;
-}
-.group {
-    display: flex;
-}
-
-img {
+.image {
     margin-left: 4%;
     margin-top: 2%;
-}
-
-.FooterLeft {
-    width: 50%;
-    margin-top: 3%;
-}
-.FooterCenter {
-    width: 50%;
-    margin-top: 4%;
-}
-.FooterRight {
-    width: 50%;
-    margin-top: 4%;
-}
-.FooterEnd{
-    width: 30%;
-    margin-top: 4%;
-}
-.GroupIcon {
-  text-align: center;
-  padding: 10px;
-}
-
-.social-icon {
-  color: palevioletred;
-  margin: 0 10px;
-  font-size: 24px;
-  transition: color 0.3s ease-in-out;
-}
-
-.social-icon:hover {
-  color: #3e0ab8;
 }
 </style>

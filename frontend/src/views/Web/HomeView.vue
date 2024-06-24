@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import WebLayout from '@/Components/Layouts/WebLayout.vue'
 import SlineShow from '@/Components/UserPage/SlineShow/SlineShowComponent.vue'
-import CardImageComponentVue from '@/Components/UserPage/UserCard/CardImageComponents.vue'
-import footerVue from '@/Components/Footer/footer.vue'
+import CardImageComponentVue from '@/Components/UserPage/ProvinceCard/CardImageComponents.vue'
+import Footer from '@/Components/Footer/footerComponent.vue'
 
 import {useAuthStore} from '@/stores/auth-store';
 const userAuth = useAuthStore();
@@ -10,7 +10,7 @@ const userAuth = useAuthStore();
 </script>
 <template>
   <!-- Alert register -->
-  <div v-if="!userAuth.isAuthenticated" class="alert alert-danger alert-dismissible fade show" role="alert">
+  <div v-if="!userAuth.isAuthenticated" class="alert alert-danger alert-dismissible fade show text-center" role="alert">
 
     <strong>Do you want to become a member of me?</strong> Please click the button to become my member!
     <a href="/register" class="btn btn-outline-danger">Register now</a>
@@ -19,5 +19,6 @@ const userAuth = useAuthStore();
   <WebLayout></WebLayout>
   <SlineShow></SlineShow>
   <CardImageComponentVue></CardImageComponentVue>
-  <footerVue/>
+  <Footer></Footer>
+  
 </template>
