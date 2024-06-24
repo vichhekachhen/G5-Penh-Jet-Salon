@@ -1,8 +1,7 @@
-
 <template>
-  <div class="id h-190">
-    <h2 class="text-center pt-20">Provinces in Cambodia</h2>
-    <div class="d-flex justify-content-around pt-5 ">
+  <div class="id h-175">
+    <h2 class="text-center pt-20">Beauty salon design</h2>
+    <div class="d-flex justify-content-around pt-6 ">
       <div class="card text-white col-3 shadow card-hover">
         <img class="Image" src="https://media.tacdn.com/media/attractions-splice-spp-674x446/06/6c/56/f8.jpg">
         <div class="card-img-overlay">
@@ -61,7 +60,7 @@
         </div>
       </div>
     </div>
-</div>
+  </div>
 </template>
 <style>
 .Image{
@@ -69,10 +68,12 @@
   height: 100%;
   overflow: hidden;
 }
-.id{
+
+.id {
   background-color: white;
 }
-.card-hover:hover{
+
+.card-hover:hover {
   transform: scale(1.04);
   transition: all 0.3s ease-in-out;
   transition-duration: 0.3s;
@@ -80,4 +81,5 @@
   transition-delay: 0s;
   /* transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); */
 }
+
 </style>

@@ -16,5 +16,4 @@ import footerVue from '@/Components/Footer/footer.vue'
   <SlineShow></SlineShow>
   <CardImageComponentVue></CardImageComponentVue>
   <footerVue/>
-  <Card/>
 </template>
