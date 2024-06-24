@@ -79,7 +79,7 @@ const logout = async () => {
     const response = await axiosInstance.post('/logout')
     console.log(response.data.message)
     localStorage.removeItem('token')
-    router.push('/')
+    router.push('/home')
   } catch (error) {
     console.error('Error logging out:', error)
   }
