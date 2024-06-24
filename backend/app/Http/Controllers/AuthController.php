@@ -37,10 +37,12 @@ class AuthController extends Controller
 
         $user   = User::where('email', $request->email)->firstOrFail();
         $token  = $user->createToken('auth_token')->plainTextToken;
+        $roles = $user->getRoleNames();
 
         return response()->json([
             'message'       => 'Login success',
             'access_token'  => $token,
+            'role'  => $roles,
             'token_type'    => 'Bearer'
         ]);
     }
