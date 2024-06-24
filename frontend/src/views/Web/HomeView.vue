@@ -2,6 +2,8 @@
 import WebLayout from '@/Components/Layouts/WebLayout.vue'
 import SlineShow from '@/Components/UserPage/SlineShow/SlineShowComponent.vue'
 import CardImageComponentVue from '@/Components/UserPage/UserCard/CardImageComponents.vue'
+import footerVue from '@/Components/Footer/footer.vue'
+
 </script>
 <template>
   <!-- Alert register -->
@@ -13,4 +15,6 @@ import CardImageComponentVue from '@/Components/UserPage/UserCard/CardImageCompo
   <WebLayout></WebLayout>
   <SlineShow></SlineShow>
   <CardImageComponentVue></CardImageComponentVue>
+  <footerVue/>
+  <Card/>
 </template>

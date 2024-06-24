@@ -63,7 +63,6 @@
     </div>
 </div>
 </template>
-
 <style>
 .Image{
   width: 100%;
@@ -81,5 +80,4 @@
   transition-delay: 0s;
   /* transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); */
 }
-
 </style>

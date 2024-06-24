@@ -3,7 +3,6 @@
   import 'bootstrap/dist/css/bootstrap.css';
   import 'bootstrap/dist/js/bootstrap.bundle.js';
   const imageShow = ref([
-    // { id: 1, image: "https://www.learndirect.com/image/size/sm-course/uploads/products/6a802f8cffd55923baa85c22aaf0eac4.jpg.webp" },
     { id: 2, image: "https://static.wixstatic.com/media/f2b8aa_20d0c5de3367410ba704c76f39559efd~mv2.jpg/v1/fill/w_496,h_193,al_c,lg_1,q_80,usm_2.00_1.00_0.00,enc_auto/f2b8aa_20d0c5de3367410ba704c76f39559efd~mv2.jpg" },
     { id: 3, image: "https://www.learndirect.com/image/size/lg-course/uploads/products/a7affb5f7e1a8fa0348040cdf33e2ec3.jpg.webp" },
   ]);
