@@ -74,6 +74,7 @@ const userAuth = useAuthStore()
 
 const router = useRouter()
 
+
 const logout = async () => {
   try {
     const response = await axiosInstance.post('/logout')
