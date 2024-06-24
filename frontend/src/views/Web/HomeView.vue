@@ -5,7 +5,7 @@ import CardImageComponentVue from '@/Components/UserPage/UserCard/CardImageCompo
 </script>
 <template>
   <!-- Alert register -->
-  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+  <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
     <strong>Do you want to become a member of me?</strong> Please click the button to become my member!
     <button class="btn btn-outline-danger">Register now</button>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
