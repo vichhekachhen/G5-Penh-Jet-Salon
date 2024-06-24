@@ -1,13 +1,12 @@
-
 <template>
   <div class="id h-187">
-    <h2 class="text-center pt-20">Provinces in Cambodia</h2>
+    <h2 class="text-center pt-23">Find us in your area</h2>
     <div class="d-flex justify-content-around pt-5 ">
       <div class="card text-white col-3 shadow card-hover">
         <img class="Image" src="https://media.tacdn.com/media/attractions-splice-spp-674x446/06/6c/56/f8.jpg">
         <div class="card-img-overlay text-end" style="width: 22rem;">
           <div class="pt-41">
-            <button class="btn bg-light text-dark" type="button">Phnom Penh</button>
+            <button class="btn bg-light text-dark" type="button"><b>Phnom Penh</b></button>
           </div>
         </div>
       </div>
@@ -15,7 +14,7 @@
         <img class="Image" src="https://i0.wp.com/www.cambodialifestyle.com/wp-content/uploads/2024/04/Takeo-4.jpg?fit=1000%2C612&ssl=1">
         <div class="card-img-overlay text-end" style="width: 22rem;">
           <div class="pt-41">
-            <button class="btn bg-light text-dark" type="button">Tachoe</button>
+            <button class="btn bg-light text-dark" type="button"><b>Tachoe</b></button>
           </div>
         </div>
       </div>
