@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Gender;
 use App\Models\Address;
 use App\Models\Province;
 use App\Models\Store;
@@ -71,8 +72,9 @@ class AuthController extends Controller
             'name' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
+            'gender' => ['required', 'in:male,female,other'],
         ]);
-
+        
         if ($validator->fails()) {
             return response()->json([
                 'message' => 'Validation failed',
@@ -85,6 +87,8 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'gender' => Gender::from($request['gender']),
+            'store_id' => 0,
         ]);
 
         // Generate a token for the user
@@ -98,7 +102,6 @@ class AuthController extends Controller
             }
         }
         $user->syncRoles($userRole);
-
 
         // Return a success response
         return response()->json([
@@ -119,6 +122,7 @@ class AuthController extends Controller
             'shop_name' => 'required|string|max:255',
             'province_id' => 'required|string',
             'city' => 'required|string|max:255',
+            'gender' => 'required', 'in:male,female,other',
 
         ]);
 
@@ -145,6 +149,7 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'gender' => Gender::from($request['gender']),
             'store_id' => $store->id
         ]);
 
