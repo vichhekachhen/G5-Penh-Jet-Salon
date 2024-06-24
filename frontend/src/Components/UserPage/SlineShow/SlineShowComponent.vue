@@ -43,16 +43,16 @@
     <ol class="carousel-indicators">
     </ol>
     <div class="card">
-      <h2 class="bg-white pl-5 m-5">We have many places to serve your transaction in use.</h2>
+      <h2 class="p-12 text-center text-secondary font-weight-bold">We're here to help you live life the salon way.<br>Spend more time doing what you love. <br>We'll take care of relaxing treatments, stylish cuts, and new looks.</h2> 
       <img class="w-100" src="https://niobebeauty.wordpress.com/wp-content/uploads/2019/07/slide35.jpg" alt="Image">
       <div class="card-img-overlay">
         <div class="pl-10 cardRegister mt-87">
           <div class="card w-50 bg-light">
-            <div class="card-body">
-              <h3 class="card-title">Register your shop here!!</h3>
-              <p class="card-text">Do you want many new customers to enjoy booking for your convenience? We want it too!</p>
-              <p class="card-text">How easy it is for us to include booking and online time to help you process your booking and not have to wait as fast as before!</p>
-              <button type="button" class="btn btn-outline-danger"><router-link to="/register" class="nav-link">Register now</router-link></button>
+            <div class="card-body"> 
+              <h3 class="card-title">Join your shop here!</h3>
+               <p class="card-text">Expand your client base and streamline your booking process by becoming a Sala Salon Partner.</p> 
+               <p class="card-text">Our centralized online booking system and marketing support make it easy for customers to discover and book appointments at your salon.</p> 
+               <button type="button" class="btn btn-outline-danger"><router-link to="/register" class="nav-link">Register now</router-link></button>
             </div>
           </div>      
         </div>
