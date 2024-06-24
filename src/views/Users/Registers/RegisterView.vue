@@ -63,6 +63,9 @@
     
     <p class="mt-4 text-center">Already have on acount? <router-link to="/login">Login now</router-link></p>
     </el-card>
+    <!-- <div class="col-3 ml-6">
+        <h2 class="text-center">Welcome to register the employee in SaLon Cambodia</h2>
+    </div> -->
   </div>
 </template>
 
