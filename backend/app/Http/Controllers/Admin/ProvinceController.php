@@ -54,7 +54,7 @@ class ProvinceController extends Controller
         $data= $request->all();
         $data['user_id'] = Auth::user()->id;
         $Province = Province::create($data);
-        return redirect()->back('')->withSuccess('Province created successfully !!!');
+        return redirect()->back()->withSuccess('Province created successfully !!!');
     }
 
     /**
