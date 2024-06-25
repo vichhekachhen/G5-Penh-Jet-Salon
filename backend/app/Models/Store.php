@@ -14,4 +14,9 @@ class Store extends Model
         'shop_profile',
         'address_id'
     ];
+
+    public function address()
+    {
+        return $this->belongsTo(Address::class,'address_id','id');
+    }
 }

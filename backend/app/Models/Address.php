@@ -13,4 +13,13 @@ class Address extends Model
         'city',
         'province_id'
     ];
+
+    // public function province()
+    // {
+    //     return $this->belongsTo(Province::class,'province_id','id');
+    // }
+    public function province()
+    {
+        return $this->belongsTo(Province::class);
+    }
 }
