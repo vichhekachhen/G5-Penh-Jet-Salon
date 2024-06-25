@@ -11,5 +11,6 @@ class Province extends Model
 
     protected $fillable = [
         'province_name',
+        'image',
     ];
 }

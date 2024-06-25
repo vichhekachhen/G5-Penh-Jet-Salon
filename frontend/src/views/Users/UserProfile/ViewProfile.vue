@@ -8,9 +8,9 @@
                             <div class="d-flex flex-column align-items-center text-center">
                                 <img :src="user.avatarUrl" alt="User" class="rounded-circle" width="150" />
                                 <div class="mt-3">
-                                    <h4>{{ user.name }}</h4>
-                                    <p class="text-secondary mb-1">{{ user.role }}</p>
-                                    <p class="text-muted font-size-sm">{{ user.location }}</p>
+                                    <h4></h4>
+                                    <p class="text-secondary mb-1"></p>
+                                    <p class="text-muted font-size-sm"></p>
                                     <button class="btn btn-outline-primary">Message</button>
                                 </div>
                             </div>
@@ -25,7 +25,7 @@
                                     <h6 class="mb-0">Full Name</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    {{ user.name }}
+                                    {{ userAuth.user.name }}
                                 </div>
                             </div>
                             <hr />
@@ -34,10 +34,10 @@
                                     <h6 class="mb-0">Email</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    {{ user.email }}
+                                    {{ userAuth.user.email }}
                                 </div>
                             </div>
-                            <hr />
+                            <hr/>
                             <!-- Add more rows for other user data -->
                         </div>
                     </div>
@@ -47,46 +47,3 @@
     </div>
 </template>
 
-<script>
-import { useUserStore } from '../../../stores/user-store';
-import { useField, useForm } from 'vee-validate';
-import * as yup from 'yup';
-import axios from 'axios';
-
-export default {
-  setup() {
-    const userStore = useUserStore();
-
-    const { handleSubmit, errors } = useForm({
-      validationSchema: yup.object({
-        name: yup.string().required('Name is required'),
-        email: yup.string().email('Invalid email address').required('Email is required'),
-        profile: yup.string().required('Profile is required'),
-      }),
-    });
-
-    const { value: name, errorMessage: nameError } = useField('name');
-    const { value: email, errorMessage: emailError } = useField('email');
-    const { value: profile, errorMessage: profileError } = useField('profile');
-
-    const onSubmit = handleSubmit(async (values) => {
-      try {
-        await axios.post('/api/users', values);
-        userStore.fetchUsers();
-      } catch (error) {
-        console.error('Error creating user:', error);
-      }
-    });
-
-    return {
-      name,
-      email,
-      profile,
-      nameError,
-      emailError,
-      profileError,
-      onSubmit,
-    };
-  },
-};
-</script>
