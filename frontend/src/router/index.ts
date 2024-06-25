@@ -20,7 +20,6 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: () => import('../views/Admin/Auth/LoginView.vue')
-      // component: () => import('../views/Users/Registers/RegisterView.vue')
     },
     {
       path: '/',
@@ -37,11 +36,12 @@ const router = createRouter({
       name: 'register',
       component: () => import('../views/Users/Registers/RegisterView.vue')
     },
+    // =================ShopOwner=================
     {
-      path: '/owner',
-      name: 'owner',
-      component: () => import('../views/Web/OwnerStore/SideBar.vue')
-    },
+      path: '/registerOwner',
+      name: 'registerOwner',
+      component: () => import('../views/Users/RegisterOwner/RegisterOwner.vue')
+    }
   ],
   linkExactActiveClass: 'bg-danger text-white border-bottom',
 })
