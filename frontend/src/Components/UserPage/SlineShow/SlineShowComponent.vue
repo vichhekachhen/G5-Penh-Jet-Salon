@@ -39,24 +39,22 @@
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>
+  </div>
 
-    <!-- Register employee -->
-    <ol class="carousel-indicators">
-    </ol>
-    <div class="card">
-      <h2 class="p-12 text-center text-secondary font-weight-bold">We're here to help you live life the salon way.<br>Spend more time doing what you love. <br>We'll take care of relaxing treatments, stylish cuts, and new looks.</h2> 
-      <img class="w-100" src="https://niobebeauty.wordpress.com/wp-content/uploads/2019/07/slide35.jpg" alt="Image">
+  <!-- Register employee -->
+  <div class="card">
+    <h2 class="p-12 text-center text-secondary font-weight-bold">We're here to help you live life the salon way.<br>Spend more time doing what you love. <br>We'll take care of relaxing treatments, stylish cuts, and new looks.</h2> 
+    <img class="w-100" src="https://niobebeauty.wordpress.com/wp-content/uploads/2019/07/slide35.jpg" alt="Image">
       <div class="card-img-overlay">
-        <div class="pl-10 cardRegister mt-87">
+        <div class="pl-10 cardRegister mt-100">
           <div class="card w-50 bg-light">
             <div class="card-body"> 
               <h3 class="card-title">Join your shop here!</h3>
                <p class="card-text">Expand your client base and streamline your booking process by becoming a Sala Salon Partner.</p> 
                <p class="card-text">Our centralized online booking system and marketing support make it easy for customers to discover and book appointments at your salon.</p> 
-               <button type="button" class="btn btn-outline-danger"><router-link to="/register" class="nav-link">Register now</router-link></button>
-            </div>
-          </div>      
-        </div>
+              <button type="button" class="btn btn-outline-danger"><router-link to="/register" class="nav-link">Register now</router-link></button>
+          </div>
+        </div>      
       </div>
     </div>
   </div>
