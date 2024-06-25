@@ -49,7 +49,7 @@
           <span class="d-none d-lg-inline-flex">{{ userAuth.user.name }}</span>
         </a>
         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-          <a href="#" class="dropdown-item">My Profile</a>
+          <router-link to="/profile">Profile</router-link>
           <a href="#" class="dropdown-item">Settings</a>
           <a @click="logout()" href="#" class="dropdown-item">Log Out</a>
         </div>
