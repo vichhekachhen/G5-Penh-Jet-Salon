@@ -66,7 +66,7 @@
   </header>
 </template>
 <script setup lang="ts">
-import { Icon } from '@iconify/vue'
+// import { Icon } from '@iconify/vue'
 import { useRouter } from 'vue-router'
 import axiosInstance from '@/plugins/axios'
 import { useAuthStore } from '@/stores/auth-store'
@@ -74,13 +74,12 @@ const userAuth = useAuthStore()
 
 const router = useRouter()
 
-
 const logout = async () => {
   try {
     const response = await axiosInstance.post('/logout')
     console.log(response.data.message)
     localStorage.removeItem('token')
-    router.push('/home')
+    router.push('/')
   } catch (error) {
     console.error('Error logging out:', error)
   }

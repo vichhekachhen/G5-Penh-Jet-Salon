@@ -122,7 +122,7 @@ class AuthController extends Controller
         'email' => 'required|string|email|max:255|unique:users',
         'password' => 'required|string|min:8|confirmed',
         'shop_name' => 'required|string|max:255',
-        'province_id' => 'required|string', 
+        'province_id' => 'required', 
         'city' => 'required|string|max:255',
         'gender' => 'required|in:male,female,other',
         'shop_profile' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
