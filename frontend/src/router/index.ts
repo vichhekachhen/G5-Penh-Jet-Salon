@@ -36,7 +36,12 @@ const router = createRouter({
       path: '/register',
       name: 'register',
       component: () => import('../views/Users/Registers/RegisterView.vue')
-    }
+    },
+    {
+      path: '/owner',
+      name: 'owner',
+      component: () => import('../views/Web/OwnerStore/SideBar.vue')
+    },
   ],
   linkExactActiveClass: 'bg-danger text-white border-bottom',
 })
