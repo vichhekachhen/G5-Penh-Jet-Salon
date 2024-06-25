@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('stores', function (Blueprint $table) {
             $table->id();
             $table->string('shop_name');
-            $table->string('profile')->nullable();
+            $table->string('shop_profile')->nullable();
             $table->integer('address_id');
             $table->timestamps();
         });

@@ -17,6 +17,7 @@ class StoreResource extends JsonResource
         return [
             'id'=> $this->id,
             'shop_name'=> $this->shop_name,
+            'shop_profile'=> $this->shop_profile ? : null,
             'created_at' => $this->created_at->format('d-m-Y'),
             'address'=>new AddressResource($this->address),
             // 'address'=> $this->address,
