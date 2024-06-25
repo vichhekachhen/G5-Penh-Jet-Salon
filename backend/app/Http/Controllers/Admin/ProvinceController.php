@@ -137,27 +137,6 @@ class ProvinceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function update(Request $request, Province $province)
-    // {
-    //     $request->validate([
-    //         'province_name' => 'required|string|unique:provinces,province_name',
-    //         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-    //     ]);
-    
-    //     // Get all input data except for the image
-    //     $data = $request->except('image');
-        
-    //     // Check if the request has an image file
-    //     if ($request->hasFile('image')) {
-    //         // Store the image and get its path
-    //         $path = $request->file('image')->store('ProvinceImages', 'public');
-    //         // Get the URL for the stored image
-    //         $data['image'] = Storage::url($path);
-    //     }
-    //     $province->update($request->all());
-
-    //     return redirect()->back()->withSuccess('Province updated !!!');
-    // }
 
     public function update(Request $request, $id)
 {
