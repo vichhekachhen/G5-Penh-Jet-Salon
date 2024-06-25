@@ -22,30 +22,7 @@ class StoreController extends Controller
             'data' => $stores,
         ]);
     }
-    // public function StoreByProvince()
-    // {
-    //     $stores = Store::all();
-    //     $stores = StoreResource::collection($stores);
-    //     $stores = JSON.parse( $stores );
-    //     $dataArray = json_decode($stores, true);
-    //     $stores = $dataArray['data'];
-
-    //     $groupedByProvince = [];
-
-    //     foreach ($stores as $store) {
-    //         $provinceName = $store['address']['province']['province_name'];
-    //         if (!isset($groupedByProvince[$provinceName])) {
-    //             $groupedByProvince[$provinceName] = [];
-    //         }
-    //         $groupedByProvince[$provinceName][] = $store;
-    //     }
-    //     return response()->json([
-    //         'success' => true,
-    //         'message' => 'Store by province name',
-    //         'data' => $groupedByProvince,
-    //     ]);
-    // }
-
+    
     public function StoreByProvince()
     {
         $stores = StoreResource::collection(Store::all());
