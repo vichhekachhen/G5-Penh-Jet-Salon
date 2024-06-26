@@ -9,7 +9,7 @@
                             <div>
                                 <img v-if="userAuth.user.profile" class="rounded-circle me-3"
                                     style="width: 80px; height: 80px;" :src="userAuth.user.profile" alt="User Profile">
-                                <img v-else src="../../Images/image.png" class="rounded-circle me-3"
+                                <img v-else src="../../Images/photo1.jpg" class="rounded-circle me-3"
                                     style="width: 80px; height: 80px;" alt="User Profile">
                             </div>
                             <h2 class="card-title mb-0 text-pink-500">{{ userAuth.user.name }}</h2>
