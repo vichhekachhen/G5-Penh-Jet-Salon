@@ -17,7 +17,6 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 
 const app = createApp(App)
 
-
 configure({
   validateOnInput: true
 })
@@ -30,5 +29,3 @@ app.use(router.simpleAcl)
 app.config.globalProperties.$axios = axios
 
 app.mount('#app')
-
-
