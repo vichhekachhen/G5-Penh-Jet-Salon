@@ -32,11 +32,13 @@ class StoreController extends Controller
 
         // Iterate through each store and group them by province name
         foreach ($storesArray as $store) {
-            $provinceName = $store['address']['province']['province_name'];
-            if (!isset($groupedByProvince[$provinceName])) {
-                $groupedByProvince[$provinceName] = [];
+            if (isset($store['address']['province'])){
+                $provinceName = $store['address']['province']['province_name'];
+                if (!isset($groupedByProvince[$provinceName])) {
+                    $groupedByProvince[$provinceName] = [];
+                }
+                $groupedByProvince[$provinceName][] = $store;
             }
-            $groupedByProvince[$provinceName][] = $store;
         }
 
         // Return the response as a JSON object

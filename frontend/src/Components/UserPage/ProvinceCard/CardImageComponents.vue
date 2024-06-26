@@ -1,20 +1,20 @@
 <template>
   <div class="bg-white p-5">
     <h2 class="text-center pt-20">Find us in your area</h2>
-    <div class="pt-5 d-flex justify-content-between row row-cols-1 row-cols-md-4 g-0">
+    <div class="row gap-4">
       <div
         v-for="location in locations"
         :key="location.id"
-        class="card text-white col-4 shadow card-hover m-5"
+        class="card text-white col-3 shadow card-hover m-5 p-1"
       >
       <img
         class="card-img-top"
-        :src="location.shop_profile"
+        :src="location.province_image"
         alt=""
         style="height: 250px"/>
         <div class="card-img-overlay d-flex align-items-end justify-content-end">
           <button class="btn bg-light text-dark" type="button">
-            <b>{{ location.shop_name }}</b>
+            <b>{{ location.province_name}}</b>
           </button>
         </div>
       </div>
@@ -43,18 +43,29 @@ export default {
   methods: {
     async fetchLocations() {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/store/list');
-        let listProvince = response.data.data
-        listProvince.forEach(element => {
-          element.shop_profile = 'http://127.0.0.1:8000' + element.shop_profile;
-          console.log(element.shop_profile)
-          
-        });
-        if (response.data.data) {
-          this.locations = response.data.data;
+        const response = await axios.get('http://127.0.0.1:8000/api/store/StoreByProvince')
+        let provinces = response.data.data
+        let locations = []
+
+        for (let province_name in provinces) {
+          if (Object.prototype.hasOwnProperty.call(provinces, province_name)) {
+            let province_image = ''
+            let id = null;
+            if (provinces[province_name].length > 0) {
+              province_image = provinces[province_name][0].address.province.image
+              id = provinces[province_name][0].address.province.province_id
+            }
+            locations.push({
+              province_id: id,
+              province_name: province_name,
+              province_image:'http://127.0.0.1:8000'+ province_image,
+              stores: provinces[province_name]
+            })
+          }
         }
+        this.locations = locations
       } catch (error) {
-        console.error('Error fetching locations:', error);
+        console.error('Error fetching locations:', error)
       }
     }
   }

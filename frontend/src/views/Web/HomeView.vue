@@ -9,16 +9,18 @@ const userAuth = useAuthStore();
 
 </script>
 <template>
-  <!-- Alert register -->
-  <div v-if="!userAuth.isAuthenticated" class="alert alert-danger alert-dismissible fade show text-center" role="alert">
-
-    <strong>Do you want to become a member of me?</strong> Please click the button to become my member!
-    <a href="/register" class="btn btn-outline-danger">Register now</a>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  <div class="">
+    <!-- Alert register -->
+    <div v-if="!userAuth.isAuthenticated" class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+  
+      <strong>Do you want to become a member of me?</strong> Please click the button to become my member!
+      <a href="/register" class="btn btn-outline-danger">Register now</a>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <WebLayout></WebLayout>
+    <SlineShow></SlineShow>
+    <CardImageComponentVue></CardImageComponentVue>
+    <Footer></Footer>
   </div>
-  <WebLayout></WebLayout>
-  <SlineShow></SlineShow>
-  <CardImageComponentVue></CardImageComponentVue>
-  <Footer></Footer>
   
 </template>
