@@ -1,21 +1,25 @@
 <template>
-  <div class="bg-white">
-    <h2 class="text-center pt-23">Find us in your area</h2>
-    <div class="pt-5 row row-cols-1 row-cols-md-3 g-4">
+  <div class="bg-white p-5">
+    <h2 class="text-center pt-20">Find us in your area</h2>
+    <div class="pt-5 d-flex justify-content-between row row-cols-1 row-cols-md-4 g-0">
       <div
         v-for="location in locations"
         :key="location.id"
-        class="card text-white col-3 shadow card-hover "
+        class="card text-white col-4 shadow card-hover m-5"
       >
-        <img class="Image" :src="location.image" alt="Location Image" />
+      <img
+        class="card-img-top"
+        :src="location.shop_profile"
+        alt=""
+        style="height: 250px"/>
         <div class="card-img-overlay d-flex align-items-end justify-content-end">
           <button class="btn bg-light text-dark" type="button">
-            <b>{{ location.province_name }}</b>
+            <b>{{ location.shop_name }}</b>
           </button>
         </div>
       </div>
     </div>
-    <div class="p-15 d-flex justify-content-start bg-white">
+    <div class="pt-5 pl-10 d-flex justify-content-start bg-white">
       <h2>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet nulla ipsum nisi. Voluptatum
         quia, numquam ipsa doloremque nemo veniam? Earum!
@@ -25,54 +29,40 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
 
 export default {
-  // name: "StoreByProvince",
   data() {
     return {
       locations: []
-    }
+    };
   },
   mounted() {
-    this.fetchLocations()
+    this.fetchLocations();
   },
   methods: {
     async fetchLocations() {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/store/StoreByProvince')
-        let provinces = response.data.data;
-        let locations = [];
-        for (let province_name in provinces) {
-          if (Object.prototype.hasOwnProperty.call(provinces, province_name)) {
-            provinces[province_name].forEach((shop) => {
-              console.log(shop.address.province.image, province_name);
-              locations.push({
-                name: shop.name,
-                image: shop.address.province.image,
-                province_name: province_name,
-                province_image: shop.address.province.image,
-
-              });
-            })
-          }
+        const response = await axios.get('http://127.0.0.1:8000/api/store/list');
+        let listProvince = response.data.data
+        listProvince.forEach(element => {
+          element.shop_profile = 'http://127.0.0.1:8000' + element.shop_profile;
+          console.log(element.shop_profile)
+          
+        });
+        if (response.data.data) {
+          this.locations = response.data.data;
         }
-        this.locations = locations;
       } catch (error) {
-        console.error('Error fetching locations:', error)
+        console.error('Error fetching locations:', error);
       }
     }
   }
-}
+};
 </script>
 
 <style>
-.Image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.card-hover:hover {
+.card-hover:hover { 
   transform: scale(1.04);
   transition: all 0.3s ease-in-out;
 }
