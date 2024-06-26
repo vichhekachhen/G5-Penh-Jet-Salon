@@ -49,7 +49,6 @@
          </nav>
       </div>
    </div>
-
    <nav class="navbar navbar-light bg-light shadow-lg">
       <a class="navbar-brand">Navbar</a>
       <form class="form-inline d-flex">

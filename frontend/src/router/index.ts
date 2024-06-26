@@ -41,7 +41,12 @@ const router = createRouter({
       path: '/registerOwner',
       name: 'registerOwner',
       component: () => import('../views/Users/RegisterOwner/RegisterOwner.vue')
-    }
+    },
+    {
+      path: '/services',
+      name: 'services',
+      component: () => import('../views/Web/OwnerStore/Service.vue')
+    },
   ],
   linkExactActiveClass: 'bg-danger text-white border-bottom',
 })
