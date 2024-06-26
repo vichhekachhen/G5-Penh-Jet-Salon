@@ -18,6 +18,7 @@ class AddressResource extends JsonResource
             'id' => $this->id,
             'province' => $this->province ?[
                 'province_name' => $this->province->province_name,
+                'image' => $this->province->image,
             ] : null,
         ];
     }

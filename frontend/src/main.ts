@@ -12,6 +12,9 @@ import axios from './plugins/axios'
 import 'uno.css'
 import { configure } from 'vee-validate'
 
+import "bootstrap/dist/js/bootstrap.js";
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
 const app = createApp(App)
 
 configure({
