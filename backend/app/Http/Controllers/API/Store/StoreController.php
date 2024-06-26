@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\Store;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\StoreByProvinceResource;
 use App\Http\Resources\StoreResource;
 use App\Models\Store;
 use Illuminate\Http\Request;
@@ -47,6 +48,24 @@ class StoreController extends Controller
             'message' => 'Store by province name',
             'data' => $groupedByProvince,
         ]);
+    }
+
+    public function GetStoreByProvinceId(string $id){
+        $storeByProvinceId = [];
+        $stores = StoreResource::collection(Store::all());
+        foreach ($stores as $key => $store) {
+            if ( isset($store['address']) && $store['address']['province_id'] === $id){
+                $storeByProvinceId[] = $store;
+            }
+        }
+        $storeByProvinceId = StoreByProvinceResource::collection($storeByProvinceId);
+        $storeByProvinceIdCollection = collect($storeByProvinceId);
+        return response()->json([
+            'success'=> true,
+            'message'=> 'There are all store get by province id',
+            'Total' => $storeByProvinceIdCollection->count(),
+            'data' => $storeByProvinceId,
+      ]);
     }
 
     /**

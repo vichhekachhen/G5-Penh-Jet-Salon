@@ -32,23 +32,18 @@ Route::post('/registerOwner', [AuthController::class, 'registerOwner'])->name('r
 Route::get('/me', [AuthController::class, 'index'])->middleware('auth:sanctum');
 Route::get('/post/list', [PostController::class, 'index'])->middleware('auth:sanctum');
 
-Route::middleware('auth:sanctum')->prefix('province')->group(function (){
-    // Route::get('/list', [ProvinceController::class, 'index']);
-    Route::post('/create', [ProvinceController::class, 'store']);
-    Route::put('/update', [ProvinceController::class, 'update']);
-    Route::delete('/destroy', [ProvinceController::class, 'destroy']);
-
-});
+//province list
 Route::get('province/list', [ProvinceController::class, 'index']);
 
 
 Route::middleware('auth:sanctum')->prefix('service')->group(function (){
-    Route::get('/list', [ServiceController::class, 'index']);
-    Route::get('/show', [ServiceController::class, 'show']);
+    Route::get('/show/{id}', [ServiceController::class, 'show']);
     Route::post('/create', [ServiceController::class, 'store']);
     Route::put('/update/{id}', [ServiceController::class, 'update']);
-    Route::delete('/destroy', [ServiceController::class, 'destroy']);
+    Route::delete('/destroy/{id}', [ServiceController::class, 'destroy']);
 });
 
 Route::get('store/list', [StoreController::class, 'index']);
 Route::get('store/StoreByProvince', [StoreController::class, 'StoreByProvince']);
+Route::get('store/list/{provinceId}', [StoreController::class, 'GetStoreByProvinceId']);
+Route::get('service/list/{storeId}', [ServiceController::class, 'GetServiceByStoreId']);
