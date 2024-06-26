@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\APi\Service;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ServiceResource;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -107,6 +108,16 @@ class ServiceController extends Controller
         return response()->json([
             'success'=> true,
             'message' => 'Service deleted successfully',
+      ]);
+    }
+
+    public function GetServiceByStoreId(string $id){
+        $services = Service::where('store_id', $id)->get();
+        $services = ServiceResource::collection($services);
+        return response()->json([
+            'success'=> true,
+            'message' => 'Service by store id',
+            'data' =>$services ,
       ]);
     }
 }
