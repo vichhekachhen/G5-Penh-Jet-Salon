@@ -52,7 +52,7 @@
               <h3 class="card-title">Join your shop here!</h3>
                <p class="card-text">Expand your client base and streamline your booking process by becoming a Sala Salon Partner.</p> 
                <p class="card-text">Our centralized online booking system and marketing support make it easy for customers to discover and book appointments at your salon.</p> 
-              <button type="button" class="btn btn-outline-danger"><router-link to="/register" class="nav-link">Register now</router-link></button>
+              <button type="button" class="btn btn-outline-danger"><router-link to="/registerOwner" class="nav-link">Register now</router-link></button>
           </div>
         </div>      
       </div>
