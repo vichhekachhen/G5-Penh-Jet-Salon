@@ -1,8 +1,10 @@
 <template>
     <div class="container">
       <div class="d-flex justify-content-end" style="margin-top: 10px; margin-bottom: 10px;">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">+AddService</button>
+        <button type="button" class="btn btn-primary" >+AddService</button>
       </div>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">+AddService</button>
+
     <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -50,5 +52,4 @@
         </tbody>
       </table>
     </div>
-
 </template>
