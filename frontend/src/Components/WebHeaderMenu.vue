@@ -1,77 +1,59 @@
 <template>
-  <header class="flex justify-between px-15 py-2 bg-light items-center">
-    <!-- Logo -->
-    <div class="flex items-center space-x-2">
-      <img class="w-15" src="../views/Logo/Salon.png" alt=""> <b>SALON</b> 
-    </div>
+  <header class="bg-light shadow fixed-top">
+    <div class="container-fluid px-4 py-2 d-flex justify-content-between align-items-center">
+      <!-- Logo -->
+      <div class="ml-5">
+        <img style="width: 45px; height: 45px" src="../Images/logo.png" alt="">
+      </div>
 
-    <!-- Menu Items -->
-    <nav class="navbar navbar-default flex justify-center space-x-4">
-      <router-link
-        class="font-bold px-3 py-2 text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900 nav-link"
-        aria-current="page"
-        to="/"
-        >Home</router-link
-      >
-      <router-link
-        class="font-bold px-3 py-2 text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900 nav-link"
-        to="/post"
-        >Post</router-link
-      >
-      <router-link
-        class="font-bold px-3 py-2 text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900 nav-link"
-        to="/team"
-      >
-        Team</router-link
-      >
-      <router-link
-        class="font-bold px-3 py-2 text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900 nav-link"
-        to="/projects"
-        >Project</router-link
-      >
-      <router-link
-        class="font-bold px-3 py-2 text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900 nav-link"
-        to="/reports"
-        >Report</router-link
-      >
-      <!-- <router-link
-        class="font-bold px-3 py-2 text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900 nav-link"
-        to="/listShop"
-        >listShop</router-link
-      > -->
-    </nav>
+      <!-- Menu Items -->
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <router-link class="nav-link font-bold text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900"
+                aria-current="page" to="/">Home</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link font-bold text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900"
+                to="/post">Post</router-link>
+            </li>
+          </ul>
+        </div>
+      </nav>
 
-    <!-- Sign In -->
-    <div v-if="userAuth.isAuthenticated">
-      <div class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-          <img
-            class="rounded-circle me-lg-2"
-            src="../Images/download (6).png"
-            alt=""
-            style="width: 40px; height: 40px"
-          />
-          <span class="d-none d-lg-inline-flex">{{ userAuth.user.name }}</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-          <a href="/profile" class="dropdown-item">Profile</a>
-          <a href="#" class="dropdown-item">Settings</a>
-          <a @click="logout()" href="#" class="dropdown-item">Log Out</a>
+      <!-- Sign In -->
+      <div class="navbar-nav d-flex justify-content-end" v-if="userAuth.isAuthenticated">
+        <div class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+            <img v-if="userAuth.user.profile" class="rounded-circle me-lg-2" :src="userAuth.user.profile" alt=""
+              style="width: 40px; height: 40px">
+            <img v-else class="rounded-circle me-lg-2" src="../Images/default-user-image.png" alt=""
+              style="width: 40px; height: 40px">
+            <h6 class="d-none d-lg-inline-flex text-pink-500">{{ userAuth.user.name }}</h6>
+          </a>
+          <div class="dropdown-menu dropdown-menu-end">
+            <a href="/profile" class="dropdown-item">Profile</a>
+            <a href="#" class="dropdown-item">Settings</a>
+            <a @click="logout()" href="#" class="dropdown-item">Log Out</a>
+          </div>
+        </div>
+      </div>
+      <div class="navbar-nav d-flex justify-content-end" v-else>
+        <div class="d-flex justify-content-around">
+          <router-link to="/login" class="nav-link me-2 p-2 btn-pink "><b>Login</b></router-link>
+          <router-link to="/register" class="nav-link  me-2 p-2 btn-pink "><b>SignUp</b></router-link>
         </div>
       </div>
     </div>
-    <div v-else>
-      <router-link
-        @click.prevent="logout"
-        to="/login"
-        class="px-4 py-2 rounded font-semibold btn btn-danger"
-        >Login Now</router-link
-      >
-    </div>
   </header>
 </template>
+
 <script setup lang="ts">
-// import { Icon } from '@iconify/vue'
 import { useRouter } from 'vue-router'
 import axiosInstance from '@/plugins/axios'
 import { useAuthStore } from '@/stores/auth-store'
@@ -90,3 +72,10 @@ const logout = async () => {
   }
 }
 </script>
+<style>
+.btn-pink:hover{
+  background-color: #ff20a6;
+  color: aliceblue;
+  border-radius: 5px;
+}
+</style>

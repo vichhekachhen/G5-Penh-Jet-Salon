@@ -12,7 +12,7 @@
                                 <img v-else src="../../Images/image.png" class="rounded-circle me-3"
                                     style="width: 80px; height: 80px;" alt="User Profile">
                             </div>
-                            <h2 class="card-title mb-0 text-pink-500">{{ userAuth.user.name }}</h2>
+                            <h2 class="card-title mb-0 text-muted">{{ userAuth.user.name }}</h2>
                         </div>
                         <div class="row d-flex justify-content-center">
                             <div class="col-md-6">
