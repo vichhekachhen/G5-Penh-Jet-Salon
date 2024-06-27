@@ -1,28 +1,26 @@
 <template>
   <div class="bg-white p-5">
-    <h2 class="text-center pt-20">Find us in your area</h2>
+    <h1 class="text-center my-3">Find us in your area</h1>
     <div class="row gap-4">
-      <div
-        v-for="location in locations"
-        :key="location.id"
-        class="card text-white col-3 shadow card-hover p-1 d-flex justify-content-between ml-6 mt-3 gap-6"
-      >
-          <img class="card-img-top" :src="location.province_image" alt="" style="height: auto" />
-          <div class="card-img-overlay d-flex align-items-end justify-content-end">
-            <button class="btn bg-light text-dark" type="button">
-              <router-link class="link-underline link-underline-opacity-0"
-               :to="{ name: 'listShop', params: { id: location.province_id } }"
-                ><b>{{ location.province_name }}</b></router-link
-              >
-            </button>
-          </div>
+      <div v-for="location in locations" :key="location.id"
+        class="card text-white col-3 shadow card-hover p-1 d-flex justify-content-between ml-6 mt-3 gap-6">
+        <img class="card-img-top" :src="location.province_image" alt="" style="height: auto" />
+        <div class="card-img-overlay d-flex align-items-end justify-content-end">
+          <button class="btn bg-light text-dark" type="button">
+            <router-link class="link-underline link-underline-opacity-0"
+              :to="{ name: 'listShop', params: { id: location.province_id } }"><b>{{ location.province_name
+                }}</b></router-link>
+          </button>
         </div>
+      </div>
     </div>
-    <div class="pt-5 pl-10 d-flex justify-content-start bg-white">
-      <h2>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet nulla ipsum nisi. Voluptatum
-        quia, numquam ipsa doloremque nemo veniam? Earum!
-      </h2>
+    <div class="pt-5 ">
+      <h2>Our goal:</h2>
+      <h4>Decide on the service(s) you would like to receive (e.g. haircut, color, manicure, pedicure, etc.) <br>
+        Determine the date and time that works best for your schedule <br>
+        Contact the salon directly to check availability for your preferred date and time <br>
+        Request the name of the stylist or service provider you would like, if you have a preference <br>
+      </h4>
     </div>
   </div>
 </template>
