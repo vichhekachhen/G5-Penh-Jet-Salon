@@ -14,7 +14,7 @@
         style="height: 250px"/>
         <div class="card-img-overlay d-flex align-items-end justify-content-end">
           <button class="btn bg-light text-dark" type="button">
-            <b>{{ location.shop_name }}</b>
+            <router-link class="link-underline link-underline-opacity-0" to="/listShop"><b>{{ location.shop_name }}</b></router-link>
           </button>
         </div>
       </div>
