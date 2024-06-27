@@ -5,19 +5,18 @@
       <div
         v-for="location in locations"
         :key="location.id"
-        class="card text-white col-3 shadow card-hover m-5 p-1"
+        class="card text-white col-3 shadow card-hover p-1 d-flex justify-content-between ml-6 mt-3 gap-6"
       >
-      <img
-        class="card-img-top"
-        :src="location.province_image"
-        alt=""
-        style="height: 250px"/>
-        <div class="card-img-overlay d-flex align-items-end justify-content-end">
-          <button class="btn bg-light text-dark" type="button">
-            <b>{{ location.province_name}}</b>
-          </button>
+          <img class="card-img-top" :src="location.province_image" alt="" style="height: auto" />
+          <div class="card-img-overlay d-flex align-items-end justify-content-end">
+            <button class="btn bg-light text-dark" type="button">
+              <router-link class="link-underline link-underline-opacity-0"
+               :to="{ name: 'listShop', params: { id: location.province_id } }"
+                ><b>{{ location.province_name }}</b></router-link
+              >
+            </button>
+          </div>
         </div>
-      </div>
     </div>
     <div class="pt-5 pl-10 d-flex justify-content-start bg-white">
       <h2>
@@ -29,16 +28,16 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from 'axios'
 
 export default {
   data() {
     return {
       locations: []
-    };
+    }
   },
   mounted() {
-    this.fetchLocations();
+    this.fetchLocations()
   },
   methods: {
     async fetchLocations() {
@@ -50,7 +49,7 @@ export default {
         for (let province_name in provinces) {
           if (Object.prototype.hasOwnProperty.call(provinces, province_name)) {
             let province_image = ''
-            let id = null;
+            let id = null
             if (provinces[province_name].length > 0) {
               province_image = provinces[province_name][0].address.province.image
               id = provinces[province_name][0].address.province.province_id
@@ -58,7 +57,7 @@ export default {
             locations.push({
               province_id: id,
               province_name: province_name,
-              province_image:'http://127.0.0.1:8000'+ province_image,
+              province_image: 'http://127.0.0.1:8000' + province_image,
               stores: provinces[province_name]
             })
           }
@@ -67,13 +66,14 @@ export default {
       } catch (error) {
         console.error('Error fetching locations:', error)
       }
-    }
+    },
+
   }
-};
+}
 </script>
 
 <style>
-.card-hover:hover { 
+.card-hover:hover {
   transform: scale(1.04);
   transition: all 0.3s ease-in-out;
 }

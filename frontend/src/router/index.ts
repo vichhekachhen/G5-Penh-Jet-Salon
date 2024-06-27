@@ -25,6 +25,7 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: () => import('../views/Web/HomeView.vue')
+      // component: () => import('../views/Shops/ListShopView.vue')
     },
     {
       path: '/post',
@@ -46,6 +47,12 @@ const router = createRouter({
       path: '/registerOwner',
       name: 'registerOwner',
       component: () => import('../views/Users/RegisterOwner/RegisterOwner.vue')
+    },
+    {
+      path: '/listShop/:id',
+      name: 'listShop',
+      component: () => import('../views/Shops/ListShopView.vue'),
+      props: true
     }
   ],
   linkExactActiveClass: 'bg-danger text-white border-bottom',
