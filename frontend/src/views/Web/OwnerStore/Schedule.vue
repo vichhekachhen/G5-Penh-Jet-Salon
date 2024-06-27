@@ -1,3 +1,4 @@
+
 <template>
     <div class="site-wrapper">
         <div class="container cover-container">
@@ -143,7 +144,18 @@
 </template>
 
 <script>
-export default {};
+export default {
+    name: 'HelloWorld',
+    data() {
+        return {
+            msg: 'Welcome to Your Vue.js App'
+        }
+    },
+    mounted() {
+        console.log(this.msg)
+    }
+    
+};
 </script>
 
 <style>

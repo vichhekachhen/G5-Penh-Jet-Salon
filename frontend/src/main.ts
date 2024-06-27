@@ -30,3 +30,4 @@ app.use(router.simpleAcl)
 app.config.globalProperties.$axios = axios
 
 app.mount('#app')
+

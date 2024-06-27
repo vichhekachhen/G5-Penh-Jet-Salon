@@ -1,28 +1,71 @@
 <template>
-    <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Logo</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-lg d-flex justify-content-between">
+        <div class="container-fluid"> <!-- Wrap the navbar content inside a container-fluid for responsive behavior -->
+            <a class="navbar-brand" href="#">Your Brand</a>
+
+            <!-- Toggle button for mobile -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="bi bi-bell"></i>
-                            <span class="badge badge-pill badge-primary">8</span>
+
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+                <!-- Search input with icon -->
+                <form class="d-flex my-2 my-lg-0 ms-lg-4">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-primary" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </form>
+
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown notification-container">
+                        <a class="nav-link dropdown-toggle text-primary d-flex align-items-center" href="#"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-bell me-2"></i>Notification<span
+                                class="badge bg-danger rounded-pill">2</span>
                         </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="bi bi-bell"></i>
-                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end notification-dropdown shadow-lg">
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <div class="d-flex">
+                                        <div class="flex-shrink-0 me-3">
+                                            <img src="https://t4.ftcdn.net/jpg/06/08/55/73/360_F_608557356_ELcD2pwQO9pduTRL30umabzgJoQn5fnd.jpg"
+                                                alt="User Avatar" class="rounded-circle w-13 h-13"
+                                                style="object-fit: cover;">
+                                        </div>
+                                        <div>
+                                            <strong>Veak Khlop</strong>
+                                            <div>Check out this interesting article!</div>
+                                            <small class="text-muted">1 year ago</small>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <hr>
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <div class="d-flex">
+                                        <div class="flex-shrink-0 me-3">
+                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAcZUYZ7y_E5rfCrLNUNDOJEf-0Ii6wgRlyRB1ywNheQdzqjg_muOu9YwnAuq9ZEn50tc&usqp=CAU"
+                                                alt="User Avatar" class="rounded-circle w-13 h-13"
+                                                style="object-fit: cover;">
+                                        </div>
+                                        <div>
+                                            <strong>Makara Try</strong>
+                                            <div>Check out this interesting article!</div>
+                                            <small class="text-muted">1 day ago</small>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div>
-        </nav>
-    </div>
+        </div>
+    </nav>
 </template>
 
 <script>

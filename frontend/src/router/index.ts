@@ -45,7 +45,23 @@ const router = createRouter({
     {
       path: '/services',
       name: 'services',
-      component: () => import('../views/Web/OwnerStore/Service.vue')
+      component: () => import('../views/Web/OwnerStore/Services/ServiesView.vue')
+    },
+    {
+      path: '/schedule',
+      name: 'schedule',
+      component: () => import('../views/Web/OwnerStore/Schedule.vue')
+    },
+    {
+      path: '/message',
+      name: 'message',
+      component: () => import('../views/Web/OwnerStore/Message.vue')
+    },
+    // after push delete 
+    {
+      path: '/sidebar',
+      name: 'sidebar',
+      component: () => import('../views/Web/OwnerStore/SideBar.vue')
     },
   ],
   linkExactActiveClass: 'bg-danger text-white border-bottom',
@@ -79,7 +95,7 @@ router.beforeEach(async (to, from, next) => {
 
   if (authRequired && !store.isAuthenticated) {
     next()
-    
+
   } else {
     next()
   }
