@@ -115,71 +115,70 @@ class AuthController extends Controller
     }
 
     public function registerOwner(Request $request): JsonResponse
-{
-    // Validate the request
-    $validator = Validator::make($request->all(), [
-        'name' => 'required|string|max:255|unique:users',
-        'email' => 'required|string|email|max:255|unique:users',
-        'password' => 'required|string|min:8|confirmed',
-        'shop_name' => 'required|string|max:255',
-        'province_id' => 'required', 
-        'city' => 'required|string|max:255',
-        'gender' => 'required|in:male,female,other',
-        'shop_profile' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-    ]);
+    {
+        // Validate the request
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'shop_name' => 'required|string|max:255',
+            'province_id' => 'required',
+            'city' => 'required|string|max:255',
+            'gender' => 'required|in:male,female,other',
+            'shop_profile' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
 
-    if ($validator->fails()) {
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        // Handle the file upload for shop_profile
+        if ($request->hasFile('shop_profile')) {
+            $path = $request->file('shop_profile')->store('public/StoreImages');
+            $shopProfileUrl = Storage::url($path);
+        } else {
+            $shopProfileUrl = null;
+        }
+
+        // Create the address
+        $address = Address::create([
+            'city' => $request->city,
+            'province_id' => $request->province_id,
+        ]);
+
+        // Create the store
+        $store = Store::create([
+            'shop_name' => $request->shop_name,
+            'shop_profile' => $shopProfileUrl,
+            'address_id' => $address->id,
+        ]);
+
+        // Create the user
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'gender' => Gender::from($request->gender),
+            'store_id' => $store->id,
+        ]);
+
+        // Assign role to the user
+        $ownerRole = Role::where('name', 'owner')->first();
+        if ($ownerRole) {
+            $user->assignRole($ownerRole);
+        }
+
+        // Generate a token for the user
+        $token = $user->createToken('authToken')->accessToken;
+
+        // Return a success response
         return response()->json([
-            'message' => 'Validation failed',
-            'errors' => $validator->errors()
-        ], 422);
+            'message' => 'Registration successful',
+            'access_token' => $token,
+            'token_type' => 'Bearer',
+        ], 201);
     }
-
-    // Handle the file upload for shop_profile
-    if ($request->hasFile('shop_profile')) {
-        $path = $request->file('shop_profile')->store('public/StoreImages');
-        $shopProfileUrl = Storage::url($path);
-    } else {
-        $shopProfileUrl = null;
-    }
-
-    // Create the address
-    $address = Address::create([
-        'city' => $request->city,
-        'province_id' => $request->province_id,
-    ]);
-
-    // Create the store
-    $store = Store::create([
-        'shop_name' => $request->shop_name,
-        'shop_profile' => $shopProfileUrl,
-        'address_id' => $address->id,
-    ]);
-
-    // Create the user
-    $user = User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => Hash::make($request->password),
-        'gender' => Gender::from($request->gender),
-        'store_id' => $store->id,
-    ]);
-
-    // Assign role to the user
-    $ownerRole = Role::where('name', 'owner')->first();
-    if ($ownerRole) {
-        $user->assignRole($ownerRole);
-    }
-
-    // Generate a token for the user
-    $token = $user->createToken('authToken')->accessToken;
-
-    // Return a success response
-    return response()->json([
-        'message' => 'Registration successful',
-        'access_token' => $token,
-        'token_type' => 'Bearer',
-    ], 201);
-}
-
 }
