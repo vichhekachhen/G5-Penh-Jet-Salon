@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex">
+  <transition name="fade" mode="out-in">
     <div class="sidebar bg-white border-right shadow-lg">
       <div class="user-profile d-flex align-items-center p-3 border-bottom">
         <img
@@ -8,7 +8,6 @@
         <div>
           <h5 class="text-muted fw-bold">Socheathek MAO</h5>
           <small class="text-muted fw-bold">Salon Owner</small>
-          <!-- <span class="badge bg-success">Salon Owner</span> -->
         </div>
       </div>
       <hr>
@@ -17,9 +16,9 @@
           <i class="bi bi-calendar-event me-2"></i>
           Dashboard
         </router-link>
-        <router-link class="nav-link" :to="{ path: '/Schedule' }" active-class="router-link-active">
+        <router-link class="nav-link" :to="{ path: '/Calendar' }" active-class="router-link-active">
           <i class="bi bi-calendar-event me-2"></i>
-          Schedule
+          Calendar
         </router-link>
         <router-link class="nav-link" :to="{ path: '/Messages' }" active-class="router-link-active">
           <i class="bi bi-envelope me-2"></i>
@@ -47,7 +46,7 @@
         </router-link>
       </nav>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -96,5 +95,24 @@ export default {
 
 .nav-link i {
   font-size: 18px;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter,
+.fade-leave-to
+
+/* .fade-leave-active in <2.1.8 */
+  {
+  opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+  /* Adjust the transition duration here */
 }
 </style>

@@ -63,6 +63,11 @@ const router = createRouter({
       component: () => import('../views/Web/OwnerStore/Dashboard.vue')
     },
     {
+      path: '/Calendar',
+      name: 'Calendar',
+      component: () => import('../views/Web/OwnerStore/Calendar.vue')
+    },
+    {
       path: '/ProductService',
       name: 'ProductService',
       component: () => import('../views/Web/OwnerStore/Services/ServiesView.vue')
@@ -107,3 +112,4 @@ router.beforeEach(async (to, from, next) => {
 })
 
 export default { router, simpleAcl }
+
