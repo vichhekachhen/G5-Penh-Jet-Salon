@@ -4,6 +4,7 @@ use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\APi\Province\ProvinceController;
 use App\Http\Controllers\APi\Service\ServiceController;
 use App\Http\Controllers\API\Store\StoreController;
+use App\Http\Controllers\API\User\UserController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
@@ -47,3 +48,7 @@ Route::get('store/list', [StoreController::class, 'index']);
 Route::get('store/StoreByProvince', [StoreController::class, 'StoreByProvince']);
 Route::get('store/list/{provinceId}', [StoreController::class, 'GetStoreByProvinceId']);
 Route::get('service/list/{storeId}', [ServiceController::class, 'GetServiceByStoreId']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::put('/updateInfo', [UserController::class, 'update']);
+});
