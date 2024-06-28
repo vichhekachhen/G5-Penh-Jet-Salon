@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\APi\Province\ProvinceController;
 use App\Http\Controllers\APi\Service\ServiceController;
+use App\Http\Controllers\API\Slide\SlideshowController;
 use App\Http\Controllers\API\Store\StoreController;
 use App\Http\Controllers\API\User\UserController;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -36,6 +37,11 @@ Route::get('/post/list', [PostController::class, 'index'])->middleware('auth:san
 //province list
 Route::get('province/list', [ProvinceController::class, 'index']);
 
+//slide show
+Route::get('slideshow/list', [SlideshowController::class, 'index']);
+Route::post('slideshow/create', [SlideshowController::class, 'store']);
+Route::delete('slideshow/destroy/{id}', [SlideshowController::class, 'destroy']);
+
 
 Route::middleware('auth:sanctum')->prefix('service')->group(function (){
     Route::get('/list', [ServiceController::class, 'index']);
@@ -53,3 +59,4 @@ Route::get('service/list/{storeId}', [ServiceController::class, 'GetServiceBySto
 Route::middleware('auth:sanctum')->group(function () {
     Route::put('/updateInfo', [UserController::class, 'update']);
 });
+
