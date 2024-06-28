@@ -43,7 +43,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . $user->id,
             'gender' => 'required|in:male,female,other',
-            'phone' => 'nullable|string|max:15',
+            'phone' => 'nullable|regex:/^0[0-9]{2}\s[0-9]{3}\s[0-9]{3}$/',
             'birth' => 'nullable|date',
             'location' => 'nullable|string|max:255',
         ]);
@@ -52,7 +52,9 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->gender = $request->gender;
         $user->phone = $request->phone;
-        $user->birth = $request->birth;
+        if ($request->birth){
+            $user->birth = $request->birth;
+        }
         $user->location = $request->location;
         $user->save();
         return response()->json([
