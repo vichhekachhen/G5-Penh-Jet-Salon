@@ -3,8 +3,10 @@ import WebLayout from '@/Components/Layouts/WebLayout.vue'
 import SlineShow from '@/Components/UserPage/SlineShow/SlineShowComponent.vue'
 import CardImageComponentVue from '@/Components/UserPage/ProvinceCard/CardImageComponents.vue'
 import Footer from '@/Components/Footer/footerComponent.vue'
+import ListShopComponentVue from '@/Components/UserPage/ProvinceCard/ListShopComponent.vue'
 
 import {useAuthStore} from '@/stores/auth-store';
+
 const userAuth = useAuthStore();
 
 </script>

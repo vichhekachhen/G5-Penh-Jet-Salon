@@ -62,6 +62,7 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
         Route::resource('users','UserController');
         Route::resource('posts','PostController');
         Route::resource('provinces','ProvinceController');
+        Route::resource('categories','CategoryController');
 
         Route::get('/profile',[ProfileController::class,'index'])->name('profile');
         Route::put('/profile-update',[ProfileController::class,'update'])->name('profile.update');

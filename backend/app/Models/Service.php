@@ -15,5 +15,8 @@ class Service extends Model
         'duration',
         'price',
         'store_id',
+        'discount',
+        'image',
+        'category_id',
     ];
 }

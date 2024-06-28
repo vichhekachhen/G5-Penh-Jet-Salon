@@ -25,6 +25,7 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: () => import('../views/Web/HomeView.vue')
+      // component: () => import('../views/Shops/ListShopView.vue')
     },
     {
       path: '/post',
@@ -35,6 +36,11 @@ const router = createRouter({
       path: '/register',
       name: 'register',
       component: () => import('../views/Users/Registers/RegisterView.vue')
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: () => import('../Components/Profile/Profile.vue')
     },
     // =================ShopOwner=================
     {
