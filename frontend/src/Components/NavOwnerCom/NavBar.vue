@@ -1,31 +1,30 @@
 <template>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-lg d-flex justify-content-between">
-        <div class="container-fluid"> <!-- Wrap the navbar content inside a container-fluid for responsive behavior -->
-            <a class="navbar-brand" href="#">Your Brand</a>
-
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><b>PENH JET SALON</b></a>
             <!-- Toggle button for mobile -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
-                <!-- Search input with icon -->
                 <form class="d-flex my-2 my-lg-0 ms-lg-4">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-primary" type="submit">
                         <i class="bi bi-search"></i>
                     </button>
                 </form>
-
                 <ul class="navbar-nav">
-                    <li class="nav-item dropdown notification-container">
+                    <li class="nav-item dropdown notification-container" id="dropdown-menu">
                         <a class="nav-link dropdown-toggle text-primary d-flex align-items-center" href="#"
                             role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-bell me-2"></i>Notification<span
-                                class="badge bg-danger rounded-pill">2</span>
+                            <span class="badge-container">
+                                <i class="bi bi-bell"></i> <span class="badge bg-danger">99</span>
+                            </span>
                         </a>
+
+
                         <ul class="dropdown-menu dropdown-menu-end notification-dropdown shadow-lg">
                             <li>
                                 <a class="dropdown-item" href="#">
@@ -74,4 +73,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.navbar {
+    background-color: #fff;
+}
+</style>

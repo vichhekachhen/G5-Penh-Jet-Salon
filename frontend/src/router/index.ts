@@ -57,12 +57,17 @@ const router = createRouter({
       name: 'message',
       component: () => import('../views/Web/OwnerStore/Message.vue')
     },
-    // after push delete 
     {
-      path: '/sidebar',
-      name: 'sidebar',
-      component: () => import('../views/Web/OwnerStore/SideBar.vue')
+      path: '/Dashboard',
+      name: 'Dashboard',
+      component: () => import('../views/Web/OwnerStore/Dashboard.vue')
     },
+    {
+      path: '/ProductService',
+      name: 'ProductService',
+      component: () => import('../views/Web/OwnerStore/Services/ServiesView.vue')
+    }
+  
   ],
   linkExactActiveClass: 'bg-danger text-white border-bottom',
 })
