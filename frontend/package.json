@@ -26,6 +26,8 @@
     "vue-gates": "^2.1.2",
     "vue-router": "^4.3.3",
     "vue-simple-acl": "^2.0.2",
+     "@mdi/font": "^7.4.47",
+    "vuetify": "^3.0.0",
     "yup": "^1.4.0"
   },
   "devDependencies": {

@@ -23,6 +23,7 @@ const userAuth = useAuthStore();
     <SlineShow></SlineShow>
     <CardImageComponentVue></CardImageComponentVue>
     <Footer></Footer>
+
   </div>
   
 </template>
