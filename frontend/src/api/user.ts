@@ -7,3 +7,7 @@ export function registerOwner(value:object) {
 export function registerCustomer(value:object) {
   return http.post('/register',value)
 }
+
+export function updateInfo(value:object) {
+  return http.put('/updateInfo',value)
+}

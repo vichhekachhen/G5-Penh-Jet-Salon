@@ -176,24 +176,16 @@
 
 <script>
 import { useAuthStore } from '@/stores/auth-store'
-import axiosInstance from '@/plugins/axios'
+// import axiosInstance from '@/plugins/axios'
+import {useUserStore} from '@/stores/user';
+const userAuth = useUserStore();
 
 export default {
   data() {
     return {
-      username: 'Nathaniel',
-      phoneNumber: '+1800-000',
-      location: 'Phnom Penh',
-      email: 'nathaniel.poole@microsoft.com',
-      gender: 'male',
-      dob: '',
       isUpdate: false,
       isClick: false,
       num: 15,
-      currentPage: 1,
-      pageSize: 10,
-      totalRecords: 97,
-      pageLinks: [],
       userAuth: useAuthStore()
     }
   },
@@ -210,13 +202,16 @@ export default {
       console.log('Form submitted!')
       this.isUpdate = false
     },
-    async updateUserProfile() {
-      try {
-        const response = await axiosInstance.put('/updateInfo', this.userAuth.user)
-        console.log(response.data.message)
-      } catch (error) {
-        console.error('Error updating profile:', error)
-      }
+    // async updateUserProfile() {
+    //   try {
+    //     const response = await axiosInstance.put('/updateInfo', this.userAuth.user)
+    //     console.log(response.data.message)
+    //   } catch (error) {
+    //     console.error('Error updating profile:', error)
+    //   }
+    // }
+    async updateUserProfile(){
+      userAuth.updateUserInfo(this.userAuth.user)
     }
   }
 }

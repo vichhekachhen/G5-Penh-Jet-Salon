@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 // import axiosInstance from '@/plugins/axios'
-import { registerCustomer, registerOwner } from '@/api/user'
+import { registerCustomer, registerOwner, updateInfo } from '@/api/user'
 import router from '@/router'
 
 export const useUserStore = defineStore('user', {
@@ -28,6 +28,17 @@ export const useUserStore = defineStore('user', {
         router.router.push('/login')
       } catch (error) {
         console.error('Error creating user:', error)
+      } finally {
+        this.loading = false
+      }
+    },
+    async updateUserInfo(userData:object) {
+      try {
+        const response = await updateInfo(userData)
+        this.users = response.data
+        router.router.push('/profile')
+      } catch (error) {
+        console.error('Error updating user:', error)
       } finally {
         this.loading = false
       }
