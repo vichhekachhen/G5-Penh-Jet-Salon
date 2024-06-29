@@ -14,7 +14,9 @@
                 Sale
               </div>
               <!-- Store image -->
-              <img class="card-img-top" :src="store.shop_profile || 'https://via.placeholder.com/100'"
+              <img v-if="store.shop_profile !== null" class="card-img-top" :src="'http://127.0.0.1:8000'+store.shop_profile"
+                alt="Store Image" />
+              <img v-else class="card-img-top" :src="'https://via.placeholder.com/100'"
                 alt="Store Image" />
               <!-- Store details -->
               <div class="card-body">

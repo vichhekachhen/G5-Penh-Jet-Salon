@@ -58,5 +58,6 @@ Route::get('service/list/{storeId}', [ServiceController::class, 'GetServiceBySto
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::put('/updateInfo', [UserController::class, 'update']);
+    Route::post('store/update', [StoreController::class, 'update']);
 });
 
