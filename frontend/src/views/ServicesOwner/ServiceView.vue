@@ -173,7 +173,7 @@
             </tr>
           </tbody>
         </table>
-        {{newService}}
+        <!-- {{newService}} -->
       </div>
     </div>
   </div>
