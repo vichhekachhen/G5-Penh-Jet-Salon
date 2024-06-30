@@ -9,9 +9,9 @@ import App from './App.vue'
 import router from './router'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+import axios from './plugins/axios'
 import 'uno.css'
 import { configure } from 'vee-validate'
-import vuetify from "./plugins/vuetify"
 
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
@@ -25,6 +25,7 @@ app.use(createPinia())
 app.use(router.router)
 app.use(ElementPlus)
 app.use(router.simpleAcl)
-app.use(vuetify)
+
+app.config.globalProperties.$axios = axios
 
 app.mount('#app')
