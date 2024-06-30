@@ -1,34 +1,29 @@
-// src/plugins/axios.js
 import axios from 'axios'
-
-const axiosInstance = axios.create({
-  baseURL: 'http://127.0.0.1:8000/api', // Replace with your API base URL
+// VITE_BASE_URL=http://127.0.0.1:8000/api
+const api = axios.create({
+  baseURL: import.meta.env.VITE_BASE_URL,
   headers: {
     'Content-Type': 'application/json'
   }
 })
-
-axiosInstance.get('http://127.0.0.1:8000/sanctum/csrf-cookie')
-
 // Add a request interceptor
-axiosInstance.interceptors.request.use(
+api.interceptors.request.use(
   (config) => {
-    // Do something before request is sent
-    // For example, add an authentication token
     const token = localStorage.getItem('access_token')
     if (token) {
+        console.log(token);
+        
       config.headers.Authorization = `Bearer ${token}`
     }
     return config
   },
   (error) => {
-    // Do something with request error
     return Promise.reject(error)
   }
 )
 
 // Add a response interceptor
-axiosInstance.interceptors.response.use(
+api.interceptors.response.use(
   (response) => response,
   (error) => {
     // Handle error
@@ -39,4 +34,4 @@ axiosInstance.interceptors.response.use(
   }
 )
 
-export default axiosInstance
+export default api

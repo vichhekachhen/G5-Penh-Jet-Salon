@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import axiosInstance from '@/plugins/axios'
+import htpp from '@/api/api'
 import { useAuthStore } from '@/stores/auth-store'
 import { createAcl, defineAclRules } from 'vue-simple-acl'
 
 const simpleAcl = createAcl({})
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(import.meta.env.VITE_BASE_URL),
   routes: [
     {
       path: '/admin/dashboard',
@@ -77,6 +77,11 @@ const router = createRouter({
       path: '/ProductService',
       name: 'ProductService',
       component: () => import('../views/Web/OwnerStore/Services/ServiesView.vue')
+    },
+    {
+      path: '/test',
+      name: 'test',
+      component: () => import('../views/TestView.vue')
     }
   
   ],
@@ -89,7 +94,7 @@ router.beforeEach(async (to, from, next) => {
   const store = useAuthStore()
 
   try {
-    const { data } = await axiosInstance.get('/me')
+    const { data } = await htpp.get('/me')
 
     store.isAuthenticated = true
     store.user = data.data

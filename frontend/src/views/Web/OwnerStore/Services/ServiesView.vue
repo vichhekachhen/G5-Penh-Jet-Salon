@@ -128,7 +128,7 @@
               <td>
                 <div class="d-flex align-items-center">
                   <img
-                    :src="service.image"
+                    :src="'http://127.0.0.1:8000'+ service.image"
                     alt=""
                     style="width: 45px; height: 45px"
                     class="rounded-circle"
@@ -171,96 +171,88 @@
             </tr>
           </tbody>
         </table>
-      {{services}}
+        {{services}}
       </div>
     </div>
   </div>
 </template>
 
-<script>
-// import axios from 'axios'
-import SideBarVue from '../SideBar.vue'
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
 import NavBarVue from '../../../../Components/NavOwnerCom/NavBar.vue'
+import SideBarVue from '../SideBar.vue'
+import axiosInstance from '@/plugins/axios'
 
-export default {
-  name: 'CreateService',
-  components: {
-    NavBarVue,
-    SideBarVue
-  },
-  data() {
-    return {
-      services: [
-        // { id: 1, name: "Service 1", description: "Description 1", price: 100, discount: 10, duration: "30m", image: "https://mdbootstrap.com/img/new/avatars/8.jpg" },
-        // { id: 2, name: "Service 2", description: "Description 2", price: 200, discount: 20, duration: "60m", image: "https://mdbootstrap.com/img/new/avatars/8.jpg" },
-        // { id: 3, name: "Service 3", description: "Description 3", price: 300, discount: 30, duration: "90m", image: "https://mdbootstrap.com/img/new/avatars/8.jpg" }
-      ],
-      newService: {
-        image: '',
-        name: '',
-        description: '',
-        price: '',
-        discount: '0',
-        duration: ''
-      },
-      editMode: false,
-      editServiceId: null,
-      imageData: null
-    };
-  },
-  methods: {
-    openAddServiceModal() {
-      this.editMode = false;
-      this.newService = {
-        image: '',
-        name: '',
-        description: '',
-        price: '',
-        discount: '0',
-        duration: ''
-      };
-    },
-    openEditServiceModal(service) {
-      this.editMode = true;
-      this.newService = service;
-      this.editServiceId = service.id;
-      this.showModal('ServiceModal');
-    },
-    handleFileUpload(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          this.newService.image = e.target.result;
-        };
-        reader.readAsDataURL(file);
-      }
-    },
-    saveService() {
-      if (this.editMode) {
-        const serviceIndex = this.services.findIndex(service => service.id === this.editServiceId);
-        if (serviceIndex !== -1) {
-          this.$set(this.services, serviceIndex, { ...this.newService, id: this.editServiceId });
+const services = ref([])
+const newService = ref({
+  service_name: '',
+  description: '',
+  price: '',
+  discount: '',
+  duration: '',
+  image: ''
+})
+// const editMode = ref(false)
+// const selectedServiceId = ref(null)
+
+const fetchData = async () => {
+  const token = localStorage.getItem('access_token')
+  if (token) {
+    try {
+      const response = await axiosInstance.get('/service/list', {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-        this.editMode = false;
-        this.editServiceId = null;
-      } else {
-        const newService = { ...this.newService, id: Date.now() };
-        this.services.push(newService);
-      }
-      this.newService = {
-        image: '',
-        name: '',
-        description: '',
-        price: '',
-        discount: '0',
-        duration: ''
-      };
-    },
-    deleteService(id) {
-      this.services = this.services.filter(service => service.id !== id);
-    },
+      })
+      services.value = response.data.data
+    } catch (error) {
+      console.error('Error fetching data:', error)
+    }
+  } else {
+    console.error('No token found in localStorage.')
   }
-};
+}
+
+const handleFileUpload = (event) => {
+  const file = event.target.files[0]
+  newService.value.image = file
+}
+
+const openAddServiceModal = async () => {
+    try {
+      const response = await axiosInstance.put('http://127.0.0.1:8000/service/create')
+      if (response.data.success) {
+        console.log(response.data.success)
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error)
+    }
+}
+
+// const openEditServiceModal = (service) => {
+//   editMode.value = true
+//   selectedServiceId.value = service.id
+//   newService.value = { ...service }
+// }
+
+const deleteService = async (serviceId) => {
+  const token = localStorage.getItem('access_token')
+  if (token) {
+    try {
+      await axiosInstance.delete(`/service/destroy/${serviceId}/`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      fetchData()
+    } catch (error) {
+      console.error('Error deleting service:', error)
+    }
+  } else {
+    console.error('No token found in localStorage.')
+  }
+}
+
+onMounted(fetchData)
 </script>
 

@@ -17,7 +17,9 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $services = Service::all();
+        $user = Auth::user();
+        $services = Service::where('store_id', $user->store_id)->get();
+        $services = ServiceResource::collection($services);
         return response()->json([
             'success' => true,
             'data' => $services,
