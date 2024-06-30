@@ -14,6 +14,7 @@
             + Add Service
           </button>
         </div>
+        
         <!-- Modal create and update service-->
         <div
           class="modal fade"
@@ -35,12 +36,14 @@
                   class="btn-close"
                   data-bs-dismiss="modal"
                   aria-label="Close"
+                  @click="resetForm"
                 ></button>
               </div>
               <div class="modal-body">
                 <div class="mb-3">
                   <label for="formFile" class="form-label">Upload Image</label>
                   <input
+                    ref="fileInput"
                     class="form-control"
                     type="file"
                     id="formFile"
@@ -170,7 +173,7 @@
             </tr>
           </tbody>
         </table>
-        {{services}}
+        {{newService}}
       </div>
     </div>
   </div>
@@ -192,10 +195,15 @@ const newService = ref({
 })
 const editMode = ref(false)
 const currentServiceId = ref(null)
+const fileInput = ref(null)
 
 const fetchServices = async () => {
-  const response = await axiosInstance.get('/service/list')
-  services.value = response.data
+  try {
+    const response = await axiosInstance.get('/service/list')
+    services.value = response.data.data
+  } catch (error) {
+    console.error('Error fetching services:', error.message)
+  }
 }
 
 const handleFileUpload = (event) => {
@@ -212,14 +220,17 @@ const handleSubmit = async () => {
   formData.append('duration', newService.value.duration)
   formData.append('image', newService.value.image)
 
-  if (editMode.value) {
-    await axiosInstance.put(`/service/update/${currentServiceId.value}/`, formData)
-  } else {
-    await axiosInstance.post('/service/create/', formData)
+  try {
+    if (editMode.value && currentServiceId.value) {
+      await axiosInstance.put(`/service/update/${currentServiceId.value}`, formData)
+    } else {
+      await axiosInstance.post('/service/create/', formData)
+    }
+    resetForm()
+    fetchServices()
+  } catch (error) {
+    console.error('Error submitting service:', error.message)
   }
-
-  fetchServices()
-  resetForm()
 }
 
 const openAddServiceModal = () => {
@@ -239,8 +250,12 @@ const openEditServiceModal = (service) => {
 }
 
 const deleteService = async (id) => {
-  await axiosInstance.delete(`/service/destroy/${id}/`)
-  fetchServices()
+  try {
+    await axiosInstance.delete(`/service/destroy/${id}`)
+    fetchServices()
+  } catch (error) {
+    console.error('Error deleting service:', error.message)
+  }
 }
 
 const resetForm = () => {
@@ -250,6 +265,9 @@ const resetForm = () => {
   newService.value.discount = ''
   newService.value.duration = ''
   newService.value.image = ''
+  if (fileInput.value) {
+    fileInput.value.value = ''
+  }
 }
 
 onMounted(() => {
