@@ -39,9 +39,6 @@ Route::get('province/list', [ProvinceController::class, 'index']);
 
 //slide show
 Route::get('slideshow/list', [SlideshowController::class, 'index']);
-Route::post('slideshow/create', [SlideshowController::class, 'store']);
-Route::delete('slideshow/destroy/{id}', [SlideshowController::class, 'destroy']);
-
 
 Route::middleware('auth:sanctum')->prefix('service')->group(function (){
     Route::get('/list', [ServiceController::class, 'index']);

@@ -28,31 +28,7 @@ class SlideshowController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'title'  => 'string',
-        ]);
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors());
-        }
-
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('public/SlideImages');
-            $SlideImages = Storage::url($path);
-        } else {
-            $SlideImages = null;
-        }
-
-        $slide = Slideshow::create([
-            'image' => $SlideImages,
-            'title' => $request->title,
-        ]);
-        return response()->json([
-            'success' => true,
-            'message' => 'Slide created successfully',
-            'data' => $slide,
-        ]);
     }
 
     /**
@@ -76,11 +52,6 @@ class SlideshowController extends Controller
      */
     public function destroy(string $id)
     {
-        $slide = Slideshow::find($id);
-        $slide->delete();
-        return response()->json([
-            'success'=> true,
-            'message' => 'Slide deleted successfully',
-      ]);
+
     }
 }
