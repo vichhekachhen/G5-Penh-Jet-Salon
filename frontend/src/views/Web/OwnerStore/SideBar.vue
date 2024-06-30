@@ -24,7 +24,7 @@
           <i class="bi bi-envelope me-2"></i>
           Messages
         </router-link>
-        <router-link class="nav-link" :to="{ path: '/AddProductService' }" active-class="router-link-active">
+        <router-link class="nav-link" :to="{ path: '/ServiceOwner' }" active-class="router-link-active">
           <i class="bi bi-plus-circle me-2"></i>
           Add Product & Service
         </router-link>
