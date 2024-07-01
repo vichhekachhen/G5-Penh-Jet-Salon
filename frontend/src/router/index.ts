@@ -49,11 +49,27 @@ const router = createRouter({
       component: () => import('../views/Users/RegisterOwner/RegisterOwner.vue')
     },
     {
+      path: '/Dashboard',
+      name: 'Dashboard',
+      component: () => import('../views/Web/OwnerStore/Dashboard.vue')
+    },
+    {
+      path: '/Calendar',
+      name: 'Calendar',
+      component: () => import('../views/Web/OwnerStore/Calendar.vue')
+    },
+    {
+      path: '/ServiceOwner',
+      name: 'ServiceOwmer',
+      component: () => import('../views/ServicesOwner/ServiceView.vue')
+    },
+    {
       path: '/listShop/:id',
       name: 'listShop',
       component: () => import('../views/Shops/ListShopView.vue'),
       props: true
     }
+  
   ],
   linkExactActiveClass: 'bg-danger text-white border-bottom',
 })
@@ -93,3 +109,4 @@ router.beforeEach(async (to, from, next) => {
 })
 
 export default { router, simpleAcl }
+

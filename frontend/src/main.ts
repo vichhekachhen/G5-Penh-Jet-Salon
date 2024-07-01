@@ -14,7 +14,6 @@ import axios from './plugins/axios' // we will delete when in vue don't write di
 import 'uno.css'
 import { configure } from 'vee-validate';
 
-import "bootstrap/dist/js/bootstrap.js";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 const app = createApp(App)
