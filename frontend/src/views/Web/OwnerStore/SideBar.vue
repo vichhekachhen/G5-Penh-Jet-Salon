@@ -1,52 +1,56 @@
 <template>
-  <transition name="fade" mode="out-in">
-    <div class="sidebar bg-white border-right shadow-lg">
-      <div class="user-profile d-flex align-items-center p-3 border-bottom">
-        <img
-          src="https://www.imgacademy.com/sites/default/files/styles/scale_1700w/public/2022-07/img-homepage-meta_0.jpg?itok=LMirU0Ik"
-          alt="User Avatar" class="rounded-circle me-3" width="50" height="50">
-        <div>
-          <h5 class="text-muted fw-bold">Socheathek MAO</h5>
-          <small class="text-muted fw-bold">Salon Owner</small>
-        </div>
-      </div>
-      <hr>
-      <nav class="nav flex-column">
-        <router-link class="nav-link" :to="{ path: '/Dashboard' }" active-class="router-link-active">
-          <i class="bi bi-calendar-event me-2"></i>
-          Dashboard
-        </router-link>
-        <router-link class="nav-link" :to="{ path: '/Calendar' }" active-class="router-link-active">
-          <i class="bi bi-calendar-event me-2"></i>
-          Calendar
-        </router-link>
-        <router-link class="nav-link" :to="{ path: '/Messages' }" active-class="router-link-active">
-          <i class="bi bi-envelope me-2"></i>
-          Messages
-        </router-link>
-        <router-link class="nav-link" :to="{ path: '/AddProductService' }" active-class="router-link-active">
-          <i class="bi bi-plus-circle me-2"></i>
-          Add Product & Service
-        </router-link>
-        <router-link class="nav-link" :to="{ path: '/Orders' }" active-class="router-link-active">
-          <i class="bi bi-cart-check me-2"></i>
-          Orders
-        </router-link>
-        <router-link class="nav-link" :to="{ path: '/Analytics' }" active-class="router-link-active">
-          <i class="bi bi-bar-chart-line me-2"></i>
-          Analytics
-        </router-link>
-        <router-link class="nav-link" :to="{ path: '/Customers' }" active-class="router-link-active">
-          <i class="bi bi-people me-2"></i>
-          Customers
-        </router-link>
-        <router-link class="nav-link" :to="{ path: '/Settings' }" active-class="router-link-active">
-          <i class="bi bi-gear me-2"></i>
-          Settings
-        </router-link>
-      </nav>
+  <div id="viewport">
+    <div id="sidebar" class="bg-dark text-white">
+      <header class="bg-primary text-center p-3">
+        <img src="https://imgv3.fotor.com/images/slider-image/A-clear-close-up-photo-of-a-woman.jpg"
+          class="rounded w-13 h-13 me-3 mb-3 object-fit-cover" alt="">
+        <h4 class="text-white mb-0">Kaka 24</h4>
+        <small class="text-white">Salon Owner</small>
+      </header>
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link" href="/Dashboard">
+            <i class="bi bi-grid-1x2"></i> Dashboard
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/Calendar">
+            <i class="bi bi-calendar"></i> Calendar
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="bi bi-chat-dots"></i> Messages
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="bi bi-bag-plus-fill"></i> Add Products & Service
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="bi bi-info-circle"></i> Orders
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="bi bi-graph-up-arrow"></i> Analytics
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="bi bi-person"></i> Customers
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="bi bi-gear"></i> Settings
+          </a>
+        </li>
+      </ul>
     </div>
-  </transition>
+  </div>
 </template>
 
 <script>
@@ -56,63 +60,48 @@ export default {
 </script>
 
 <style scoped>
-.sidebar {
-  background-color: #007bff;
-  height: 100vh;
-  position: fixed;
-  left: 0;
-  width: 250px;
-  z-index: 10;
-}
+@import url('https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css');
 
-@media (max-width: 768px) {
-  .sidebar {
-    width: 100%;
-    height: auto;
-    position: relative;
-  }
-}
-
-.nav-link {
-  color: #495057;
+body {
+  overflow-x: hidden;
+  font-family: 'Roboto', sans-serif;
   font-size: 16px;
-  padding: 0.75rem 1.5rem;
-  transition: background-color 0.2s ease-in-out;
 }
 
-.nav-link:hover {
-  background-color: #f8f9fa;
-  color: #007bff;
+
+#viewport {
+  padding-left: 250px;
+  transition: padding-left 0.5s ease;
 }
 
-.router-link-active {
-  background-color: #007bff !important;
-  color: #ffffff !important;
-  border-radius: 0.375rem;
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
+
+#sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 250px;
+  overflow-y: auto;
+  transition: width 0.5s ease;
 }
 
-.nav-link i {
-  font-size: 18px;
+#sidebar header {
+  font-size: 20px;
+  line-height: 52px;
 }
 
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease;
+#sidebar .nav-link {
+  color: #CFD8DC;
+  padding: 10px 20px;
+  transition: background-color 0.3s;
 }
 
-.fade-enter,
-.fade-leave-to
-
-/* .fade-leave-active in <2.1.8 */
-  {
-  opacity: 0;
+#sidebar .nav-link:hover {
+  background-color: #455A64;
+  color: #ECEFF1;
 }
 
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
-  /* Adjust the transition duration here */
+#sidebar .nav-link i {
+  margin-right: 10px;
 }
 </style>
