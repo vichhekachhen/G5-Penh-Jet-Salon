@@ -24,9 +24,8 @@
         </table>
       </div>
     </div>
+    <!-- {{ store.posts }} -->
   </WebLayout>
-  <!-- {{ store.posts }} -->
-  {{ posts }}
 </template>
 
 <script>
@@ -48,7 +47,7 @@ export default {
   },
   methods: {
     fetchPosts() {
-      this.store.fetchPosts()
+      this.store.getAllPosts()
     }
   }
 }

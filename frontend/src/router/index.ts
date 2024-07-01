@@ -25,6 +25,7 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: () => import('../views/Web/HomeView.vue')
+      // component: () => import('../views/Shops/ListShopView.vue')
     },
     {
       path: '/post',
@@ -35,6 +36,11 @@ const router = createRouter({
       path: '/register',
       name: 'register',
       component: () => import('../views/Users/Registers/RegisterView.vue')
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: () => import('../Components/Profile/Profile.vue')
     },
     // =================ShopOwner=================
     {
@@ -50,9 +56,15 @@ const router = createRouter({
     {
       path: '/Calendar',
       name: 'Calendar',
-      component: () => import('../views/Web/OwnerStore/Calendar.vue')
-    }
-  
+      component: () => import('@/views/Web/OwnerStore/Calendar.vue')
+    },
+    {
+      path: '/listShop/:id',
+      name: 'listShop',
+      component: () => import('../views/Shops/ListShopView.vue'),
+      props: true
+    },
+
   ],
   linkExactActiveClass: 'bg-danger text-white border-bottom',
 })
@@ -85,7 +97,7 @@ router.beforeEach(async (to, from, next) => {
 
   if (authRequired && !store.isAuthenticated) {
     next()
-    
+
   } else {
     next()
   }

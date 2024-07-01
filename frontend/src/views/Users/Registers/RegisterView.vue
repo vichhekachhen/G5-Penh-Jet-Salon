@@ -93,12 +93,11 @@
 </template>
 
 <script setup lang="ts">
-import axiosInstance from '@/plugins/axios'
 import { useField, useForm } from 'vee-validate'
 import * as yup from 'yup'
-import { useRouter } from 'vue-router'
+import { useUserStore } from '@/stores/user';
 
-const router = useRouter()
+// const router = useRouter()
 
 const formSchema = yup.object({
   name: yup.string().required().label('First name'),
@@ -119,17 +118,10 @@ const { handleSubmit, isSubmitting } = useForm({
   validationSchema: formSchema
 })
 
-const onSubmit = handleSubmit(async (values) => {
-    try {
-      const { data } = await axiosInstance.post('/register', values);
-      localStorage.setItem('access_token', data.access_token);
-      router.push('/login'); 
-    } 
-    catch (error) {
-        console.warn('Error:', error); 
-      }
-  })
-
+const userStore = useUserStore();
+  const onSubmit = handleSubmit(async (values) => {
+    userStore.createUserCustomer(values);
+});
 
 const { value: name, errorMessage: FirstNameError } = useField('name')
 const { value: gender} = useField('gender')

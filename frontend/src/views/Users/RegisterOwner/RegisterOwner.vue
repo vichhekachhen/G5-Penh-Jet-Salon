@@ -143,11 +143,8 @@
 import { ref, onMounted } from 'vue';
 import { useField, useForm } from 'vee-validate';
 import * as yup from 'yup';
-import { useRouter } from 'vue-router';
 import { useProvinceStore } from '@/stores/province-list';
 import { useUserStore } from '@/stores/user';
-
-const router = useRouter();
 
 const provinceStore = useProvinceStore();
 
@@ -191,12 +188,7 @@ const { value: province_id, errorMessage: provinceError } = useField('province_i
 const userStore = useUserStore();
 
 const onSubmit = handleSubmit(async (values) => {
-  try {
-    await userStore.createUser(values);
-    router.push('/login'); 
-  } catch (error) {
-    console.warn('Error:', error);
-  }
+    userStore.createUser(values);
 });
 </script>
 

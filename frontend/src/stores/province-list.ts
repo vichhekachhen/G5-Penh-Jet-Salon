@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import axiosInstance from '@/plugins/axios';
+import { fetchAllProvince } from '@/api/province';
 
 export const useProvinceStore = defineStore('province', {
   state: () => ({
@@ -12,9 +12,8 @@ export const useProvinceStore = defineStore('province', {
       this.isLoading = true;
       this.error = null;
       try {
-        const response = await axiosInstance.get('/province/list');
+        const response = await fetchAllProvince()
         this.provinces = response.data.data;
-        // console.log(response.data.data);
       } catch (error) {
         console.error('Error fetching provinces:', error);
         this.error = 'Failed to load provinces';
@@ -22,6 +21,5 @@ export const useProvinceStore = defineStore('province', {
         this.isLoading = false;
       }
     },
-
   }
 });
