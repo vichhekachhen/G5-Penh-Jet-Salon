@@ -1,6 +1,14 @@
 <template>
+
   <div class="bg-white p-5">
-    <h1 class="text-center my-3">Find us in your area</h1>
+    <div class="my-5 text-center">
+      <h2 class="text-pink-500 font-weight-bold p-10">We look forward to welcoming you to Penh Jit Salon and helping you
+        achieve your beauty and wellness goals. Book your appointment today and let us embark on a journey of self-care
+        and rejuvenation together.
+      </h2>
+      <hr>
+    </div>
+    <h1 class="text-center my-5 font-weight-bold ">Find us in your area</h1>
     <div class="row gap-4">
       <div v-for="location in locations" :key="location.id"
         class="card text-white col-3 shadow card-hover p-1 d-flex justify-content-between ml-6 mt-3 gap-6">
@@ -14,13 +22,13 @@
         </div>
       </div>
     </div>
-    <div class="pt-5 ">
-      <h2>Our goal:</h2>
-      <h4>Decide on the service(s) you would like to receive (e.g. haircut, color, manicure, pedicure, etc.) <br>
-        Determine the date and time that works best for your schedule <br>
-        Contact the salon directly to check availability for your preferred date and time <br>
-        Request the name of the stylist or service provider you would like, if you have a preference <br>
-      </h4>
+    <div class="pt-5 my-5 ">
+      <hr>
+      <h2 class="text-center font-weight-bold my-5 text-pink-500">About Us</h2>
+      <h5 class="text-muted">At Penh Jit Salon, we are passionate about beauty, wellness, and empowering our clients to
+        embrace their natural radiance. Our salon has been a trusted name in the community for over a decade, offering a
+        wide range of services to cater to your every need. From cutting-edge hair treatments to luxurious spa
+        experiences, we strive to create a sanctuary where you can relax, recharge, and emerge feeling rejuvenated.</h5>
     </div>
   </div>
 </template>
