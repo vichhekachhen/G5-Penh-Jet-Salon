@@ -1,9 +1,9 @@
 <template>
-  <header class="bg-light shadow fixed-top">
+  <header class="bg-light shadow">
     <div class="container-fluid px-4 py-2 d-flex justify-content-between align-items-center">
       <!-- Logo -->
       <div class="ml-5">
-        <img style="width: 45px; height: 45px" src="../Images/logo.png" alt="">
+        <img style="width: auto; height: 60px" src="../Images/salon.png" alt="">
       </div>
 
       <!-- Menu Items -->
@@ -15,11 +15,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <router-link class="nav-link font-bold text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900"
-                aria-current="page" to="/">Home</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link font-bold text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900"
+              <router-link class="nav-link font-bold text-white rounded-lg hover:bg-slate-100 hover:text-slate-900"
                 to="/post">Post</router-link>
             </li>
           </ul>
@@ -45,8 +41,7 @@
       </div>
       <div class="navbar-nav d-flex justify-content-end" v-else>
         <div class="d-flex justify-content-around">
-          <router-link to="/login" class="nav-link me-2 p-2 btn-pink "><b>Login</b></router-link>
-          <router-link to="/register" class="nav-link  me-2 p-2 btn-pink "><b>SignUp</b></router-link>
+          <router-link to="/login" class="nav-link bg-pink-500 hover:bg-pink-500 text-white px-4 py-2 rounded transition-colors duration-300"><b>Login</b></router-link>
         </div>
       </div>
     </div>
