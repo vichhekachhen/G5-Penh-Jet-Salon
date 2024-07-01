@@ -2,6 +2,11 @@
 import WebLayout from '@/Components/Layouts/WebLayout.vue'
 import SlineShow from '@/Components/UserPage/SlineShow/SlineShowComponent.vue'
 import CardImageComponentVue from '@/Components/UserPage/UserCard/CardImageComponents.vue'
+import FormBooingComponentVue from '../../Components/FormBooking/FormBooingComponent.vue'
+import ListServiceComponentVue from '../../Components/Service/ListServiceComponent.vue'
+
+
+
 
 </script>
 <template>
@@ -14,4 +19,6 @@ import CardImageComponentVue from '@/Components/UserPage/UserCard/CardImageCompo
   <WebLayout></WebLayout>
   <SlineShow></SlineShow>
   <CardImageComponentVue></CardImageComponentVue>
+  <ListServiceComponentVue></ListServiceComponentVue>
+  <!-- <FormBooingComponentVue></FormBooingComponentVue> -->
 </template>

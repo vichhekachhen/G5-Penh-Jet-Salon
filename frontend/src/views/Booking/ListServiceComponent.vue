@@ -40,7 +40,8 @@
             <div class="flex-1 mt-3">
               <p class="text-lg font-semibold text-gray-900">{{ service.name }}</p>
               <p class="text-pink-500 text-xl font-bold">
-                ${{ service.price.toFixed(2) }} <span class="line-through text-gray-500">${{ service.oldPrice.toFixed(2) }}</span>
+                ${{ service.price.toFixed(2) }}
+                <span class="line-through text-gray-500">${{ service.oldPrice.toFixed(2) }}</span>
                 <span class="text-gray-500 ml-3">
                   <a href=""
                     ><svg
@@ -67,7 +68,10 @@
                 :src="service.image"
                 alt="Service Image"
               />
-              <button @click="addToCart(service.id)" class="absolute bottom-2 right-2 bg-white rounded-full p-1 shadow-md">
+              <button
+                @click="addToCart(service.id)"
+                class="absolute bottom-2 right-2 bg-white rounded-full p-1 shadow-md"
+              >
                 <svg
                   class="h-6 w-6 text-pink-500"
                   viewBox="0 0 24 24"
@@ -91,15 +95,10 @@
           <div class="max-w-sm mx-auto bg-white rounded-lg shadow-md overflow-hidden p-3">
             <div class="max-h-49 overflow-y-auto pl-3">
               <div class="flex justify-between items-center mb-2">
-                <span class="text-pink-500 font-semibold">គ្រាប់ឆូក</span>
-                <!-- <span class="text-gray-500">20 បញ្ចី</span> -->
+                <span class="text-pink-500 font-semibold">Service</span>
               </div>
               <div class="flex flex-col space-y-4">
-                <div
-                  v-for="item in cartItems"
-                  :key="item.id"
-                  class="flex items-center space-x-4"
-                >
+                <div v-for="item in cartItems" :key="item.id" class="flex items-center space-x-4">
                   <img
                     class="w-16 h-16 object-cover rounded-lg"
                     :src="item.image"
@@ -108,7 +107,10 @@
                   <div class="flex-1">
                     <h5 class="text-base font-bold text-gray-900">{{ item.name }}</h5>
                     <p class="text-red-500 text-base font-bold">
-                      ${{ item.price.toFixed(2) }} <span class="line-through text-gray-500">${{ item.oldPrice.toFixed(2) }}</span>
+                      ${{ item.price.toFixed(2) }}
+                      <span class="line-through text-gray-500"
+                        >${{ item.oldPrice.toFixed(2) }}</span
+                      >
                     </p>
                   </div>
                   <div class="flex items-center border-solid p-1.5 rounded-full">
@@ -158,11 +160,14 @@
             </div>
             <div class="border-t mt-4 pt-4">
               <div class="flex justify-between items-center">
-                <span class="font-semibold text-gray-900">សរុប</span>
+                <span class="font-semibold text-gray-900">Total : </span>
                 <span class="text-gray-900">${{ totalPrice.toFixed(2) }}</span>
               </div>
-              <button @click="placeOrder" class="mt-4 bg-pink-500 text-white w-full py-2 rounded-lg shadow-md">
-                តំរូវការទិញរបស់ខ្ញុំបញ្ចូលក្នុងការចូលរួម
+              <button
+                class="mt-4 btn btn-pink w-100 py-2 rounded-lg shadow-md"
+                @click="handleBooking()"
+              >
+                Booking
               </button>
             </div>
           </div>
@@ -173,84 +178,144 @@
 </template>
 
 <script>
+import { useCartStore } from '@/stores/cart-store.ts'
+const store = useCartStore();
+
+// store.incrementProduct({
+//   id: 1,
+//   name: 'coffee',
+//   price: 5,
+//   discount: 1,
+//   quantity: 1
+// })
+// console.log(store.cart)
+
 export default {
   data() {
     return {
       services: [
         {
           id: 1,
-          name: "Passion Macchiato",
-          price: 1.40,
+          name: 'Passion Macchiato',
+          price: 1.4,
           oldPrice: 1.75,
-          description: "For ref only: To add a unique flavor fresh passion",
-          image: "https://i.pinimg.com/564x/7e/95/ca/7e95ca066aed1767823721ad53e5d83a.jpg",
-          quantity: 1,
+          description: 'For ref only: To add a unique flavor fresh passion',
+          image: 'https://i.pinimg.com/564x/7e/95/ca/7e95ca066aed1767823721ad53e5d83a.jpg',
+          quantity: 1
         },
         {
           id: 2,
-          name: "Taxi Tea",
-          price: 1.40,
+          name: 'Taxi Tea',
+          price: 1.4,
           oldPrice: 4.75,
-          description: "For ref only: To add a unique flavor fresh passion",
-          image: "https://images.unsplash.com/photo-1499696010180-025ef6e1a8f9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
-          quantity: 1,
+          description: 'For ref only: To add a unique flavor fresh passion',
+          image:
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNbtDaMPJ4HPYCKMFVQP--f6oQ2kMqpreA-A&s',
+          quantity: 1
         },
-        // Add more services here
+        {
+          id: 3,
+          name: 'Vannda',
+          price: 1.4,
+          oldPrice: 4.75,
+          description: 'For ref only: To add a unique flavor fresh passion',
+          image:
+            '',
+          quantity: 1
+        }
       ],
       cartItems: [
         {
           id: 1,
-          name: "Passion Macchiato",
-          price: 1.40,
+          name: 'Passion Macchiato',
+          price: 1.4,
           oldPrice: 1.75,
-          image: "https://i.pinimg.com/564x/7e/95/ca/7e95ca066aed1767823721ad53e5d83a.jpg",
-          quantity: 1,
+          image: 'https://i.pinimg.com/564x/7e/95/ca/7e95ca066aed1767823721ad53e5d83a.jpg',
+          quantity: 1
         },
         {
           id: 2,
-          name: "Taxi Tea",
-          price: 1.40,
+          name: 'Taxi Tea',
+          price: 1.4,
           oldPrice: 4.75,
-          image: "https://images.unsplash.com/photo-1499696010180-025ef6e1a8f9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
-          quantity: 1,
+          image:
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNbtDaMPJ4HPYCKMFVQP--f6oQ2kMqpreA-A&s',
+          quantity: 1
         },
-        // Add more cart items here
-      ],
-    };
+        {
+          id: 3,
+          name: 'Vannda',
+          price: 1.4,
+          oldPrice: 4.75,
+          image:
+            '',
+          quantity: 1
+        }
+      ]
+    }
   },
   computed: {
     totalPrice() {
-      return this.cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-    },
+      return this.cartItems.reduce((total, item) => total + item.price * item.quantity, 0)
+    }
   },
   methods: {
+    clickLeng(value) {
+      console.log(value, this.cartItems)
+    },
     addToCart(id) {
-      const item = this.cartItems.find(item => item.id === id);
+      const item = this.cartItems.find((item) => item.id === id)
+      const product = {
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        discount: item.oldPrice - item.price ,
+        quantity: item.quantity,
+      }
+      store.incrementProduct(product)
       if (item) {
-        item.quantity++;
+        item.quantity++
       } else {
-        const service = this.services.find(service => service.id === id);
+        const service = this.services.find((service) => service.id === id)
         if (service) {
-          this.cartItems.push({ ...service, quantity: 1 });
+          this.cartItems.push({ ...service, quantity: 1 })
         }
       }
+      console.log(item);
     },
     removeFromCart(id) {
-      const item = this.cartItems.find(item => item.id === id);
+      const item = this.cartItems.find((item) => item.id === id)
       if (item && item.quantity > 1) {
-        item.quantity--;
+        item.quantity--
       } else {
-        this.cartItems = this.cartItems.filter(item => item.id !== id);
+        this.cartItems = this.cartItems.filter((item) => item.id !== id)
       }
     },
     placeOrder() {
-      alert("Order placed successfully!");
+      alert('Order placed successfully!')
     },
-  },
-};
+    handleBooking() {
+      const bookingInfo = {
+        cartItems: this.cartItems,
+        totalPrice: this.totalPrice,
+        selectedDate: this.selectedDate,
+        selectedTime: this.selectedTime
+      }
+      this.$router.push('/payment')
+    }
+  }
+}
 </script>
 
 <style>
-/* Add any custom styles here if needed */
+.btn-pink {
+  background-color: #ff69b4;
+  color: #fff;
+  border-color: #ff69b4;
+}
 
+.btn-pink:hover {
+  background-color: #e64a8b;
+  border-color: #e64a8b;
+}
 </style>

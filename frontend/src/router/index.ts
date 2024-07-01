@@ -36,7 +36,21 @@ const router = createRouter({
       path: '/register',
       name: 'register',
       component: () => import('../views/Users/Registers/RegisterView.vue')
-    }
+    },
+    {
+      path: '/payment',
+      name: 'payment',
+      component: () => import('../views/Booking/FormBooingComponent.vue'),
+      meta: {
+        // requiresAuth: true,
+        role: 'User'
+      }
+    },
+    {
+      path: '/booking',
+      name: 'booking',
+      component: () => import('../views/Booking/ListServiceComponent.vue')
+    },
   ],
   linkExactActiveClass: 'bg-danger text-white border-bottom',
 })
