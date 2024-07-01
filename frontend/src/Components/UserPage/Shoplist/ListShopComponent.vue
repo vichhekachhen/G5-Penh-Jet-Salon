@@ -6,7 +6,7 @@
         <h5 class="my-3 px-lg-2">
           <router-link to="/" class="nav-link my-3">Home ></router-link>
         </h5>
-        <!-- <form @click="details"> -->
+        <router-link to="/booking" class="link-underline link-underline-opacity-0">
           <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center ">
             <div class="col mb-5" v-for="store in stores" :key="store.id" style="cursor: pointer">
               <div @click="handleStoreClick(store)" class="card h-100 hover-shadow">
@@ -34,6 +34,8 @@
               </div>
             </div>
           </div>
+
+        </router-link>
       </div>
     </section>
   </div>

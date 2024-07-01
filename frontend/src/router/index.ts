@@ -68,8 +68,21 @@ const router = createRouter({
       name: 'listShop',
       component: () => import('../views/Shops/ListShopView.vue'),
       props: true
-    }
-  
+    },
+    {
+      path: '/payment',
+      name: 'payment',
+      component: () => import('../views/Booking/FormBooingComponent.vue'),
+      meta: {
+        // requiresAuth: true,
+        role: 'User'
+      }
+    },
+    {
+      path: '/booking',
+      name: 'booking',
+      component: () => import('../views/Booking/ListServiceComponent.vue')
+    },
   ],
   linkExactActiveClass: 'bg-danger text-white border-bottom',
 })
