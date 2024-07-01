@@ -28,9 +28,7 @@
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="ServiceModalLabel">
-                  Add New Service
-                </h5>
+                <h5 class="modal-title" id="ServiceModalLabel">Add New Service</h5>
                 <button
                   type="button"
                   class="btn-close"
@@ -39,76 +37,85 @@
                   @click="resetForm"
                 ></button>
               </div>
-              <div class="modal-body">
-                <div class="mb-3">
-                  <label for="formFile" class="form-label">Upload Image</label>
-                  <input
-                    ref="fileInput"
-                    class="form-control"
-                    type="file"
-                    id="formFile"
-                    @change="handleFileUpload"
-                  />
+              <form @submit.prevent="createService">
+                <div class="modal-body">
+                  <div class="mb-3">
+                    <label for="formFile" class="form-label">Upload Image</label>
+                    <input
+                      ref="fileInput"
+                      class="form-control"
+                      type="file"
+                      id="formFile"
+                      @change="handleFileUpload"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="serviceName" class="form-label">Service Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="serviceName"
+                      v-model="newService.service_name"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="serviceName" class="form-label">Select category</label>
+                    <select class="form-select" aria-label="select"
+                      id="categoryName"
+                      v-model="newService.selectService"
+                    
+                    >
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="serviceDescription" class="form-label">Description</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="serviceDescription"
+                      v-model="newService.description"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="servicePrice" class="form-label">Price</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="servicePrice"
+                      v-model="newService.price"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="serviceDiscount" class="form-label">Discount</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="serviceDiscount"
+                      v-model="newService.discount"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="serviceDuration" class="form-label">Duration</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="serviceDuration"
+                      v-model="newService.duration"
+                    />
+                  </div>
                 </div>
-                <div class="mb-3">
-                  <label for="serviceName" class="form-label">Service Name</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="serviceName"
-                    v-model="newService.service_name"
-                  />
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                  </button>
+                  <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">
+                    Create
+                  </button>
                 </div>
-                <div class="mb-3">
-                  <label for="serviceDescription" class="form-label">Description</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="serviceDescription"
-                    v-model="newService.description"
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="servicePrice" class="form-label">Price</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="servicePrice"
-                    v-model="newService.price"
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="serviceDiscount" class="form-label">Discount</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="serviceDiscount"
-                    v-model="newService.discount"
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="serviceDuration" class="form-label">Duration</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="serviceDuration"
-                    v-model="newService.duration"
-                  />
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                  Close
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-primary"
-                  data-bs-dismiss="modal"
-                  @click="createService"
-                >
-                  Create
-                </button>
-              </div>
+              </form>
             </div>
           </div>
         </div>
@@ -153,12 +160,7 @@
                 <p class="fw-normal mb-1">{{ service.duration }}</p>
               </td>
               <td>
-                <button
-                  type="button"
-                  class="btn btn-primary"
-                >
-                  Edit
-                </button>
+                <button type="button" class="btn btn-primary">Edit</button>
                 <button
                   type="button"
                   class="btn btn-danger btn-sm ml-3"
@@ -181,15 +183,28 @@ import SideBarVue from '../Web/OwnerStore/SideBar.vue'
 import axiosInstance from '@/plugins/axios'
 
 const services = ref([])
+const fileInput = ref(null)
 const newService = ref({
   service_name: '',
   description: '',
   price: '',
   discount: '',
   duration: '',
-  image: ''
+  image: null
 })
-const fileInput = ref(null)
+
+const createService = async () => {
+  try {
+    const response = await axiosInstance.post('/service/create', newService)
+    console.log(response);
+    // push.fetchServices()
+    // if (response.data.success) {
+    //   // response.push({ name: 'services' });
+    // }
+  } catch (error) {
+    console.error('Error submitting service:', error.message)
+  }
+}
 
 const fetchServices = async () => {
   try {
@@ -204,24 +219,6 @@ const handleFileUpload = (event) => {
   const file = event.target.files[0]
   newService.value.image = file
 }
-
-const createService = async () => {
-  const formData = new FormData()
-  formData.append('service_name', newService.value.service_name)
-  formData.append('description', newService.value.description)
-  formData.append('price', newService.value.price)
-  formData.append('discount', newService.value.discount)
-  formData.append('duration', newService.value.duration)
-  formData.append('image', newService.value.image)
-
-  try {
-    await axiosInstance.post('/service/create', formData)
-    fetchServices()
-  } catch (error) {
-    console.error('Error submitting service:', error.message)
-  }
-}
-
 
 const deleteService = async (id) => {
   try {
