@@ -5,10 +5,7 @@
       <div class="p-5 w-280">
         <div class="d-flex justify-content-end">
           <button
-            type="button"
-            class="btn btn-primary"
-            data-bs-toggle="modal"
-            data-bs-target="#ServiceModal"
+            type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ServiceModal"            
             @click="openAddServiceModal"
           >
             + Add Service
