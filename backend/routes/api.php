@@ -3,7 +3,9 @@
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\APi\Province\ProvinceController;
 use App\Http\Controllers\APi\Service\ServiceController;
+use App\Http\Controllers\API\Slide\SlideshowController;
 use App\Http\Controllers\API\Store\StoreController;
+use App\Http\Controllers\API\User\UserController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
@@ -32,19 +34,18 @@ Route::post('/registerOwner', [AuthController::class, 'registerOwner'])->name('r
 Route::get('/me', [AuthController::class, 'index'])->middleware('auth:sanctum');
 Route::get('/post/list', [PostController::class, 'index'])->middleware('auth:sanctum');
 
-Route::middleware('auth:sanctum')->prefix('province')->group(function (){
-    // Route::get('/list', [ProvinceController::class, 'index']);
-    Route::post('/create', [ProvinceController::class, 'store']);
-    Route::put('/update', [ProvinceController::class, 'update']);
-    Route::delete('/destroy', [ProvinceController::class, 'destroy']);
-
-});
+//province list
 Route::get('province/list', [ProvinceController::class, 'index']);
+
+//slide show
+Route::get('slideshow/list', [SlideshowController::class, 'index']);
+Route::post('slideshow/create', [SlideshowController::class, 'store']);
+Route::delete('slideshow/destroy/{id}', [SlideshowController::class, 'destroy']);
 
 
 Route::middleware('auth:sanctum')->prefix('service')->group(function (){
     Route::get('/list', [ServiceController::class, 'index']);
-    Route::get('/show', [ServiceController::class, 'show']);
+    Route::get('/show/{id}', [ServiceController::class, 'show']);
     Route::post('/create', [ServiceController::class, 'store']);
     Route::put('/update/{id}', [ServiceController::class, 'update']);
     Route::delete('/destroy/{id}', [ServiceController::class, 'destroy']);
@@ -52,3 +53,11 @@ Route::middleware('auth:sanctum')->prefix('service')->group(function (){
 
 Route::get('store/list', [StoreController::class, 'index']);
 Route::get('store/StoreByProvince', [StoreController::class, 'StoreByProvince']);
+Route::get('store/list/{provinceId}', [StoreController::class, 'GetStoreByProvinceId']);
+Route::get('service/list/{storeId}', [ServiceController::class, 'GetServiceByStoreId']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::put('/updateInfo', [UserController::class, 'update']);
+    Route::post('store/update', [StoreController::class, 'update']);
+});
+

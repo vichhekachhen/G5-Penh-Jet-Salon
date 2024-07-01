@@ -1,47 +1,48 @@
 import { defineStore } from 'pinia'
-import axiosInstance from '@/plugins/axios'
+// import axiosInstance from '@/plugins/axios'
+import { registerCustomer, registerOwner, updateInfo } from '@/api/user'
+import router from '@/router'
 
 export const useUserStore = defineStore('user', {
   state: () => ({
     users: [],
-    user: {
-      name: '',
-      email: '',
-      password: '',
-      password_confirmation: '',
-      city: '',
-      shop_name: '',
-      gender: '',
-      province_id: '',
-      shop_profile: ''
-    },
     loading: false,
     error: null
   }),
   actions: {
-    async createUser(userData: {
-      name: string
-      email: string
-      password: string
-      password_confirmation: string
-      city: string
-      shop_name: string
-      gender: string
-      province_id: string
-      shop_profile: string
-    }) {
-      this.loading = true
-      this.error = null
+    async createUser(userData:object) {
       try {
-        const response = await axiosInstance.post('/registerOwner', userData)
+        const response = await registerOwner(userData)
         this.users = response.data
-        this.user = { ...this.user, ...userData }
+        router.router.push('/login')
       } catch (error) {
-        console.error('Error creating post:', error)
+        console.error('Error creating user:', error)
       } finally {
         this.loading = false
       }
-    }
+    },
+    async createUserCustomer(userData:object) {
+      try {
+        const response = await registerCustomer(userData)
+        this.users = response.data
+        router.router.push('/login')
+      } catch (error) {
+        console.error('Error creating user:', error)
+      } finally {
+        this.loading = false
+      }
+    },
+    async updateUserInfo(userData:object) {
+      try {
+        const response = await updateInfo(userData)
+        this.users = response.data
+        router.router.push('/profile')
+      } catch (error) {
+        console.error('Error updating user:', error)
+      } finally {
+        this.loading = false
+      }
+    },
 
     //     async updateUser(userId, userData) {
     //       this.loading = true;

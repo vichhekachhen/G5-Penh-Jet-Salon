@@ -43,13 +43,13 @@
 
   <!-- Register employee -->
   <div class="card">
-    <h2 class="p-12 text-center text-secondary font-weight-bold">We're here to help you live life the salon way.<br>Spend more time doing what you love. <br>We'll take care of relaxing treatments, stylish cuts, and new looks.</h2> 
-    <img class="w-100" src="https://niobebeauty.wordpress.com/wp-content/uploads/2019/07/slide35.jpg" alt="Image">
+    <h1 class="p-12 text-start font-weight-bold">We are here to help you live life the salon way.<br>Spend more time doing what you love. <br>We'll take care of relaxing treatments, stylish cuts, and new looks.</h1> 
+    <img class="w-100" style="height: 30rem" src="../../../Images/shop1.jpg" alt="Image">
       <div class="card-img-overlay">
-        <div class="pl-10 cardRegister mt-100">
+        <div class="pl-10 cardRegister mt-130">
           <div class="card w-50 bg-light">
             <div class="card-body"> 
-              <h3 class="card-title">Join your shop here!</h3>
+              <h3 class="text-pink-500">Join your shop here!</h3>
                <p class="card-text">Expand your client base and streamline your booking process by becoming a Sala Salon Partner.</p> 
                <p class="card-text">Our centralized online booking system and marketing support make it easy for customers to discover and book appointments at your salon.</p> 
               <button type="button" class="btn btn-outline-danger"><router-link to="/registerOwner" class="nav-link">Register now</router-link></button>

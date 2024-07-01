@@ -2,7 +2,7 @@
   <div class="app">
     <SideBarVue></SideBarVue>
     <div class="d-flex justify-content-end">
-      <div class="p-5 w-300">
+      <div class="p-5 w-280">
         <div class="d-flex justify-content-end">
           <button
             type="button"
@@ -14,7 +14,7 @@
             + Add Service
           </button>
         </div>
-        
+
         <!-- Modal create and update service-->
         <div
           class="modal fade"
@@ -29,7 +29,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="ServiceModalLabel">
-                  {{ editMode ? 'Edit Service' : 'Add New Service' }}
+                  Add New Service
                 </h5>
                 <button
                   type="button"
@@ -104,9 +104,9 @@
                   type="button"
                   class="btn btn-primary"
                   data-bs-dismiss="modal"
-                  @click="handleSubmit"
+                  @click="createService"
                 >
-                  {{ editMode ? 'Update' : 'Create' }}
+                  Create
                 </button>
               </div>
             </div>
@@ -130,7 +130,7 @@
               <td>
                 <div class="d-flex align-items-center">
                   <img
-                    :src="'http://127.0.0.1:8000'+ service.image"
+                    :src="'http://127.0.0.1:8000' + service.image"
                     alt=""
                     style="width: 45px; height: 45px"
                     class="rounded-circle"
@@ -156,9 +156,6 @@
                 <button
                   type="button"
                   class="btn btn-primary"
-                  data-bs-toggle="modal"
-                  data-bs-target="#ServiceModal"
-                  @click="openEditServiceModal(service)"
                 >
                   Edit
                 </button>
@@ -173,7 +170,6 @@
             </tr>
           </tbody>
         </table>
-        <!-- {{newService}} -->
       </div>
     </div>
   </div>
@@ -193,8 +189,6 @@ const newService = ref({
   duration: '',
   image: ''
 })
-const editMode = ref(false)
-const currentServiceId = ref(null)
 const fileInput = ref(null)
 
 const fetchServices = async () => {
@@ -211,7 +205,7 @@ const handleFileUpload = (event) => {
   newService.value.image = file
 }
 
-const handleSubmit = async () => {
+const createService = async () => {
   const formData = new FormData()
   formData.append('service_name', newService.value.service_name)
   formData.append('description', newService.value.description)
@@ -221,33 +215,13 @@ const handleSubmit = async () => {
   formData.append('image', newService.value.image)
 
   try {
-    if (editMode.value && currentServiceId.value) {
-      await axiosInstance.put(`/service/update/${currentServiceId.value}`, formData)
-    } else {
-      await axiosInstance.post('/service/create/', formData)
-    }
-    resetForm()
+    await axiosInstance.post('/service/create', formData)
     fetchServices()
   } catch (error) {
     console.error('Error submitting service:', error.message)
   }
 }
 
-const openAddServiceModal = () => {
-  editMode.value = false
-  resetForm()
-}
-
-const openEditServiceModal = (service) => {
-  editMode.value = true
-  currentServiceId.value = service.id
-  newService.value.service_name = service.service_name
-  newService.value.description = service.description
-  newService.value.price = service.price
-  newService.value.discount = service.discount
-  newService.value.duration = service.duration
-  newService.value.image = service.image
-}
 
 const deleteService = async (id) => {
   try {
@@ -255,18 +229,6 @@ const deleteService = async (id) => {
     fetchServices()
   } catch (error) {
     console.error('Error deleting service:', error.message)
-  }
-}
-
-const resetForm = () => {
-  newService.value.service_name = ''
-  newService.value.description = ''
-  newService.value.price = ''
-  newService.value.discount = ''
-  newService.value.duration = ''
-  newService.value.image = ''
-  if (fileInput.value) {
-    fileInput.value.value = ''
   }
 }
 
