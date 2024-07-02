@@ -60,7 +60,8 @@ class RoleController extends Controller
 
         $role->syncPermissions($request->permissions);
         
-        return redirect()->back()->withSuccess('Role created !!!');
+        return redirect('/admin/roles')->with('success', 'Role created successfully !!!');
+
     }
 
     /**
@@ -98,7 +99,8 @@ class RoleController extends Controller
     {
         $role->update(['name'=>$request->name]);
         $role->syncPermissions($request->permissions);
-        return redirect()->back()->withSuccess('Role updated !!!');
+        return redirect('/admin/roles')->with('success', 'Role updated successfully !!!');
+
     }
 
     /**
