@@ -51,7 +51,7 @@ const router = createRouter({
     {
       path: '/listShop/:id',
       name: 'listShop',
-      component: () => import('../views/Shops/ListShopView.vue'),
+      component: () => import('../views/Users/Shops/ListShops.vue'),
       props: true
     }
   ],
