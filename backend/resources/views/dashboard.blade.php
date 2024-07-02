@@ -11,7 +11,8 @@
                         {{ $role->name }}
                     @endforeach 
                 </b> </p>
-  
+                
+                <!-- {{auth()->user()}} -->
             </div>
         </main>
     </div>
