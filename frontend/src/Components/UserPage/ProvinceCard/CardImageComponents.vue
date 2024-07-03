@@ -12,14 +12,15 @@
     <div class="row gap-4">
       <div v-for="location in locations" :key="location.id"
         class="card text-white col-3 shadow card-hover p-1 d-flex justify-content-between ml-6 mt-3 gap-6">
-        <img class="card-img-top" :src="location.province_image" alt="" style="height: auto" />
-        <div class="card-img-overlay d-flex align-items-end justify-content-end">
-          <button class="btn bg-light text-dark" type="button">
-            <router-link class="link-underline link-underline-opacity-0"
-              :to="{ name: 'listShop', params: { id: location.province_id } }"><b>{{ location.province_name
-                }}</b></router-link>
-          </button>
-        </div>
+        <router-link class="link-underline link-underline-opacity-0"
+          :to="{ name: 'listShop', params: { id: location.province_id } }">
+          <img class="card-img-top" :src="location.province_image" alt="" style="height: auto" />
+          <div class="card-img-overlay d-flex align-items-end justify-content-end">
+            <button class="btn bg-light text-dark" type="button">
+              <b>{{ location.province_name }}</b>
+            </button>
+          </div>
+        </router-link>
       </div>
     </div>
     <div class="pt-5 my-5 ">
