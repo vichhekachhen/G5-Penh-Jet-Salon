@@ -1,93 +1,221 @@
 <template>
-<div class="p-10">
-    <createServicesComponent></createServicesComponent>
-    <v-data-table-server
-      :headers="headers"
-      :api="fetchServices"
-      :server-items-length="totalItems"
-      :items="serverItems"
-      :items-length="totalItems"
-      :loading="loading"
-      :search="search"
-      item-value="service_name"
-      @update:options="loadItems"
-      
-    >
-    </v-data-table-server>
+  <div class="app">
+    <!-- <SideBarVue></SideBarVue> -->
+    <div class="id">
+      <div class="p-5">
+        <div class="d-flex justify-content-end">
+          <button
+            type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ServiceModal"            
+            @click="openAddServiceModal"
+          >
+            + Add Service
+          </button>
+        </div>
 
-</div>
+        <!-- Modal create and update service-->
+        <div
+          class="modal fade"
+          id="ServiceModal"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          tabindex="-1"
+          aria-labelledby="ServiceModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="ServiceModalLabel">Add New Service</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  @click="resetForm"
+                ></button>
+              </div>
+              <form @submit.prevent="createService">
+                <div class="modal-body">
+                  <div class="mb-3">
+                    <label for="formFile" class="form-label">Upload Image</label>
+                    <input
+                      ref="fileInput"
+                      class="form-control"
+                      type="file"
+                      id="formFile"
+                      @change="handleFileUpload"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="serviceName" class="form-label">Service Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="serviceName"
+                      v-model="newService.service_name"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="serviceName" class="form-label">Select category</label>
+                    <select class="form-select" aria-label="select"
+                      id="categoryName"
+                      v-model="newService.selectService"
+                    
+                    >
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="serviceDescription" class="form-label">Description</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="serviceDescription"
+                      v-model="newService.description"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="servicePrice" class="form-label">Price</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="servicePrice"
+                      v-model="newService.price"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="serviceDiscount" class="form-label">Discount</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="serviceDiscount"
+                      v-model="newService.discount"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="serviceDuration" class="form-label">Duration</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="serviceDuration"
+                      v-model="newService.duration"
+                    />
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                  </button>
+                  <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">
+                    Create
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <h1>Create your Service</h1>
+        <table class="table align-middle mb-0 bg-white">
+          <thead class="bg-light">
+            <tr>
+              <th>Service Name</th>
+              <th>Description</th>
+              <th>Price</th>
+              <th>Discount</th>
+              <th>Duration</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="service in services.serviceOwner" :key="service.id">
+              <td>
+                <div class="d-flex align-items-center">
+                  <img
+                    :src="'http://127.0.0.1:8000' + service.image"
+                    alt=""
+                    style="width: 45px; height: 45px"
+                    class="rounded-circle"
+                  />
+                  <div class="ms-3">
+                    <p class="fw-bold mb-1">{{ service.service_name }}</p>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <p class="fw-normal mb-1">{{ service.description }}</p>
+              </td>
+              <td>
+                <p class="fw-normal mb-1">{{ service.price }}</p>
+              </td>
+              <td>
+                <p class="fw-normal mb-1">{{ service.discount }}</p>
+              </td>
+              <td>
+                <p class="fw-normal mb-1">{{ service.duration }}</p>
+              </td>
+              <td>
+                <button type="button" class="btn btn-primary">Edit</button>
+                <button
+                  type="button"
+                  class="btn btn-danger btn-sm ml-3"
+                  @click="deleteService(service.id)"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  {{services.serviceOwner}}
+  </div>
 </template>
 
 <script setup lang="ts">
-import createServicesComponent from "@/Components/ServiceOwner/CreateServiceComponent.vue"
 import { ref, onMounted } from 'vue'
-import axiosInstance from '@/plugins/axios'
+import { useServiceStore } from '../../../stores/service'
 
-const desserts = ref([])
+const services = useServiceStore()
+
+// const services = ref([])
+const fileInput = ref(null)
+const newService = ref({
+  service_name: '',
+  description: '',
+  price: '',
+  discount: '',
+  duration: '',
+  image: null
+})
+
+// const createService = async ()
 const fetchServices = async () => {
   try {
-    const response = await axiosInstance.get('/service/list')
-    desserts.value = response.data.data
+    await services.getServiceOwner()
   } catch (error) {
-    console.error('Error fetching services:', error.message)
+    console.error("Failed to fetch services", error)
   }
 }
+
+const handleFileUpload = (event) => {
+  const file = event.target.files[0]
+  newService.value.image = file
+}
+const deleteService = async (id) => {
+  try {
+    await services.deleteserviceOwner(id)
+    fetchServices()
+  } catch (error) {
+    console.error('Failed to delete item', error)
+  }
+}
+
 
 onMounted(() => {
   fetchServices()
 })
-
-const serverAPI = {
-  async fetch({ page, itemsPerPage, sortBy }) {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        const start = (page - 1) * itemsPerPage
-        const end = start + itemsPerPage
-        const items = desserts.value.slice()
-
-        if (sortBy.length) {
-          const sortKey = sortBy[0].key
-          const sortOrder = sortBy[0].order
-          items.sort((a, b) => {
-            const aValue = a[sortKey]
-            const bValue = b[sortKey]
-            return sortOrder === 'desc' ? bValue - aValue : aValue - bValue
-          })
-        }
-
-        const paginated = items.slice(start, end)
-
-        resolve({ items: paginated, total: items.length })
-      }, 50)
-    })
-  },
-}
-
-const headers = ref([
-  {
-    title: 'Profile',
-    align: 'start',
-    sortable: false,
-    key: 'service_name',
-  },
-  { title: 'Name', key: 'service_name', align: 'end' },
-  { title: 'Description', key: 'description', align: 'end' },
-  { title: 'Price', key: 'price', align: 'end' },
-  { title: 'Discount', key: 'discount', align: 'end' },
-  { title: 'Duration', key: 'duration', align: 'end' },
-])
-
-const search = ref('')
-const serverItems = ref([])
-const loading = ref(true)
-const totalItems = ref(0)
-
-const loadItems = ({ page, itemsPerPage, sortBy }) => {
-  loading.value = true
-  serverAPI.fetch({ page, itemsPerPage, sortBy }).then(({ items, total }) => {
-    serverItems.value = items
-    totalItems.value = total
-    loading.value = false
-  })
-}
 </script>
