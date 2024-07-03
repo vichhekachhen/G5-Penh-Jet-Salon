@@ -70,7 +70,8 @@ class SlideshowController extends Controller
         }
 
         Slideshow::create($data);
-        return redirect()->back()->with('success', 'Slideshow created successfully !!!');
+    return redirect('/admin/slideshows')->with('success', 'Slideshow created successfully !!!');
+
     }
 
     /**
@@ -123,8 +124,8 @@ class SlideshowController extends Controller
             $data['image'] = Storage::url($path);
         }
         $slideshow->update($data);
+        return redirect('/admin/slideshows')->with('success', 'Slideshow updated successfully !!!');
 
-        return redirect()->back()->with('success', 'Slideshow updated successfully !!!');
     }
 
     /**

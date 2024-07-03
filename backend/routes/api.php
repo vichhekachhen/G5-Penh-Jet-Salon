@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\Category\CategoryController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\APi\Province\ProvinceController;
 use App\Http\Controllers\APi\Service\ServiceController;
@@ -58,3 +59,4 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('store/update', [StoreController::class, 'update']);
 });
 
+Route::get('/category/list',[CategoryController::class, 'index']);
