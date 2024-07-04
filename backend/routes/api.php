@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\CardItem\CardController;
 use App\Http\Controllers\API\Category\CategoryController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\APi\Province\ProvinceController;
@@ -57,6 +58,11 @@ Route::get('service/list/{storeId}', [ServiceController::class, 'GetServiceBySto
 Route::middleware('auth:sanctum')->group(function () {
     Route::put('/updateInfo', [UserController::class, 'update']);
     Route::post('store/update', [StoreController::class, 'update']);
+
+    //add services to the cards list
+    Route::get('/card/list', [CardController::class, 'index']);
+    Route::post('/card/add/{service_id}', [CardController::class, 'add']);
+    Route::delete('/card/remove/{cardItem_id}', [CardController::class, 'destroy']);
 });
 
 Route::get('/category/list',[CategoryController::class, 'index']);
