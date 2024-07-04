@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\Booking\BookingController;
 use App\Http\Controllers\API\CardItem\CardController;
 use App\Http\Controllers\API\Category\CategoryController;
 use App\Http\Controllers\API\PostController;
@@ -63,6 +64,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/card/list', [CardController::class, 'index']);
     Route::post('/card/add/{service_id}', [CardController::class, 'add']);
     Route::delete('/card/remove/{cardItem_id}', [CardController::class, 'destroy']);
+
+    //booking
+
+    Route::post('/booking', [BookingController::class, 'store']);
 });
 
 Route::get('/category/list',[CategoryController::class, 'index']);
