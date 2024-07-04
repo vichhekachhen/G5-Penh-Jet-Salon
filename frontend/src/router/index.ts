@@ -59,6 +59,11 @@ const router = createRouter({
       name: 'services',
       // component: () => import('../views/ShopOwner/Service/CreateService.vue')
       component: () => import('../views/ShopOwner/Service/ServiceView.vue')
+    },
+    {
+      path: '/UpdateService',
+      name: 'UpdateService',
+      component: () => import('../views/ShopOwner/Service/EditServiceOwner.vue')
     }
   ],
   linkExactActiveClass: 'bg-danger text-white border-bottom',

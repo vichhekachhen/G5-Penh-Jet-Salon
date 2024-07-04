@@ -13,7 +13,7 @@
       @update:options="loadItems"
     >
       <template v-slot:item.actions="{ item }">
-        <v-icon small @click="editItem(item)" class="text-blue">mdi-pencil</v-icon>
+        <router-link to="/UpdateService"><v-icon small class="text-blue">mdi-pencil</v-icon></router-link>
         <v-icon small @click="deleteItem(item)" class="text-red ml-2">mdi-delete</v-icon>
       </template>
 
@@ -43,7 +43,7 @@ import { useServiceStore } from '../../../stores/service'
 const service = useServiceStore()
 const headers = ref([
   { title: 'Profile', align: 'start', key: 'image' },
-  { title: 'Name', key: 'service_name', align: 'start' },
+  { title: 'Name service', key: 'service_name', align: 'start' },
   { title: 'Description', key: 'description', align: 'start' },
   { title: 'Price', key: 'price', align: 'start' },
   { title: 'Discount', key: 'discount', align: 'start' },
