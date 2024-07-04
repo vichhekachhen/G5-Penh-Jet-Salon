@@ -9,16 +9,16 @@
             <v-spacer></v-spacer>
 
             <!-- User Information -->
-            <v-row align="center" justify="end" class="mr-2">
-                <v-col class="text-right">
-                    <v-toolbar-title class="text-white mb-1">John Wick</v-toolbar-title>
-                    <v-list-item-subtitle class="mb-3" style="font-size: 14px;">Salon Owner</v-list-item-subtitle>
-                </v-col>
-                <v-avatar size="50" style="border-radius: 8px;" class="mr-2">
-                    <v-img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg"
-                        contain></v-img>
-                </v-avatar>
-            </v-row>
+            <v-row align="center" justify-end class="mr-2">
+    <v-avatar size="50" style="border-radius: 8px;" class="mr-2">
+        <v-img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg"
+            contain></v-img>
+    </v-avatar>
+    <v-col>
+        <v-toolbar-title class="text-white mb-1">John Wick</v-toolbar-title>
+        <v-list-item-subtitle class="mb-3" style="font-size: 14px;">Salon Owner</v-list-item-subtitle>
+    </v-col>
+</v-row>
         </v-app-bar>
         <!-- Sidebar -->
         <v-navigation-drawer v-model="drawer" :rail="rail" app dark color="#001f54" permanent @click="rail = false">
