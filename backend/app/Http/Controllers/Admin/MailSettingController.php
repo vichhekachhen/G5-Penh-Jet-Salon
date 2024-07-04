@@ -47,7 +47,8 @@ class MailSettingController extends Controller
         ]);
 
         $mailsetting->update($data);
-        return redirect()->back()->withSuccess('Mail updated !!!');
+        return redirect('/admin/mail')->with('success', 'Mail updated !!!');
+
     }
 
 }

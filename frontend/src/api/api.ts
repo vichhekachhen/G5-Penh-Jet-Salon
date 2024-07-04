@@ -1,13 +1,15 @@
-import axios from 'axios'
+import URL from './url';
+import axios from 'axios';
+
 
 const axiosInstance = axios.create({
-  baseURL: 'http://127.0.0.1:8000/api', // Replace with your API base URL
+  baseURL: `${URL}/api`, // Replace with your API base URL
   headers: {
     'Content-Type': 'application/json'
   }
-})
+});
 
-axiosInstance.get('http://127.0.0.1:8000/sanctum/csrf-cookie')
+axiosInstance.get(`${URL}/sanctum/csrf-cookie`)
 
 // Add a request interceptor
 axiosInstance.interceptors.request.use(
