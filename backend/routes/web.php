@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\{
     ProfileController,
     MailSettingController,
+    UserController
 };
 
 /*
@@ -64,6 +65,8 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
         Route::resource('provinces','ProvinceController');
         Route::resource('categories','CategoryController');
         Route::resource('slideshows','SlideshowController');
+        Route::get('/dashboard', [UserController::class, 'getOwner'])->name('dashboard');
+
 
         Route::get('/profile',[ProfileController::class,'index'])->name('profile');
         Route::put('/profile-update',[ProfileController::class,'update'])->name('profile.update');

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Service;
 use Illuminate\Http\Request;
 use App\Models\User;
 use PhpParser\Node\Expr\AssignOp\Concat;
@@ -42,8 +41,6 @@ class UserController extends Controller
     public function getOwner()
     {
         $users = User::with('roles')->get();
-        $services = Service::all();
-        $countService = $services->count();
 
         // $owners = [];
         $countOwner = 0;
@@ -60,8 +57,9 @@ class UserController extends Controller
             }
         }
 
-        return view('dashboard', ['countOwner' => $countOwner, 'countCustomer' => $countCustomer, 'services' => $services, 'countService'=> $countService]);
+        return view('dashboard', ['countOwner' => $countOwner, 'countCustomer' => $countCustomer]);
     }
+
 
 
     /**

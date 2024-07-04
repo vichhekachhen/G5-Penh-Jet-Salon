@@ -14,6 +14,7 @@ export const useProvinceStore = defineStore('province', {
       try {
         const response = await fetchAllProvince()
         this.provinces = response.data.data;
+        
       } catch (error) {
         console.error('Error fetching provinces:', error);
         this.error = 'Failed to load provinces';

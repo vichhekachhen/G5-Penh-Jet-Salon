@@ -2,7 +2,7 @@
   <div class="flex items-center justify-center min-h-screen bg-gray-100 p-3">
     <el-card class="w-full max-w-md shadow-lg">
       <h2 class="text-2xl font-bold mb-6 text-center">Registration</h2>
-      <el-form @submit="onSubmit">
+      <el-form @submit="ReSubmit">
 
         <!-- name -->
         <el-form-item :error="FirstNameError">
@@ -119,7 +119,7 @@ const { handleSubmit, isSubmitting } = useForm({
 })
 
 const userStore = useUserStore();
-  const onSubmit = handleSubmit(async (values) => {
+  const ReSubmit = handleSubmit(async (values) => {
     userStore.createUserCustomer(values);
 });
 
