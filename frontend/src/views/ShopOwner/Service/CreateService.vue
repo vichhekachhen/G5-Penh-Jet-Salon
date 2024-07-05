@@ -1,11 +1,13 @@
 <template>
   <div class="app">
-    <!-- <SideBarVue></SideBarVue> -->
     <div class="id">
       <div class="p-5">
         <div class="d-flex justify-content-end">
           <button
-            type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ServiceModal"            
+            type="button"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#ServiceModal"
             @click="openAddServiceModal"
           >
             + Add Service
@@ -34,7 +36,7 @@
                   @click="resetForm"
                 ></button>
               </div>
-              <form @submit.prevent="createService">
+              <form @submit.prevent="createServiceOwner" enctype="multipart/form-data">
                 <div class="modal-body">
                   <div class="mb-3">
                     <label for="formFile" class="form-label">Upload Image</label>
@@ -56,15 +58,20 @@
                     />
                   </div>
                   <div class="mb-3">
-                    <label for="serviceName" class="form-label">Select category</label>
-                    <select class="form-select" aria-label="select"
+                    <label for="categoryName" class="form-label">Select category</label>
+                    <select
+                      class="form-select"
+                      aria-label="select"
                       id="categoryName"
-                      v-model="newService.selectService"
-                    
+                      v-model="newService.category_id"
                     >
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
+                      <option
+                        v-for="category in categoryStore.categories"
+                        :key="category.id"
+                        :value="category.id"
+                      >
+                        {{ category.name }}
+                      </option>
                     </select>
                   </div>
                   <div class="mb-3">
@@ -105,7 +112,11 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
                     Close
                   </button>
                   <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">
@@ -171,51 +182,70 @@
         </table>
       </div>
     </div>
-  {{services.serviceOwner}}
+    {{newService}}
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useServiceStore } from '../../../stores/service'
+import { useCategoryStore } from '../../../stores/category'
 
 const services = useServiceStore()
+const categoryStore = useCategoryStore();
 
-// const services = ref([])
-const fileInput = ref(null)
 const newService = ref({
+  // image: '',
   service_name: '',
   description: '',
   price: '',
-  discount: '',
   duration: '',
-  image: null
+  discount: '',
+  category_id: null,
 })
 
-// const createService = async ()
 const fetchServices = async () => {
-  try {
-    await services.getServiceOwner()
-  } catch (error) {
-    console.error("Failed to fetch services", error)
-  }
+  await services.getServiceOwner()
 }
 
-const handleFileUpload = (event) => {
-  const file = event.target.files[0]
-  newService.value.image = file
+const fetchCategories = async () => {
+  await categoryStore.getAllCategories()
 }
+
+// const handleFileUpload = (event) => {
+//   const file = event.target.files[0]
+//   newService.value.image = file
+// }
+
 const deleteService = async (id) => {
-  try {
-    await services.deleteserviceOwner(id)
-    fetchServices()
-  } catch (error) {
-    console.error('Failed to delete item', error)
+  await services.deleteserviceOwner(id)
+  fetchServices()
+}
+
+const createServiceOwner = async () => {
+  await services.createServiceOwner(newService.value)
+  fetchServices()
+  resetForm()
+}
+
+const resetForm = () => {
+  newService.value = {
+    service_name: '',
+    description: '',
+    price: '',
+    discount: '',
+    duration: '',
+    category_id: null,
+    // image: null
   }
 }
 
+const openAddServiceModal = () => {
+  resetForm()
+}
 
 onMounted(() => {
   fetchServices()
+  fetchCategories()
 })
 </script>
