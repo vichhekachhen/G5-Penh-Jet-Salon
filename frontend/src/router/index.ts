@@ -58,7 +58,12 @@ const router = createRouter({
       path: '/owner',
       name: 'owner',
       component: () => import('../views/ShopOwner/Navbar.vue')
-    }
+    },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: () => import('../views/ShopOwner/Dashboard.vue')
+    },
   ],
   linkExactActiveClass: 'bg-danger text-white border-bottom',
 })
