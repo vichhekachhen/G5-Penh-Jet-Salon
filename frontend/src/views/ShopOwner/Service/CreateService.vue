@@ -38,16 +38,13 @@
               </div>
               <form @submit.prevent="createServiceOwner" enctype="multipart/form-data">
                 <div class="modal-body">
-                  <div class="mb-3">
-                    <label for="formFile" class="form-label">Upload Image</label>
-                    <input
-                      ref="fileInput"
-                      class="form-control"
-                      type="file"
-                      id="formFile"
-                      @change="handleFileUpload"
-                    />
-                  </div>
+                  <v-file-input
+                    type="file"
+                    accept="image/jpeg,image/png,image/jpg,image/gif,image/svg"
+                    label="Image"
+                    class="mb-2"
+                    v-model="image"
+                  ></v-file-input>
                   <div class="mb-3">
                     <label for="serviceName" class="form-label">Service Name</label>
                     <input
@@ -112,11 +109,7 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button
-                    type="button"
-                    class="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                  >
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     Close
                   </button>
                   <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">
@@ -182,7 +175,7 @@
         </table>
       </div>
     </div>
-    {{newService}}
+    {{ newService }}
   </div>
 </template>
 
@@ -192,16 +185,16 @@ import { useServiceStore } from '../../../stores/service'
 import { useCategoryStore } from '../../../stores/category'
 
 const services = useServiceStore()
-const categoryStore = useCategoryStore();
+const categoryStore = useCategoryStore()
 
 const newService = ref({
-  // image: '',
+  image: '',
   service_name: '',
   description: '',
   price: '',
   duration: '',
   discount: '',
-  category_id: null,
+  category_id: null
 })
 
 const fetchServices = async () => {
@@ -235,7 +228,7 @@ const resetForm = () => {
     price: '',
     discount: '',
     duration: '',
-    category_id: null,
+    category_id: null
     // image: null
   }
 }

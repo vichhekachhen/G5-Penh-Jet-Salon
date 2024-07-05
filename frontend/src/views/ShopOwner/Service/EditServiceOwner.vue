@@ -4,29 +4,48 @@
       <v-card class="mx-auto px-2 py-4" max-width="900">
         <v-form @submit.prevent="onSubmitUpdate" enctype="multipart/form-data">
           <v-file-input
-            v-model="image"
+            type="file"
             accept="image/jpeg,image/png,image/jpg,image/gif,image/svg"
             label="Image"
             class="mb-2"
-              :rules="[requiredFile]"
+            v-model="image"
           ></v-file-input>
-          <v-text-field v-model="service_name" :readonly="loading" :rules="[required]" class="mb-2" label="Name" clearable></v-text-field>
-          <v-text-field v-model="description" :readonly="loading" :rules="[required]" label="Description" placeholder="Enter your description" clearable></v-text-field>
-          <v-text-field v-model="price" :readonly="loading" :rules="[required, isNumber]"  label="Price"  placeholder="Enter your Price"
+          <v-text-field
+            v-model="service_name"
+            :readonly="loading"
+            :rules="[required]"
+            class="mb-2"
+            label="Name"
             clearable
           ></v-text-field>
           <v-text-field
-            v-model="discount"
+            v-model="description"
+            :readonly="loading"
+            :rules="[required]"
+            label="Description"
+            placeholder="Enter your description"
+            clearable
+          ></v-text-field>
+          <v-text-field type="number"
+            v-model="price"
+            :readonly="loading"
+            :rules="[required, isNumber]"
+            label="Price"
+            placeholder="Enter your Price"
+            clearable
+          ></v-text-field>
+          <v-text-field
+            v-model="discount" type="number"
             :readonly="loading"
             :rules="[required, isNumber]"
             label="Discount"
             placeholder="Enter your Discount"
             clearable
           ></v-text-field>
-          <v-text-field
+          <v-text-field type="number"
             v-model="duration"
             :readonly="loading"
-            :rules="[required]"
+            :rules="[required, isNumber]"
             label="Duration"
             placeholder="Enter your Duration"
             clearable
@@ -64,6 +83,7 @@ import { ref, onMounted } from 'vue'
 import { useCategoryStore } from '../../../stores/category'
 import { useServiceStore } from '../../../stores/service'
 import { useRoute } from 'vue-router'
+import axiosInstance from '@/plugins/axios'
 
 // Get the route parameters
 const route = useRoute()
@@ -75,11 +95,11 @@ const isLoading = ref(false)
 
 // Form fields
 const image = ref<File | null>(null)
-const service_name = ref("")
-const description = ref("")
+const service_name = ref('')
+const description = ref('')
 const price = ref<number | null>(null)
 const discount = ref<number | null>(null)
-const duration = ref("")
+const duration = ref('')
 const selectedCategory = ref<string | null>(null)
 
 const loading = ref(false)
@@ -108,7 +128,7 @@ const showService = async () => {
       price.value = services.price
       discount.value = services.discount
       duration.value = services.duration
-      selectedCategory.value = services.category_id 
+      selectedCategory.value = services.category_id
     }
     return service
   } catch (err) {
@@ -120,17 +140,28 @@ onMounted(() => {
   fetchCategories()
   showService()
 })
+
 const onSubmitUpdate = async () => {
-    const serviceUpdate = {
-      image: image.value,
-      service_name: service_name.value,
-      description: description.value,
-      price: price.value,
-      discount: discount.value,
-      duration: duration.value,
-      category_id: selectedCategory.value
+  if (
+    image.value ||
+    service_name.value ||
+    price.value ||
+    discount.value ||
+    duration.value ||
+    selectedCategory.value
+  ) {
+    const formData = new FormData()
+    if (image.value) {
+      formData.append('image', image.value)
     }
-    console.log(image.value.toString());
-    serviceStore.updateserviceOwner(id, serviceUpdate)
+    formData.append('service_name', service_name.value)
+    formData.append('description', description.value)
+    formData.append('price', price.value.toString())
+    formData.append('discount', discount.value.toString())
+    formData.append('duration', duration.value)
+    formData.append('category_id', selectedCategory.value)
+
+    serviceStore.updateserviceOwner(id, formData)
+  }
 }
 </script>

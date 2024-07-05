@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { createservice, deleteservice, fetchAllService, fetchAllServiceOwner, showService, updateservice } from '@/api/service'
+import router from '@/router'
 
 export const useServiceStore = defineStore('service', {
   state: () => ({
@@ -28,6 +29,7 @@ export const useServiceStore = defineStore('service', {
       try {
         const response = await createservice(value)
         this.serviceOwner = response.data.data
+        router.router.push('/services')
       } catch (error) {
         console.error('Error fetching service owner:', error)
       }
@@ -44,6 +46,7 @@ export const useServiceStore = defineStore('service', {
       try {
         const response = await updateservice(id,value)
         this.serviceOwner = response.data.data
+        router.router.push('/services')
       } catch (error) {
         console.error('Error fetching service owner:', error)
       }

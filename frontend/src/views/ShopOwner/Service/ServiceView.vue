@@ -12,28 +12,36 @@
       item-value="service_name"
       @update:options="loadItems"
     >
+      <!-- ... existing code ... -->
+
       <template v-slot:item.actions="{ item }">
         <v-icon small @click="editItem(item)" class="text-blue">mdi-pencil</v-icon>
         <v-icon small @click="deleteItem(item)" class="text-red ml-2">mdi-delete</v-icon>
       </template>
 
-      <template v-slot:tfoot>
-        <tr>
+      <!-- Add click event to tr -->
+      <template v-slot:item="{ item }">
+        <tr @click="showDetails(item)">
           <td>
-            <v-text-field
-              v-model="searchName"
-              class="ma-3 w-100"
-              density="compact"
-              placeholder="Search name..."
-              hide-details
-              @input="loadItems"
-            ></v-text-field>
+            <v-avatar size="36px">
+              <v-img v-if="item.image !== null" :src="URL + item.image" alt="Avatar"></v-img>
+              <v-img v-else src="../../../Images/product/product_img.png" alt="Avatar"></v-img>
+            </v-avatar>
+          </td>
+          <td>{{ item.service_name }}</td>
+          <td>{{ item.price }}</td>
+          <td>
+            <v-icon small @click="editItem(item)" class="text-blue">mdi-pencil</v-icon>
+            <v-icon small @click="deleteItem(item)" class="text-red ml-2">mdi-delete</v-icon>
           </td>
         </tr>
       </template>
+
+      <!-- ... existing code ... -->
     </v-data-table-server>
   </div>
 </template>
+
 
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue'
@@ -41,16 +49,16 @@ import { useRouter } from 'vue-router'
 import createServicesComponent from '@/Components/ServiceOwner/CreateServiceComponent.vue'
 import { useServiceStore } from '../../../stores/service'
 import { debounce } from 'lodash'
-
+import URL from '@/api/url'
 const router = useRouter()
 const service = useServiceStore()
 const headers = ref([
   { title: 'Profile', align: 'start', key: 'image' },
   { title: 'Name service', key: 'service_name', align: 'start' },
-  { title: 'Description', key: 'description', align: 'start' },
+  // { title: 'Description', key: 'description', align: 'start' },
   { title: 'Price', key: 'price', align: 'start' },
-  { title: 'Discount', key: 'discount', align: 'start' },
-  { title: 'Duration', key: 'duration', align: 'start' },
+  // { title: 'Discount', key: 'discount', align: 'start' },
+  // { title: 'Duration', key: 'duration', align: 'start' },
   { title: 'Actions', key: 'actions', align: 'start', sortable: false }
 ])
 
