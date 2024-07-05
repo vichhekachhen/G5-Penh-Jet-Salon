@@ -13,18 +13,18 @@
       @update:options="loadItems"
     >
       <template v-slot:item.actions="{ item }">
-        <router-link to="/UpdateService"><v-icon small class="text-blue">mdi-pencil</v-icon></router-link>
+        <v-icon small @click="editItem(item)" class="text-blue">mdi-pencil</v-icon>
         <v-icon small @click="deleteItem(item)" class="text-red ml-2">mdi-delete</v-icon>
       </template>
 
       <template v-slot:tfoot>
         <tr>
           <td>
-            <v-text-field 
-              v-model="searchName" 
-              class="ma-3 w-100" 
-              density="compact" 
-              placeholder="Search name..." 
+            <v-text-field
+              v-model="searchName"
+              class="ma-3 w-100"
+              density="compact"
+              placeholder="Search name..."
               hide-details
               @input="loadItems"
             ></v-text-field>
@@ -37,9 +37,12 @@
 
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue'
+import { useRouter } from 'vue-router'
 import createServicesComponent from '@/Components/ServiceOwner/CreateServiceComponent.vue'
 import { useServiceStore } from '../../../stores/service'
+import { debounce } from 'lodash'
 
+const router = useRouter()
 const service = useServiceStore()
 const headers = ref([
   { title: 'Profile', align: 'start', key: 'image' },
@@ -63,7 +66,7 @@ const fetchServices = async () => {
     await service.getServiceOwner()
     loadItems({ page: 1, itemsPerPage: 10, sortBy: [] })
   } catch (error) {
-    console.error("Failed to fetch services", error)
+    console.error('Failed to fetch services', error)
   }
 }
 
@@ -75,13 +78,13 @@ const serverAPI = {
           let items = service.serviceOwner.slice()
 
           if (search) {
-            items = items.filter(item => 
+            items = items.filter((item) =>
               item.service_name.toLowerCase().includes(search.toLowerCase())
             )
           }
 
           if (minCalories) {
-            items = items.filter(item => item.calories >= minCalories)
+            items = items.filter((item) => item.calories >= minCalories)
           }
 
           if (sortBy.length) {
@@ -114,7 +117,13 @@ const serverAPI = {
 const loadItems = async ({ page, itemsPerPage, sortBy }) => {
   loading.value = true
   try {
-    const { items, total } = await serverAPI.fetch({ page, itemsPerPage, sortBy, search: searchName.value, minCalories: minCalories.value })
+    const { items, total } = await serverAPI.fetch({
+      page,
+      itemsPerPage,
+      sortBy,
+      search: searchName.value,
+      minCalories: minCalories.value
+    })
     serverItems.value = items
     totalItems.value = total
   } catch (error) {
@@ -123,7 +132,6 @@ const loadItems = async ({ page, itemsPerPage, sortBy }) => {
     loading.value = false
   }
 }
-
 const deleteItem = async (item) => {
   try {
     await service.deleteserviceOwner(item.id)
@@ -134,15 +142,18 @@ const deleteItem = async (item) => {
   }
 }
 
-// const editItem = (item) => {
-//   // Implement edit item logic here
-// }
+const editItem = async (item) => {
+  router.push({ name: 'UpdateService', params: { id: item.id } })
+}
 
 onMounted(() => {
   fetchServices()
 })
 
-watch([searchName, minCalories], () => {
-  loadItems({ page: 1, itemsPerPage: 10, sortBy: [] })
-})
+watch(
+  searchName,
+  debounce(() => {
+    loadItems({ page: 1, itemsPerPage: 10, sortBy: [] })
+  }, 300)
+)
 </script>

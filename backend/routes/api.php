@@ -45,7 +45,7 @@ Route::middleware('auth:sanctum')->prefix('service')->group(function (){
     Route::get('/list', [ServiceController::class, 'index']);
     Route::get('/show/{id}', [ServiceController::class, 'show']);
     Route::post('/create', [ServiceController::class, 'store']);
-    Route::put('/update/{id}', [ServiceController::class, 'update']);
+    Route::post('/update/{id}', [ServiceController::class, 'update']);
     Route::delete('/destroy/{id}', [ServiceController::class, 'destroy']);
 });
 

@@ -13,3 +13,9 @@ export function createservice(value:object) {
 export function deleteservice(id:number) {
   return http.delete(`/service/destroy/${id}`)
 }
+export function updateservice(id:number, value:object) {
+  return http.post(`/service/update/${id}`,value)
+}
+export function showService(id:number) {
+  return http.get(`/service/show/${id}`)
+}
