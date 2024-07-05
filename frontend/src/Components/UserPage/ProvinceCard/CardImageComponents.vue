@@ -1,5 +1,4 @@
 <template>
-
   <div class="bg-white p-5">
     <div class="my-5 text-center">
       <h2 class="text-pink-500 font-weight-bold p-10">We look forward to welcoming you to Penh Jit Salon and helping you

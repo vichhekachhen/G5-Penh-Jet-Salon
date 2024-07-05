@@ -1,8 +1,9 @@
 <!-- list services in shop -->
 <script setup lang="ts">
-import ListService from "../../../Components/UserPage/ServiceList/ListService.vue";
-
+import WebLayout from '@/Components/Layouts/WebLayout.vue'
+import ListService from "@/Components/UserPage/ServiceList/ListService.vue";
 </script>
 <template>
+  <WebLayout></WebLayout>
   <ListService></ListService>
 </template>

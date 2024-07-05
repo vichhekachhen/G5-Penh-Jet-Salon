@@ -55,9 +55,10 @@ const router = createRouter({
       props: true
     },
     {
-      path: '/listService',
+      path: '/listService/:id',
       name: 'listService',
-      component: () => import('../views/Users/Shops/ListService.vue')
+      component: () => import('../views/Users/Shops/ListService.vue'),
+      props: true
     }
   ],
   linkExactActiveClass: 'bg-danger text-white border-bottom',
