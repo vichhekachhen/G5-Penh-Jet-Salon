@@ -66,7 +66,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/card/remove/{cardItem_id}', [CardController::class, 'destroy']);
 
     //booking
-
     Route::post('/booking', [BookingController::class, 'store']);
 });
 
