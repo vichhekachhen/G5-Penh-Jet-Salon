@@ -12,8 +12,17 @@
       item-value="service_name"
       @update:options="loadItems"
     >
+    
+    <!-- Search service owner -->
+    <template v-slot:tfoot>
+      <tr>
+        <td>
+          <v-text-field v-model="searchName" class="ma-2" density="compact" placeholder="Search name..." hide-details></v-text-field>
+        </td>
+      </tr>
+    </template>
+  
       <!-- ... existing code ... -->
-
       <template v-slot:item.actions="{ item }">
         <v-icon small @click="editItem(item)" class="text-blue">mdi-pencil</v-icon>
         <v-icon small @click="deleteItem(item)" class="text-red ml-2">mdi-delete</v-icon>
@@ -29,19 +38,19 @@
             </v-avatar>
           </td>
           <td>{{ item.service_name }}</td>
+          <td>{{ item.description }}</td>
           <td>{{ item.price }}</td>
+          <td>{{ item.discount }}</td>
+          <td>{{ item.duration }}</td>
           <td>
             <v-icon small @click="editItem(item)" class="text-blue">mdi-pencil</v-icon>
             <v-icon small @click="deleteItem(item)" class="text-red ml-2">mdi-delete</v-icon>
           </td>
         </tr>
       </template>
-
-      <!-- ... existing code ... -->
     </v-data-table-server>
   </div>
 </template>
-
 
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue'
@@ -53,12 +62,12 @@ import URL from '@/api/url'
 const router = useRouter()
 const service = useServiceStore()
 const headers = ref([
-  { title: 'Profile', align: 'start', key: 'image' },
+  { title: 'Image', align: 'start', key: 'image' },
   { title: 'Name service', key: 'service_name', align: 'start' },
-  // { title: 'Description', key: 'description', align: 'start' },
+  { title: 'Description', key: 'description', align: 'start' },
   { title: 'Price', key: 'price', align: 'start' },
-  // { title: 'Discount', key: 'discount', align: 'start' },
-  // { title: 'Duration', key: 'duration', align: 'start' },
+  { title: 'Discount', key: 'discount', align: 'start' },
+  { title: 'Duration', key: 'duration', align: 'start' },
   { title: 'Actions', key: 'actions', align: 'start', sortable: false }
 ])
 
@@ -70,12 +79,8 @@ const searchName = ref('')
 const minCalories = ref(0)
 
 const fetchServices = async () => {
-  try {
-    await service.getServiceOwner()
-    loadItems({ page: 1, itemsPerPage: 10, sortBy: [] })
-  } catch (error) {
-    console.error('Failed to fetch services', error)
-  }
+  await service.getServiceOwner()
+  loadItems({ page: 1, itemsPerPage: 10, sortBy: [] })
 }
 
 const serverAPI = {
@@ -117,7 +122,7 @@ const serverAPI = {
         } catch (error) {
           reject(error)
         }
-      }, 1000)
+      }, 100)
     })
   }
 }
@@ -141,13 +146,9 @@ const loadItems = async ({ page, itemsPerPage, sortBy }) => {
   }
 }
 const deleteItem = async (item) => {
-  try {
-    await service.deleteserviceOwner(item.id)
-    loadItems({ page: 1, itemsPerPage: 10, sortBy: [] })
-    fetchServices()
-  } catch (error) {
-    console.error('Failed to delete item', error)
-  }
+  await service.deleteserviceOwner(item.id)
+  loadItems({ page: 1, itemsPerPage: 10, sortBy: [] })
+  fetchServices()
 }
 
 const editItem = async (item) => {
@@ -162,6 +163,6 @@ watch(
   searchName,
   debounce(() => {
     loadItems({ page: 1, itemsPerPage: 10, sortBy: [] })
-  }, 300)
+  }, 100)
 )
 </script>

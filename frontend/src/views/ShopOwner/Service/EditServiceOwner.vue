@@ -83,7 +83,6 @@ import { ref, onMounted } from 'vue'
 import { useCategoryStore } from '../../../stores/category'
 import { useServiceStore } from '../../../stores/service'
 import { useRoute } from 'vue-router'
-import axiosInstance from '@/plugins/axios'
 
 // Get the route parameters
 const route = useRoute()
@@ -108,18 +107,11 @@ const isNumber = (v: any) => !isNaN(v) || 'Must be a number'
 
 // Fetch all categories
 const fetchCategories = async () => {
-  try {
-    await categoryStore.getAllCategories()
-  } catch (err) {
-    error.value = 'Failed to load categories'
-  } finally {
-    isLoading.value = false
-  }
+  await categoryStore.getAllCategories()
 }
 
 // Populate the form with the existing service details
 const showService = async () => {
-  try {
     const service = await serviceStore.showserviceOwner(id)
     if (serviceStore.serviceShow) {
       const services = serviceStore.serviceShow
@@ -131,9 +123,6 @@ const showService = async () => {
       selectedCategory.value = services.category_id
     }
     return service
-  } catch (err) {
-    error.value = 'Failed to load service details'
-  }
 }
 
 onMounted(() => {
