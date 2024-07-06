@@ -1,27 +1,26 @@
 <template>
   <div>
-    <div class="flex items-center justify-center p-3 flex-wrap bg-pink-500 sticky top-0 z-90">
-        <button type="button" class="text-blue-700 hover:text-white border border-blue-600 bg-white hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:bg-gray-900 dark:focus:ring-blue-800">
-          All categories
-        </button>
-        <button type="button" class="text-blue-900 border border-white hover:border-blue-200 dark:border-blue-900 dark:bg-blue-900 dark:hover:border-blue-700 bg-white focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 dark:text-white dark:focus:ring-blue-800">
-          Man
-        </button>
-        <button type="button" class="text-blue-900 border border-white hover:border-gray-200 dark:border-blue-900 dark:bg-blue-900 dark:hover:border-blue-700 bg-white focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 dark:text-white dark:focus:ring-blue-800">
-          Woman
-        </button>
-        <button type="button" class="text-blue-900 border border-white hover:border-blue-200 dark:border-blue-900 dark:bg-blue-900 dark:hover:border-blue-700 bg-white focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 dark:text-white dark:focus:ring-blue-800">
-          Product
-        </button>
-        <!-- search service  -->
-        <div class="relative w-full md:w-auto ml-5">
-          <div class="absolute inset-y-0 left-0 flex items-center pl-5 pointer-events-none ">
-            <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
-            </svg>
-          </div>
-            <input type="text" id="search-navbar" class="block w-full p-2 pl-10 text-sm text-blue-900 border border-gray-300 rounded-full bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search...">
+    <div class="flex items-center justify-center p-3 flex-wrap bg-pink-500 sticky top-0 z-50 md:flex-nowrap">
+      <button type="button" class="text-blue-700 hover:text-white border border-blue-600 bg-white hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:bg-gray-900 dark:focus:ring-blue-800 md:me-5">
+        All categories
+      </button>
+      <button type="button" class="text-blue-900 border border-white hover:border-blue-200 dark:border-blue-900 dark:bg-blue-900 dark:hover:border-blue-700 bg-white focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 dark:text-white dark:focus:ring-blue-800 md:me-5">
+        Man
+      </button>
+      <button type="button" class="text-blue-900 border border-white hover:border-gray-200 dark:border-blue-900 dark:bg-blue-900 dark:hover:border-blue-700 bg-white focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 dark:text-white dark:focus:ring-blue-800 md:me-5">
+        Woman
+      </button>
+      <button type="button" class="text-blue-900 border border-white hover:border-blue-200 dark:border-blue-900 dark:bg-blue-900 dark:hover:border-blue-700 bg-white focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 dark:text-white dark:focus:ring-blue-800 md:me-5">
+        Product
+      </button>
+      <div class="relative w-full md:w-auto ml-5 mt-3 md:mt-0">
+        <div class="absolute inset-y-0 left-0 flex items-center pl-5 pointer-events-none">
+          <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+          </svg>
         </div>
+        <input type="text" id="search-navbar" class="block w-full p-2 pl-10 text-sm text-blue-900 border border-gray-300 rounded-full bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search...">
+      </div>
     </div>
     
     <div class="grid grid-flow-row-dense grid-cols-3 mt-6">
