@@ -31,7 +31,7 @@ class CommentController extends Controller
         $user = Auth::user();
         $validator = Validator::make($request->all(), [
             'text' => 'required|string|max:1024',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048|naullable',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -49,7 +49,7 @@ class CommentController extends Controller
             'text' => $request->text,
             'service_id' => $id,
             'user_id' => $user->id,
-            'image' => json_encode($imagePaths)
+            'image' => $imagePaths
         ]);
 
         return response()->json([
@@ -89,15 +89,12 @@ class CommentController extends Controller
         }
         if ($request->hasFile('image')) {
             if ($comment->image) {
-                    Storage::delete('public/' . str_replace('/storage/', '', $imagePath));
+                Storage::delete($comment->image);
             }
-
-            if ($request->hasFile('image')) {
-                $path = $request->file('image')->store('public/ServiceImages');
-                $serviceImage = Storage::url($path);
-            } else {
-                $serviceImage = null;
-            }
+            $path = $request->file('image')->store('public/commentImages');
+            $commentImage = Storage::url($path);
+        } else {
+            $commentImage = $comment->image;
         }
 
         if ($request->filled('text')) {
@@ -105,6 +102,7 @@ class CommentController extends Controller
         }
 
         // Save the updated comment
+        $comment->image = $commentImage;
         $comment->save();
 
         return response()->json([

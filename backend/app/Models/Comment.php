@@ -11,7 +11,7 @@ class Comment extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'service_id', 'text', 'images'
+        'user_id', 'service_id', 'text', 'image'
     ];
 
     // Define the relationship with Service
