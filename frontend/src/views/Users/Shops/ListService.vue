@@ -6,4 +6,5 @@ import ListService from "@/Components/UserPage/ServiceList/ListService.vue";
 <template>
   <WebLayout></WebLayout>
   <ListService></ListService>
+
 </template>

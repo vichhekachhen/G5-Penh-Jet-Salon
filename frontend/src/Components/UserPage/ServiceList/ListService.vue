@@ -25,7 +25,8 @@
     
     <div class="grid grid-flow-row-dense grid-cols-3 mt-6">
       <div class="col-span-2 ml-6 overflow-y-auto">
-        <div class="grid grid-cols-2 mb-0 gap-x-5 gap-y-0 ">
+        <form action="" @click="create">
+        <div class="grid grid-cols-2 mb-0 gap-x-5 gap-y-0 " >
           <!-- card service -->
           <div v-for="service in serviceStore.services" :key="service" 
               class="max-w-lg mx-auto w-100 h-40 bg-white rounded-lg shadow-md overflow-hidden flex items-center mb-6 ">
@@ -60,11 +61,13 @@
           </div>
           <!-- card service -->
         </div>
+      </form>
       </div>
 
       <!-- booking -->
       <div class="col-span-1">
         <div class="sticky top-90 z-10">
+          <!-- cardItem -->
           <div class="max-w-sm mx-auto bg-white rounded-lg shadow-md overflow-hidden p-3 ">
               <div class="max-h-49 overflow-y-auto pl-3">
                 <div class="text-center">
@@ -117,8 +120,8 @@
           </div>
         </div>
       </div>  
-
     </div>
+    {{ cardStore }}
 </div>
 </template>
 
@@ -126,11 +129,14 @@
 import { onMounted, ref } from 'vue'; 
 import { useRoute } from 'vue-router';
 import { useServiceStore } from '../../../stores/service';
+import {useCardStore} from '../../../stores/pre-booking';
 import baseURL from '../../../api/url'
 
 const route = useRoute();
+
 const serviceStore = useServiceStore();
-const cart = ref([]);
+const cardStore = useCardStore();
+// const cart = ref([]);
 
 const fetchService = async () => {
   const id = route.params.id;
@@ -143,4 +149,9 @@ onMounted(async () => {
     console.error('Error fetching service:', error);
   }
 });
+const create = async (id:number) =>{
+
+  console.log("hello")
+  console.log('Clicked element ID:', id);
+}
 </script>
