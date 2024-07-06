@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex items-center justify-center p-3 flex-wrap bg-pink-500 sticky top-0 z-50">
+    <div class="flex items-center justify-center p-3 flex-wrap bg-pink-500 sticky top-0 z-90">
         <button type="button" class="text-blue-700 hover:text-white border border-blue-600 bg-white hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:bg-gray-900 dark:focus:ring-blue-800">
           All categories
         </button>
