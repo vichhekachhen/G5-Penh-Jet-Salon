@@ -53,7 +53,17 @@ const router = createRouter({
       name: 'listShop',
       component: () => import('../views/Users/Shops/ListShops.vue'),
       props: true
-    }
+    },
+    {
+      path: '/owner',
+      name: 'owner',
+      component: () => import('../views/ShopOwner/Navbar.vue')
+    },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: () => import('../views/ShopOwner/Dashboard.vue')
+    },
   ],
   linkExactActiveClass: 'bg-danger text-white border-bottom',
 })
@@ -86,7 +96,7 @@ router.beforeEach(async (to, from, next) => {
 
   if (authRequired && !store.isAuthenticated) {
     next()
-    
+
   } else {
     next()
   }
