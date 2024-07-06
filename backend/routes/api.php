@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\CardItem\CardController;
 use App\Http\Controllers\API\Category\CategoryController;
+use App\Http\Controllers\API\Comment\CommentController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\APi\Province\ProvinceController;
 use App\Http\Controllers\APi\Service\ServiceController;
@@ -63,6 +64,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/card/list', [CardController::class, 'index']);
     Route::post('/card/add/{service_id}', [CardController::class, 'add']);
     Route::delete('/card/remove/{cardItem_id}', [CardController::class, 'destroy']);
+    
 });
 
 Route::get('/category/list',[CategoryController::class, 'index']);
+
+//comment
+Route::middleware('auth:sanctum')->prefix('comment')->group(function () {
+    Route::post('/create/{service_id}',[CommentController::class,'store']);
+    Route::post('/update/{comment_id}',[CommentController::class,'update']);
+    Route::delete('/delete/{comment_id}',[CommentController::class,'destroy']);
+});
+Route::get('comment/list/{service_id}',[CommentController::class,'index']);
