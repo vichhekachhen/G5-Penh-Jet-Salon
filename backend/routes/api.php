@@ -81,5 +81,6 @@ Route::middleware('auth:sanctum')->prefix('reply')->group(function () {
     Route::post('/update/{reply_id}', [ReplyController::class, 'update']);
     Route::delete('/delete/{reply_id}', [ReplyController::class, 'destroy']);
 });
+
 Route::get('comment/list/{service_id}', [CommentController::class, 'index']);
 Route::get('reply/list/{comment_id}', [ReplyController::class, 'index']);
