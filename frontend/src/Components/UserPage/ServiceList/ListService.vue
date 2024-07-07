@@ -134,7 +134,7 @@
                   <div class="flex-1">
                     <h5 class="text-base font-bold text-gray-900">{{ item.service_name }}</h5>
                     <p class="text-red-500 text-base font-bold">
-                      ${{ item.duration }}
+                      ${{ item.discount }}
                     </p>
                   </div>
 
@@ -208,7 +208,7 @@ const createStore = useCardStore();
 const searchQuery = ref('');
 
 const calculateTotalPrice = () => {
-  return cardStore.value.items.reduce((total, item) => total + item.duration * item.quantity, 0);
+  return cardStore.value.items.reduce((total, item) => total + item.discount * item.quantity, 0);
 };
 const cardStore = ref({
   items: [],
