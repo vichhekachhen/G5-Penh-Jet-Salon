@@ -53,7 +53,17 @@ const router = createRouter({
       name: 'listShop',
       component: () => import('../views/Users/Shops/ListShops.vue'),
       props: true
-    }
+    },
+    {
+      path: '/profileOwner',
+      name: 'profileOwner',
+      component: () => import('../views/ShopOwner/Profile/ProfileOwner.vue'),
+    },
+    {
+      path: '/AfterRegisterOwner',
+      name: 'AfterRegisterOwner',
+      component: () => import('../views/ShopOwner/AfterRegister/AfterRegister.vue'),
+    },
   ],
   linkExactActiveClass: 'bg-danger text-white border-bottom',
 })
