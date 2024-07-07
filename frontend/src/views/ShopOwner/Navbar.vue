@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
     <v-app>
         <!-- Navbar -->
@@ -7,8 +8,8 @@
             <!-- Spacer to push elements to the right -->
             <v-spacer></v-spacer>
             <!-- User Information -->
-            <v-row align="center" justify-end class="mr-2">
-                <v-avatar size="50" style="border-radius: 8px;" class="mr-2">
+            <v-row align="center" class="mr-2 ">
+                <v-avatar size="50" style="border-radius: 8px;" class="mr-2 ">
                     <v-img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg"
                         contain></v-img>
                 </v-avatar>

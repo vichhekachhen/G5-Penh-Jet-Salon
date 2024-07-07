@@ -55,9 +55,15 @@ const router = createRouter({
       props: true
     },
     {
-      path: '/owner',
-      name: 'owner',
-      component: () => import('../views/ShopOwner/Navbar.vue')
+      path: '/services',
+      name: 'services',
+      component: () => import('../views/ShopOwner/Service/ServiceView.vue')
+    },
+    {
+      path: '/UpdateService/:id',
+      name: 'UpdateService',
+      component: () => import('../views/ShopOwner/Service/EditServiceOwner.vue'),
+      props: true
     },
     {
       path: '/dashboard',

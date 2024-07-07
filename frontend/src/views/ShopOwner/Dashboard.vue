@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
     <v-app>
         <v-container fluid>
@@ -25,15 +26,14 @@
             </v-row>
         </v-container>
     </v-app>
-    <NavBar></NavBar>
+    <!-- <NavBar></NavBar> -->
 </template>
 
 <script>
-import NavBar from "../ShopOwner/Navbar.vue";
+// import NavBar from "../ShopOwner/Navbar.vue";
 
 export default {
-    components: { NavBar },
-    name: "Dashboard",
+    // components: { NavBar },
     data() {
         return {
             items: [
