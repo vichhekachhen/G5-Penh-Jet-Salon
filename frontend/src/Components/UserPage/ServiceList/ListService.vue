@@ -109,90 +109,98 @@
                 </button>
               </div>
             </div>
-            <!-- card service -->
+            <!-- end card service -->
           </div>
         </form>
       </div>
 
       <!-- booking -->
       <div class="col-span-1">
-        <div class="sticky z-10">
+        <div class="sticky top-40 z-10">
           <!-- cardItem -->
           <div class="max-w-sm mx-auto bg-white rounded-lg shadow-md overflow-hidden p-3">
-            <div class="max-h-49 overflow-y-auto pl-3">
+            <div class="max-h-77 overflow-y-auto pl-3">
               <div class="text-center">
-                <h4 class="text-pink-500 font-semibold">Service Card</h4>
+                <h4 class="text-pink-500 font-semibold my-2">Services in Cart</h4>
+                <hr>
               </div>
               <div class="flex flex-col space-y-4">
                 <!-- cart items -->
-                <div v-for="item in cardStore.items" :key="item.id" class="flex items-center space-x-4">
-                  <img
-                    class="w-16 h-16 object-cover rounded-lg"
-                    :src="baseURL+item.image"
-                    alt="Item"
-                  />
-                  <div class="flex-1">
-                    <h5 class="text-base font-bold text-gray-900">{{ item.service_name }}</h5>
-                    <p class="text-red-500 text-base font-bold">
-                      ${{ item.discount }}
-                    </p>
-                  </div>
+                <div v-if="cardStore.items.length > 0">
+                  <div v-for="item in cardStore.items" :key="item.id" class="flex items-center space-x-4">
+                    <img
+                      class="w-16 h-16 object-cover rounded-lg"
+                      :src="baseURL+item.image"
+                      alt="Item"
+                    />
+                    <div class="flex-1">
+                      <h5 class="text-base font-bold text-gray-900">{{ item.service_name }}</h5>
+                      <p class="text-red-500 text-base font-bold">
+                        ${{ item.discount }}
+                      </p>
+                    </div>
 
-                  <div class="flex items-center rounded-full">
-                    <button @click="removeFromCart(item.id)" class="border-none bg-white">
-                      <svg
-                        class="h-6 w-6 text-red-500"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        stroke-width="2"
-                        stroke="currentColor"
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      >
-                        <path stroke="none" d="M0 0h24v24H0z" />
-                        <line x1="4" y1="7" x2="20" y2="7" />
-                        <line x1="10" y1="11" x2="10" y2="17" />
-                        <line x1="14" y1="11" x2="14" y2="17" />
-                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12" />
-                        <path d="M9 7v-3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3" />
-                      </svg>
-                    </button>
-                    <span class="text-gray-400 font-bold p-2">{{ item.quantity }}</span>
-                    <button @click="increaseQuantity(item.id)" class="border-none bg-white">
-                      <svg
-                        class="h-6 w-6 text-red-500"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      >
-                        <line x1="12" y1="5" x2="12" y2="19" />
-                        <line x1="5" y1="12" x2="19" y2="12" />
-                      </svg>
-                    </button>
+                    <div class="flex items-center rounded-full">
+                      <button @click="removeFromCart(item.id)" class="border-none bg-white">
+                        <svg
+                          class="h-6 w-6 text-red-500"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          stroke-width="2"
+                          stroke="currentColor"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" />
+                          <line x1="4" y1="7" x2="20" y2="7" />
+                          <line x1="10" y1="11" x2="10" y2="17" />
+                          <line x1="14" y1="11" x2="14" y2="17" />
+                          <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12" />
+                          <path d="M9 7v-3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3" />
+                        </svg>
+                      </button>
+                      <span class="text-gray-400 font-bold p-2">{{ item.quantity }}</span>
+                      <button @click="increaseQuantity(item.id)" class="border-none bg-white">
+                        <svg
+                          class="h-6 w-6 text-red-500"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <line x1="12" y1="5" x2="12" y2="19" />
+                          <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                      </button>
+                    </div>
                   </div>
+                </div>
+                <div v-else class="text-center text-gray-500 font-semibold">
+                  Your cart is empty.
                 </div>
                 <!-- end cart items -->
               </div>
             </div>
             <!-- total price -->
             <div class="border-t mt-4 pt-4">
-              <div>
+              <div class="flex justify-between items-center">
                 <span class="font-semibold text-gray-900">Total:</span>
-                <span class="text-gray-900 ml-2 text-red">${{ cardStore.totalPrice }}</span>
+                <span class="text-gray-900 text-red">${{ cardStore.totalPrice }}</span>
               </div>
               <button class="mt-4 bg-pink-500 text-white w-full py-2 rounded-lg shadow-md">
                 Booking
               </button>
             </div>
           </div>
+          
         </div>
       </div>
     </div>
+    
   </div>
 </template>
 <script setup lang="ts">
