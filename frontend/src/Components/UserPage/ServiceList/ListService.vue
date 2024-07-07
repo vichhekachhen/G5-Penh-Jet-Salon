@@ -116,26 +116,25 @@
 
       <!-- booking -->
       <div class="col-span-1">
-        <div class="sticky top-90 z-10">
+        <div class="sticky z-10">
           <!-- cardItem -->
           <div class="max-w-sm mx-auto bg-white rounded-lg shadow-md overflow-hidden p-3">
             <div class="max-h-49 overflow-y-auto pl-3">
               <div class="text-center">
-                <h4 class="text-pink-500 font-semibold">Service Cart</h4>
+                <h4 class="text-pink-500 font-semibold">Service Card</h4>
               </div>
               <div class="flex flex-col space-y-4">
                 <!-- cart items -->
                 <div v-for="item in cardStore.items" :key="item.id" class="flex items-center space-x-4">
                   <img
                     class="w-16 h-16 object-cover rounded-lg"
-                    :src="item.image"
+                    :src="baseURL+item.image"
                     alt="Item"
                   />
                   <div class="flex-1">
                     <h5 class="text-base font-bold text-gray-900">{{ item.service_name }}</h5>
                     <p class="text-red-500 text-base font-bold">
-                      {{ item.price }}
-                      <span class="line-through text-gray-500">{{ item.originalPrice }}</span>
+                      ${{ item.duration }}
                     </p>
                   </div>
 
@@ -182,9 +181,9 @@
             </div>
             <!-- total price -->
             <div class="border-t mt-4 pt-4">
-              <div class="flex justify-between items-center">
+              <div>
                 <span class="font-semibold text-gray-900">Total:</span>
-                <span class="text-gray-900">${{ cardStore.totalPrice }}</span>
+                <span class="text-gray-900 ml-2 text-red">${{ cardStore.totalPrice }}</span>
               </div>
               <button class="mt-4 bg-pink-500 text-white w-full py-2 rounded-lg shadow-md">
                 Booking
@@ -194,7 +193,6 @@
         </div>
       </div>
     </div>
-    <!-- {{ cardStore.items }} -->
   </div>
 </template>
 <script setup lang="ts">
@@ -210,20 +208,19 @@ const createStore = useCardStore();
 const searchQuery = ref('');
 
 const calculateTotalPrice = () => {
-  return cardStore.value.items.reduce((total, item) => total + item.price * item.quantity, 0);
+  return cardStore.value.items.reduce((total, item) => total + item.duration * item.quantity, 0);
 };
 const cardStore = ref({
   items: [],
   totalPrice: 0,
   addItem: (id: number) => {
     const item = serviceStore.services.find(service => service.id === id);
-    console.log(item)
     if (item) {
       const existingItem = cardStore.value.items.find(i => i.id === id);
       if (existingItem) {
         existingItem.quantity++;
       } else {
-        cardStore.value.items.push({ ...item, quantity: 1 });
+        cardStore.value.items.push({ ...item, quantity:1 });
       }
       cardStore.value.totalPrice = calculateTotalPrice();
     }
@@ -256,7 +253,7 @@ const createAdd = async () => {
 
 const addToCart = (serviceId: number) => {
   cardStore.value.addItem(serviceId);
-  // console.log(serviceId)
+  createStore.addCard(serviceId);
 };
 
 const removeFromCart = (serviceId: number) => {
@@ -280,6 +277,8 @@ onMounted(async () => {
   fetchService();
   createAdd();
 });
+
+
 </script>
 
 

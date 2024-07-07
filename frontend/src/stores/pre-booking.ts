@@ -7,7 +7,12 @@ export const useCardStore = defineStore('pre-booking', {
   }),
   actions: {
     async fetchAllCards() {
-      await fetchAllCardService();
+      try{
+        const response = await fetchAllCardService();
+        this.cards = response.data.data;
+      }catch(error){
+        console.error('Failed to fetch posts:', error);
+      }
     },
     async addCard(id: number) {
       try {
