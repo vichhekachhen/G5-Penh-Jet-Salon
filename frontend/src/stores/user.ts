@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 // import axiosInstance from '@/plugins/axios'
-import { registerCustomer, registerOwner, updateInfo } from '@/api/user'
+import { addInfoOwner, registerCustomer, registerOwner, updateInfo } from '@/api/user'
 import router from '@/router'
 
 export const useUserStore = defineStore('user', {
@@ -10,11 +10,12 @@ export const useUserStore = defineStore('user', {
     error: null
   }),
   actions: {
-    async createUser(userData:object) {
+    async createUserOwner(userData:object) {
       try {
         const response = await registerOwner(userData)
         this.users = response.data
-        router.router.push('/login')
+        localStorage.setItem('access_token', response.data.access_token)
+        router.router.push('/infoDetail')
       } catch (error) {
         console.error('Error creating user:', error)
       } finally {
@@ -43,6 +44,20 @@ export const useUserStore = defineStore('user', {
         this.loading = false
       }
     },
+
+
+    async addInfoToOwner(userData:object) {
+      try {
+        const response = await addInfoOwner(userData)
+        this.users = response.data
+        router.router.push('/login')
+      } catch (error) {
+        console.error('Error updating user:', error)
+      } finally {
+        this.loading = false
+      }
+    },
+
 
     //     async updateUser(userId, userData) {
     //       this.loading = true;

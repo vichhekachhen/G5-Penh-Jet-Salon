@@ -59,8 +59,9 @@ Route::get('store/list/{provinceId}', [StoreController::class, 'GetStoreByProvin
 Route::get('service/list/{storeId}', [ServiceController::class, 'GetServiceByStoreId']);
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::put('/updateInfo', [UserController::class, 'update']);
+    // Route::put('/updateInfo', [UserController::class, 'update']);
     Route::post('store/update', [StoreController::class, 'update']);
+    Route::post('/update/infoOwner', [UserController::class, 'update']);
 
     //add services to the cards list
     Route::get('/card/list', [CardController::class, 'index']);
@@ -87,3 +88,4 @@ Route::middleware('auth:sanctum')->prefix('reply')->group(function () {
 });
 Route::get('comment/list/{service_id}', [CommentController::class, 'index']);
 Route::get('reply/list/{comment_id}', [ReplyController::class, 'index']);
+

@@ -11,3 +11,7 @@ export function registerCustomer(value:object) {
 export function updateInfo(value:object) {
   return http.put('/updateInfo',value)
 }
+
+export function addInfoOwner(value:object) {
+  return http.post('/update/infoOwner',value)
+}

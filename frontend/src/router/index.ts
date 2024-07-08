@@ -48,6 +48,13 @@ const router = createRouter({
       name: 'registerOwner',
       component: () => import('../views/Users/RegisterOwner/RegisterOwner.vue')
     },
+
+    {
+      path: '/infoDetail',
+      name: 'infoDetail',
+      component: () => import('../views/Users/RegisterOwner/InforDetail.vue')
+    },
+
     {
       path: '/listShop/:id',
       name: 'listShop',
