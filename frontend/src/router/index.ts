@@ -42,6 +42,15 @@ const router = createRouter({
       name: 'profile',
       component: () => import('../Components/Profile/Profile.vue')
     },
+    {
+      path: '/payment',
+      name: 'payment',
+      component: () => import('../views/Users/Shops/Payment/ServicePayment.vue'),
+      // meta: {
+      //   requiresAuth: true,
+      //   role: 'User'
+      // }
+    },
     // =================ShopOwner=================
     {
       path: '/registerOwner',

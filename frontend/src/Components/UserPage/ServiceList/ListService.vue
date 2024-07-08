@@ -191,8 +191,8 @@
                 <span class="font-semibold text-gray-900">Total:</span>
                 <span class="text-gray-900 text-red">{{calculateTotalPrice() }}</span>
               </div>
-              <button class="mt-4 bg-pink-500 text-white w-full py-2 rounded-lg shadow-md">
-                Check Order
+              <button class="mt-4 bg-pink-500 text-white w-full py-2 rounded-lg shadow-md">        
+                <router-link to="/payment" class="nav-link">  Check Order</router-link>
               </button>
             </div>
           </div>
