@@ -84,12 +84,14 @@
                   {{ service.description }}
                 </p>
               </div>
-              <div class="relative w-30 h-30 mr-5">
-                <img
-                  class="w-full h-full object-cover rounded-lg"
-                  :src="baseURL + service.image"
-                  alt="Service Image"
-                />
+              <div class="relative w-32 h-32 mr-5">
+                <router-link to="/comment">
+                  <img
+                    class="w-full h-full object-cover rounded-lg"
+                    :src="baseURL + service.image"
+                    alt="Service Image"
+                  />
+                </router-link>
                 <button
                   @click="addToCart(service.id)"
                   class="absolute bottom-2 right-2 bg-white rounded-full p-1 shadow-md"

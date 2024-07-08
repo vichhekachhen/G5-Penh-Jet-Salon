@@ -59,6 +59,13 @@ const router = createRouter({
       name: 'listService',
       component: () => import('../views/Users/Shops/ListService.vue'),
       props: true
+    },
+    {
+      path: '/comment',
+      name: 'comment',
+      component: () => import('../views/Users/Shops/Comment/CommentService.vue'),
+      props: true
+
     }
   ],
   linkExactActiveClass: 'bg-danger text-white border-bottom',
