@@ -15,5 +15,7 @@ class Booking extends Model
         'total_price',
         'date',
         'time',
+        'indebte',
+        'pay',
     ];
 }
