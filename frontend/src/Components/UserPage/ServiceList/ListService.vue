@@ -135,8 +135,11 @@
                     />
                     <div class="flex-1">
                       <h5 class="text-base font-bold text-gray-900"> {{ item.service.service_name }}</h5>
-                      <p class="text-red-500 text-base font-bold">
-                        {{ item.service.price }}
+                      <p v-if="item.service.discount" class="text-red-500 text-base font-bold">
+                        ${{ item.service.discount }}
+                      </p>
+                      <p v-else class="text-red-500 text-base font-bold">
+                        ${{ item.service.price }}
                       </p>
                     </div>
 
@@ -189,7 +192,7 @@
             <div class="border-t mt-4 pt-4">
               <div class="flex justify-between items-center">
                 <span class="font-semibold text-gray-900">Total:</span>
-                <span class="text-gray-900 text-red">{{calculateTotalPrice() }}</span>
+                <span class="text-gray-900 text-red font-bold">${{calculateTotalPrice() }}</span>
               </div>
               <button class="mt-4 bg-pink-500 text-white w-full py-2 rounded-lg shadow-md">        
                 <router-link to="/payment" class="nav-link">  Check Order</router-link>
@@ -209,7 +212,6 @@ import { useRoute } from 'vue-router';
 import { useServiceStore } from '../../../stores/service';
 import {useCardStore} from '../../../stores/pre-booking'
 import baseURL from '../../../api/url';
-import router from '@/router'
 
 const route = useRoute();
 const serviceStore = useServiceStore();
@@ -219,7 +221,11 @@ const searchQuery = ref('');
 const calculateTotalPrice = () => {
   let totalPrice = 0;
   cardItems.cards.forEach(item => {
-    totalPrice += item.service.price * item.quantity;
+    if (!item.service.discount){
+      totalPrice += item.service.price * item.quantity;
+    }else{
+      totalPrice += item.service.discount * item.quantity;
+    }
   });
   return totalPrice;
 };
