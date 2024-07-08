@@ -162,7 +162,7 @@
                         </svg>
                       </button>
                       <span class="text-gray-400 font-bold p-2">{{ item.quantity }}</span>
-                      <button @click="increaseQuantity(item.id)" class="border-none bg-white">
+                      <button @click="addToCart(item.service_id)" class="border-none bg-white">
                         <svg
                           class="h-6 w-6 text-red-500"
                           viewBox="0 0 24 24"
@@ -192,7 +192,7 @@
                 <span class="text-gray-900 text-red">{{calculateTotalPrice() }}</span>
               </div>
               <button class="mt-4 bg-pink-500 text-white w-full py-2 rounded-lg shadow-md">
-                Booking
+                Check Order
               </button>
             </div>
           </div>
@@ -223,61 +223,21 @@ const calculateTotalPrice = () => {
   });
   return totalPrice;
 };
-const cardStore = ref({
-  items: [],
-  totalPrice: 0,
-  addItem: (id: number) => {
-    const item = serviceStore.services.find(service => service.id === id);
-    if (item) {
-      const existingItem = cardStore.value.items.find(i => i.id === id);
-      if (existingItem) {
-        existingItem.quantity++;
-      } else {
-        cardStore.value.items.push({ ...item, quantity:1 });
-      }
-      cardStore.value.totalPrice = calculateTotalPrice();
-    }
-  },
-  removeItem: (id: number) => {
-    const item = cardStore.value.items.find(i => i.id === id);
-    if (item) {
-      cardStore.value.items = cardStore.value.items.filter(i => i.id !== id);
-      cardStore.value.totalPrice = calculateTotalPrice();
-    }
-  },
-  increaseQuantity: (id: number) => {
-    const item = cardStore.value.items.find(i => i.id === id);
-    if (item) {
-      item.quantity++;
-      cardStore.value.totalPrice = calculateTotalPrice();
-    }
-  }
-});
 
 const fetchService = async () => {
   const id = route.params.id;
   await serviceStore.getService(id);
 };
 
-const createAdd = async () => {
-  const serviceId = route.params.id;
-  cardStore.value.addItem(serviceId);
-};
 
 const addToCart = (serviceId: number) => {
-  cardStore.value.addItem(serviceId);
   cardItems.addCard(serviceId);
-  router.push('/listService/')
-  
 };
 
 const removeFromCart = (serviceId: number) => {
-  cardStore.value.removeItem(serviceId);
+  cardItems.removeCard(serviceId);
 };
 
-const increaseQuantity = (serviceId: number) => {
-  cardStore.value.increaseQuantity(serviceId);
-};
 
 const filteredServices = computed(() => {
   if (!searchQuery.value) {
@@ -294,10 +254,8 @@ const fetchAllCardService = async () => {
 
 onMounted(async () => {
   fetchService();
-  createAdd();
   fetchAllCardService();
 });
-
 
 </script>
 
