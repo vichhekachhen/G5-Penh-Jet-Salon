@@ -126,17 +126,17 @@
               </div>
               <div class="flex flex-col space-y-4">
                 <!-- cart items -->
-                <div v-if="cardStore.items.length > 0">
-                  <div v-for="item in cardStore.items" :key="item.id" class="flex items-center space-x-4">
+                <div v-if="cardItems.cards.length > 0">
+                  <div v-for="item in cardItems.cards" :key="item.id" class="flex items-center space-x-4">
                     <img
                       class="w-16 h-16 object-cover rounded-lg"
-                      :src="baseURL+item.image"
+                      :src="baseURL+item.service.image"
                       alt="Item"
                     />
                     <div class="flex-1">
-                      <h5 class="text-base font-bold text-gray-900">{{ item.service_name }}</h5>
+                      <h5 class="text-base font-bold text-gray-900"> {{ item.service.service_name }}</h5>
                       <p class="text-red-500 text-base font-bold">
-                        ${{ item.discount }}
+                        {{ item.service.price }}
                       </p>
                     </div>
 
@@ -189,7 +189,7 @@
             <div class="border-t mt-4 pt-4">
               <div class="flex justify-between items-center">
                 <span class="font-semibold text-gray-900">Total:</span>
-                <span class="text-gray-900 text-red">${{ cardStore.totalPrice }}</span>
+                <span class="text-gray-900 text-red">{{calculateTotalPrice() }}</span>
               </div>
               <button class="mt-4 bg-pink-500 text-white w-full py-2 rounded-lg shadow-md">
                 Booking
@@ -209,14 +209,19 @@ import { useRoute } from 'vue-router';
 import { useServiceStore } from '../../../stores/service';
 import {useCardStore} from '../../../stores/pre-booking'
 import baseURL from '../../../api/url';
+import router from '@/router'
 
 const route = useRoute();
 const serviceStore = useServiceStore();
-const createStore = useCardStore();
+const cardItems = useCardStore();
 const searchQuery = ref('');
 
 const calculateTotalPrice = () => {
-  return cardStore.value.items.reduce((total, item) => total + item.discount * item.quantity, 0);
+  let totalPrice = 0;
+  cardItems.cards.forEach(item => {
+    totalPrice += item.service.price * item.quantity;
+  });
+  return totalPrice;
 };
 const cardStore = ref({
   items: [],
@@ -261,7 +266,9 @@ const createAdd = async () => {
 
 const addToCart = (serviceId: number) => {
   cardStore.value.addItem(serviceId);
-  createStore.addCard(serviceId);
+  cardItems.addCard(serviceId);
+  router.push('/listService/')
+  
 };
 
 const removeFromCart = (serviceId: number) => {
@@ -281,9 +288,14 @@ const filteredServices = computed(() => {
   );
 });
 
+const fetchAllCardService = async () => {
+  await cardItems.fetchAllCards();
+};
+
 onMounted(async () => {
   fetchService();
   createAdd();
+  fetchAllCardService();
 });
 
 
