@@ -1,8 +1,8 @@
 <template>
-  <!-- <RouterView /> -->
-  <NavbarVue></NavbarVue>
+  <RouterView />
+  <!-- <NavbarVue></NavbarVue> -->
 </template>
 <script setup lang="ts">
-import NavbarVue from "./views/ShopOwner/Navbar.vue";
+// import NavbarVue from "./views/ShopOwner/Navbar.vue";
 </script>
 

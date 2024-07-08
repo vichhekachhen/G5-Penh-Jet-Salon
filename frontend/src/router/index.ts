@@ -70,6 +70,16 @@ const router = createRouter({
       name: 'dashboard',
       component: () => import('../views/ShopOwner/Dashboard.vue')
     },
+    {
+      path: '/profileOwner',
+      name: 'profileOwner',
+      component: () => import('../views/ShopOwner/Profile/ProfileOwner.vue'),
+    },
+    {
+      path: '/NavbarOwner',
+      name: 'NavbarOwner',
+      component: () => import('../views/ShopOwner/Navbar.vue'),
+    },
   ],
   linkExactActiveClass: 'bg-danger text-white border-bottom',
 })

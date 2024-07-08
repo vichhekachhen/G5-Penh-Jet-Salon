@@ -6,57 +6,29 @@
         <!-- Name -->
         <el-form-item :error="FirstNameError">
           <b>Username</b>
-          <el-input
-            placeholder="Enter username"
-            v-model="name"
-            size="large"
-            type="text"
-          />
+          <el-input placeholder="Enter username" v-model="name" size="large" type="text" />
         </el-form-item>
         <!-- Email -->
         <el-form-item :error="emailError">
           <b>Email</b>
-          <el-input
-            placeholder="Enter Email"
-            v-model="email"
-            size="large"
-            type="email"
-          />
+          <el-input placeholder="Enter Email" v-model="email" size="large" type="email" />
         </el-form-item>
         <!-- Password -->
         <el-form-item :error="passwordError">
           <b>Password</b>
-          <el-input
-            placeholder="Enter your password"
-            v-model="password"
-            size="large"
-            type="password"
-          />
+          <el-input placeholder="Enter your password" v-model="password" size="large" type="password" />
         </el-form-item>
         <!-- Confirm Password -->
         <el-form-item :error="confirmPasswordError">
           <b>Confirm password</b>
-          <el-input
-            placeholder="Enter confirm password"
-            v-model="password_confirmation"
-            size="large"
-            type="password"
-          />
+          <el-input placeholder="Enter confirm password" v-model="password_confirmation" size="large" type="password" />
         </el-form-item>
         <!-- Select Province -->
         <el-form-item :error="provinceError">
           <b>Select a Province</b>
-          <select
-            class="form-select"
-            aria-label="Default select example"
-            v-model="province_id"
-            v-if="!isLoading && !error"
-          >
-            <option
-              v-for="province in provinceStore.provinces"
-              :key="province.id"
-              :value="province.id"
-            >
+          <select class="form-select" aria-label="Default select example" v-model="province_id"
+            v-if="!isLoading && !error">
+            <option v-for="province in provinceStore.provinces" :key="province.id" :value="province.id">
               {{ province.province_name }}
             </option>
           </select>
@@ -66,68 +38,34 @@
         <!-- City -->
         <el-form-item :error="cityError">
           <b>City</b>
-          <el-input
-            placeholder="Enter your city"
-            v-model="city"
-            size="large"
-            type="text"
-          />
+          <el-input placeholder="Enter your city" v-model="city" size="large" type="text" />
         </el-form-item>
         <!-- Shop Name -->
         <el-form-item :error="shopError">
           <b>Shop Name</b>
-          <el-input
-            placeholder="Enter your shop name"
-            v-model="shop_name"
-            size="large"
-            type="text"
-          />
+          <el-input placeholder="Enter your shop name" v-model="shop_name" size="large" type="text" />
         </el-form-item>
         <!-- Gender -->
         <b>Gender</b>
         <el-form-item class="mt-2">
           <div>
-            <input
-              class="form-check-input mt-2 m-2"
-              type="radio"
-              name="gender"
-              id="male"
-              value="male"
-              v-model="gender"
-            />
+            <input class="form-check-input mt-2 m-2" type="radio" name="gender" id="male" value="male"
+              v-model="gender" />
             <label class="form-check-label" for="male">Male</label>
           </div>
           <div>
-            <input
-              class="form-check-input mt-2 m-2"
-              type="radio"
-              name="gender"
-              id="female"
-              value="female"
-              v-model="gender"
-            />
+            <input class="form-check-input mt-2 m-2" type="radio" name="gender" id="female" value="female"
+              v-model="gender" />
             <label class="form-check-label" for="female">Female</label>
           </div>
           <div>
-            <input
-              class="form-check-input mt-2 m-2"
-              type="radio"
-              name="gender"
-              id="other"
-              value="other"
-              v-model="gender"
-            />
+            <input class="form-check-input mt-2 m-2" type="radio" name="gender" id="other" value="other"
+              v-model="gender" />
             <label class="form-check-label" for="other">Other</label>
           </div>
         </el-form-item>
         <div>
-          <el-button
-            size="large"
-            class="w-full"
-            :disabled="isSubmitting"
-            type="primary"
-            native-type="submit"
-          >
+          <el-button size="large" class="w-full" :disabled="isSubmitting" type="primary" native-type="submit">
             Register now
           </el-button>
         </div>
@@ -188,7 +126,7 @@ const { value: province_id, errorMessage: provinceError } = useField('province_i
 const userStore = useUserStore();
 
 const onSubmit = handleSubmit(async (values) => {
-    userStore.createUser(values);
+  userStore.createUser(values);
 });
 </script>
 

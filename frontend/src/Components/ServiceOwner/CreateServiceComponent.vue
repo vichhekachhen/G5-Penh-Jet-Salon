@@ -125,10 +125,3 @@ onMounted(() => {
   fetchCategories();
 });
 </script>
-
-<style scoped>
-.cddd {
-  background-color: #f3f3f3;
-  color: #3a3939;
- }
-</style>
