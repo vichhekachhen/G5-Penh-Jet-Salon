@@ -53,6 +53,12 @@ const router = createRouter({
       name: 'listShop',
       component: () => import('../views/Users/Shops/ListShops.vue'),
       props: true
+    },
+    {
+      path: '/listService/:id',
+      name: 'listService',
+      component: () => import('../views/Users/Shops/ListService.vue'),
+      props: true
     }
   ],
   linkExactActiveClass: 'bg-danger text-white border-bottom',

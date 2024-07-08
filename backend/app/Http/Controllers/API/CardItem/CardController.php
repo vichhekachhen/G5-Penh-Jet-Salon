@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\CardItem;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CardItemResource;
 use App\Models\CardItem;
 use App\Models\Service;
 use App\Models\Store;
@@ -17,14 +18,16 @@ class CardController extends Controller
      * List all data.
      */
 
-     public function index(){
-        $cards = CardItem::all();
+    public function index()
+    {
+        $user = Auth::user();
+        $cards = CardItem::where('user_id', $user->id)->get();
         return response()->json([
             'success' => true,
             'message' => 'Service for pre_booking',
-            'data' => $cards
+            'data' => CardItemResource::collection($cards)
         ]);
-     }
+    }
 
     /**
      * Remove the specified resource from storage.
