@@ -13,5 +13,7 @@ export function updateInfo(value:object) {
 }
 
 export function addInfoOwner(value:object) {
-  return http.post('/update/infoOwner',value)
+  return http.post('/update/infoOwner',value,{
+    headers: { 'Content-Type': 'multipart/form-data'}
+  })
 }

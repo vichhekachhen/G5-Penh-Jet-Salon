@@ -48,6 +48,7 @@ export const useUserStore = defineStore('user', {
 
     async addInfoToOwner(userData:object) {
       try {
+        // console.log(userData);
         const response = await addInfoOwner(userData)
         this.users = response.data
         router.router.push('/login')
