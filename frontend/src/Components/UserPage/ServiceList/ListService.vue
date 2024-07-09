@@ -1,3 +1,4 @@
+<!-- eslint-disable @typescript-eslint/no-unused-vars -->
 <template>
   <div>
     <div class="flex items-center justify-center p-3 flex-wrap bg-pink-500 sticky top-0 z-50 md:flex-nowrap">
@@ -56,7 +57,6 @@
       <div class="col-span-2 ml-6 overflow-y-auto">
         <form @submit.prevent="create">
           <div class="grid grid-cols-2 mb-0 gap-x-5 gap-y-0">
-            <!-- card service -->
             <div
               v-for="service in filteredServices"
               :key="service.id"
@@ -85,7 +85,9 @@
                 </p>
               </div>
               <div class="relative w-32 h-32 mr-5">
-                <router-link to="/comment">
+                <router-link 
+                  :to="{ name: 'comment', params: { id: service.id } }"
+                >
                   <img
                     class="w-full h-full object-cover rounded-lg"
                     :src="baseURL + service.image"
@@ -111,26 +113,22 @@
                 </button>
               </div>
             </div>
-            <!-- card service -->
           </div>
         </form>
       </div>
 
-      <!-- booking -->
       <div class="col-span-1">
         <div class="sticky z-10">
-          <!-- cardItem -->
           <div class="max-w-sm mx-auto bg-white rounded-lg shadow-md overflow-hidden p-3">
             <div class="max-h-49 overflow-y-auto pl-3">
               <div class="text-center">
                 <h4 class="text-pink-500 font-semibold">Service Card</h4>
               </div>
               <div class="flex flex-col space-y-4">
-                <!-- cart items -->
                 <div v-for="item in cardStore.items" :key="item.id" class="flex items-center space-x-4">
                   <img
                     class="w-16 h-16 object-cover rounded-lg"
-                    :src="baseURL+item.image"
+                    :src="baseURL + item.image"
                     alt="Item"
                   />
                   <div class="flex-1">
@@ -139,7 +137,6 @@
                       ${{ item.discount }}
                     </p>
                   </div>
-
                   <div class="flex items-center rounded-full">
                     <button @click="removeFromCart(item.id)" class="border-none bg-white">
                       <svg
@@ -178,10 +175,8 @@
                     </button>
                   </div>
                 </div>
-                <!-- end cart items -->
               </div>
             </div>
-            <!-- total price -->
             <div class="border-t mt-4 pt-4">
               <div>
                 <span class="font-semibold text-gray-900">Total:</span>
@@ -201,7 +196,7 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { useServiceStore } from '../../../stores/service';
-import {useCardStore} from '../../../stores/pre-booking'
+import { useCardStore } from '../../../stores/pre-booking';
 import baseURL from '../../../api/url';
 
 const route = useRoute();
@@ -222,7 +217,7 @@ const cardStore = ref({
       if (existingItem) {
         existingItem.quantity++;
       } else {
-        cardStore.value.items.push({ ...item, quantity:1 });
+        cardStore.value.items.push({ ...item, quantity: 1 });
       }
       cardStore.value.totalPrice = calculateTotalPrice();
     }
@@ -279,8 +274,4 @@ onMounted(async () => {
   fetchService();
   createAdd();
 });
-
-
 </script>
-
-

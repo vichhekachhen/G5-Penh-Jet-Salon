@@ -61,7 +61,7 @@ const router = createRouter({
       props: true
     },
     {
-      path: '/comment',
+      path: '/comment/:id',
       name: 'comment',
       component: () => import('../views/Users/Shops/Comment/CommentService.vue'),
       props: true

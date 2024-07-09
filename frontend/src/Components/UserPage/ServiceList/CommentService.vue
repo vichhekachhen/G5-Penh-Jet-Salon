@@ -9,32 +9,21 @@
               <div class="row g-0">
                 <div class="col-md-6">
                   <div class="product-image">
-                    <img :src="product.image" alt="Product Image" class="img-fluid rounded" />
+                    <img :src="baseURL+product.image" alt="Product Image" class="img-fluid rounded" />
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="card-body order-primary">
-                    <h1 class="card-title"><i class="bi bi-amd p-2"></i>{{ product.name }}</h1>
-                    <div class="price">${{ product.price.toFixed(2) }}</div>
+                    <h1 class="card-title"><i class="bi bi-amd p-2"></i>{{ product.service_name }}</h1>
                     <div class="description mb-3">
                       <h4>Description</h4>
                       <p>{{ product.description }}</p>
                     </div>
                     <div class="detail mb-3">
                       <h4>Details</h4>
-                      <!-- <p>Color: {{ product.color }}</p> -->
-                      <p>Size: {{ product.size }}</p>
-                      <p>Material: {{ product.material }}</p>
-                    </div>
-                    <div class="quantity mb-3">
-                      <label for="quantity">Quantity</label>
-                      <input
-                        type="number"
-                        id="quantity"
-                        v-model.number="quantity"
-                        min="1"
-                        class="form-control"
-                      />
+                      <p>Original price: <b>${{ product.price }}</b></p>
+                      <p>Descount price: <b>${{ product.discount }}</b></p>
+                      <p>Data strat: {{ product.created_at }}</p>
                     </div>
                     <div class="rating mb-3">
                       <label for="like">
@@ -46,10 +35,9 @@
                           style="cursor: pointer"
                         ></i>
                       </label>
-                      <span>{{ likeCount }}</span>
+                      <!-- <span>{{ likeCount }}</span> -->
                     </div>
                     <div class="buttons">
-                      <button class="btn btn-info me-2" @click="addToCart">Add to Cart</button>
                       <router-link to="/listService/1">
                         <button class="btn btn-info me-2" @click="addToCart">Back</button>
                       </router-link>
@@ -132,99 +120,94 @@
     </section>
   </div>
 </template>
+<script setup lang="ts">
+  import { ref, computed } from 'vue';
+  import { useRoute } from 'vue-router';
+  import { useServiceStore } from '../../../stores/service';
+  import baseURL from '../../../api/url';
 
-<script>
-export default {
-  data() {
-    return {
-      newCommentText: '',
-      product: {
-        image:
-          'https://image-prod.iol.co.za/resize/640x64000/Image-Pexels?source=https://xlibris.public.prod.oc.inl.infomaker.io:8443/opencontent/objects/142568cd-d953-525c-8732-21bb9402fec0&operation=CROP&offset=0x0&resize=499x528&webp=true',
-        name: 'Korean Style',
-        price: 99.99,
-        description: 'Product description',
-        color: 'Blue',
-        size: 'Medium',
-        material: 'Cotton',
-        liked: false
-      },
-      comments: [
-        {
-          id: 1,
-          avatar:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAzBE_P3rPclK8gJnC-y1Mq7kNOvyL8yUHlg&s',
-          username: 'User1',
-          text: 'I have come to expect much more from your products and, therefore, this has been very upsetting for me.😒😂❤️',
-          showReplyBox: false,
-          replyText: '',
-          replies: []
-        },
-        {
-          id: 2,
-          avatar: 'https://cdn-icons-png.flaticon.com/512/2919/2919906.png',
-          username: 'User2',
-          text: 'I have come to expect much more from your products and, therefore, this has been very upsetting for me.😍❤️👌',
-          showReplyBox: false,
-          replyText: '',
-          replies: []
-        }
-      ],
-      likeCount: 0,
-      quantity: 1
+  const route = useRoute();
+  const serviceStore = useServiceStore();
+  const product = computed(() => serviceStore.services.find((services: any) => services.id === Number(route.params.id)));
+
+  // Data
+  const newCommentText = ref('');
+  const comments = ref([
+    {
+      id: 1,
+      avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAzBE_P3rPclK8gJnC-y1Mq7kNOvyL8yUHlg&s',
+      username: 'User1',
+      text: 'I have come to expect much more from your products and, therefore, this has been very upsetting for me.😒😂❤️',
+      showReplyBox: false,
+      replyText: '',
+      replies: []
+    },
+    {
+      id: 2,
+      avatar: 'https://cdn-icons-png.flaticon.com/512/2919/2919906.png',
+      username: 'User2',
+      text: 'I have come to expect much more from your products and, therefore, this has been very upsetting for me.😍❤️👌',
+      showReplyBox: false,
+      replyText: '',
+      replies: []
     }
-  },
-  methods: {
-    replyTo(comment) {
-      comment.showReplyBox = !comment.showReplyBox
-    },
-    addReply(comment) {
-      if (comment.replyText.trim()) {
-        const newReply = {
-          id: Date.now(),
-          username: 'Anonymous',
-          time: 'just now',
-          text: comment.replyText.trim()
-        }
-        comment.replies.push(newReply)
-        comment.replyText = ''
-        comment.showReplyBox = false
-      }
-    },
-    removeReply(commentId, replyId) {
-      const comment = this.comments.find((comment) => comment.id === commentId)
-      if (comment) {
-        comment.replies = comment.replies.filter((reply) => reply.id !== replyId)
-      }
-    },
-    addComment() {
-      if (this.newCommentText.trim()) {
-        const newComment = {
-          id: Date.now(),
-          avatar: 'https://example.com/new-avatar.jpg',
-          username: 'Anonymous',
-          text: this.newCommentText.trim(),
-          showReplyBox: false,
-          replyText: '',
-          replies: []
-        }
-        this.comments.push(newComment)
-        this.newCommentText = ''
-      }
-    },
-    removeComment(commentId) {
-      this.comments = this.comments.filter((comment) => comment.id !== commentId)
-    },
-    toggleLike() {
-      this.product.liked = !this.product.liked
-      if (this.product.liked) {
-        this.likeCount++
-      } else {
-        this.likeCount--
-      }
+  ]);
+  const likeCount = ref(0);
+
+  // Methods
+  const replyTo = (comment: any) => {
+    comment.showReplyBox = !comment.showReplyBox;
+  };
+
+  const addReply = (comment: any) => {
+    if (comment.replyText.trim()) {
+      const newReply = {
+        id: Date.now(),
+        username: 'Anonymous',
+        time: 'just now',
+        text: comment.replyText.trim()
+      };
+      comment.replies.push(newReply);
+      comment.replyText = '';
+      comment.showReplyBox = false;
     }
-  }
-}
+  };
+
+  const removeReply = (commentId: number, replyId: number) => {
+    const comment = comments.value.find((comment) => comment.id === commentId);
+    if (comment) {
+      comment.replies = comment.replies.filter((reply) => reply.id !== replyId);
+    }
+  };
+
+  const addComment = () => {
+    if (newCommentText.value.trim()) {
+      const newComment = {
+        id: Date.now(),
+        avatar: 'https://example.com/new-avatar.jpg',
+        username: 'Anonymous',
+        text: newCommentText.value.trim(),
+        showReplyBox: false,
+        replyText: '',
+        replies: []
+      };
+      comments.value.push(newComment);
+      newCommentText.value = '';
+    }
+  };
+
+  const removeComment = (commentId: number) => {
+    comments.value = comments.value.filter((comment) => comment.id !== commentId);
+  };
+
+  const toggleLike = () => {
+    product.value.liked = !product.value.liked;
+    if (product.value.liked) {
+      likeCount.value++;
+    } else {
+      likeCount.value--;
+    }
+  };
 </script>
 
 <style scoped>
