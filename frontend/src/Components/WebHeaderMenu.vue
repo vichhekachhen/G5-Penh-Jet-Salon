@@ -51,8 +51,8 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import axiosInstance from '@/plugins/axios'
-import { useAuthStore } from '@/stores/auth-store'
 import URL from '@/api/url';
+import { useAuthStore } from '@/stores/auth-store'
 const userAuth = useAuthStore()
 
 const router = useRouter()

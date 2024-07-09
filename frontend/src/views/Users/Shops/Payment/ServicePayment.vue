@@ -5,3 +5,7 @@ import PaymentForm from '@/Components/UserPage/Payment/PaymentForm.vue'
 <template>
     <PaymentForm></PaymentForm>
 </template>
+
+<script>
+    
+</script>

@@ -33,21 +33,21 @@
               <div class="card p-3">
                 <div class="card-body">
                   <h3 class="card-title text-center mb-4" >PAYMENT SERVICE</h3>
-                  <div>
-                    <form>
+                  <div v-if="userAuth.isAuthenticated">
+                    <form @submit="ReSubmit">
                       <div class="mb-3">
                         <label for="fullName" class="form-label" ><strong>User Name:</strong></label>
-                        <input type="text" id="fullName" class="form-control"
+                        <input disable type="text" id="fullName" class="form-control" :value="userAuth.user.name"
                          required />
                       </div>
                       <div class="mb-3">
                         <label for="email" class="form-label" ><strong>Email:</strong></label>
-                        <input type="email" id="email" class="form-control"
+                        <input disable type="email" id="email" class="form-control" :value="userAuth.user.email"
                          required />
                       </div>
                       <div class="mb-3">
                         <label for="phone" class="form-label" ><strong>Phone Number:</strong></label>
-                        <input type="tel" id="phone" class="form-control"
+                        <input type="tel" id="phone" class="form-control" :value="userAuth.user.phone"
                          required />
                       </div>
     
@@ -71,13 +71,14 @@
                           <input type="text" id="total" class="form-control" required />
                         </div>   
                       </div>
+                      <button class="btn btn-primary"
+                      :disabled="submitBooking" native-type="submit">
+                        Submit
+                      </button>
                     </form>
 
                   </div>
                 </div>
-                  <button class="btn btn-primary">
-                    Submit
-                  </button>
               </div>
             </div>
           </div>
@@ -91,7 +92,13 @@
   import { useRoute } from 'vue-router';
   import { useServiceStore } from '../../../stores/service';
   import {useCardStore} from '../../../stores/pre-booking';
- 
+  import { useAuthStore } from '@/stores/auth-store';
+
+  import { useField, useForm } from 'vee-validate';
+  import * as yup from 'yup';
+  import { useBookingStore } from '@/stores/booking';
+
+  const userAuth = useAuthStore()
   const route = useRoute();
   const serviceStore = useServiceStore();
   const cardItems = useCardStore();
@@ -121,6 +128,37 @@
     fetchService();
     fetchAllCardService();
   });
+
+  const formSchema = yup.object({
+    name: yup.string().required().label('First name'),
+    email: yup.string().required().email().label('Email address'),
+    phone: yup.string().required().label('Phone'),
+    date: yup.date().required().label('Date'),
+    time: yup.string().required().label('Time'),
+    total: yup.number().required().label('Total Price')
+  });
+  
+  const { handleSubmit, submitBooking } = useForm({
+    initialValues: {
+      name: '',
+      email: '',
+      phone: '',
+      date: '',
+      time: '',
+      total: ''
+    },
+    validationSchema: formSchema
+  });
+  
+  const userBooking = useBookingStore();
+  const ReSubmit = handleSubmit(async (values) => {
+    userBooking.createUserBooking(values);
+});
+  
+  const { value: phone, errorMessage: phoneError } = useField('phone');
+  const { value: date, errorMessage: dateError } = useField('date');
+  const { value: time, errorMessage: timeError } = useField('time');
+  const { value: total, errorMessage: totalError } = useField('total');
   
   </script>
   
