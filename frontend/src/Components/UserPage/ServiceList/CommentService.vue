@@ -23,16 +23,12 @@
                     </h1>
                     <div class="description mb-3">
                       <h4>Description</h4>
-                      <p>{{ serviceStore.service.description}}</p>
+                      <p>{{ serviceStore.service.description }}</p>
                     </div>
                     <div class="detail mb-3">
                       <h4>Details</h4>
-                      <p>
-                        Original price: <b>${{ serviceStore.service.price}}</b>
-                      </p>
-                      <p>
-                        Discount price: <b>${{ serviceStore.service.discount }}</b>
-                      </p>
+                      <p>Original price: <b>${{ serviceStore.service.price }}</b></p>
+                      <p>Discount price: <b>${{ serviceStore.service.discount }}</b></p>
                       <p>Data start: {{ serviceStore.service.created_at }}</p>
                     </div>
                     <div class="buttons">
@@ -55,7 +51,7 @@
         <h2><i class="bi bi-chat-left-text p-3"></i>Comments</h2>
         <div v-for="comment in useComment.comments" :key="comment.id" class="comment-box mb-4">
           <div class="d-flex align-items-start">
-            <img :src="baseURL+comment.image" alt="User Avatar" class="rounded-circle me-3" width="50" />
+            <img :src="baseURL + comment.image" alt="User Avatar" class="rounded-circle me-3" width="50" />
             <div class="flex-grow-1">
               <div class="d-flex justify-content-between">
                 <p class="mb-1">
@@ -85,14 +81,19 @@
         </div>
         <div class="d-flex align-items-center mt-4 p-3" style="background-color: #f0f0f0">
           <img
-            v-if="baseURL+userAuth.user.profile"
-            :src="URL + userAuth.user.profile"
+            v-if="userAuth.user.profile"
+            :src="baseURL + userAuth.user.profile"
             alt="User Avatar"
             class="rounded-circle"
             width="50"
           />
-          <img v-else class="rounded-circle me-lg-2" src="../Images/user/user_none.jpg" alt=""
-            style="width: 40px; height: 40px">
+          <img
+            v-else
+            class="rounded-circle me-lg-2"
+            src="../Images/user/user_none.jpg"
+            alt=""
+            style="width: 40px; height: 40px"
+          />
           <div class="input-group ms-3">
             <input
               type="text"
@@ -116,7 +117,7 @@ import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useServiceStore } from '../../../stores/service'
 import { useCommentStore } from '../../../stores/comment'
-import { useAuthStore } from '@/stores/auth-store'
+import { useAuthStore } from '../../../stores/auth-store'
 import baseURL from '../../../api/url'
 
 const userAuth = useAuthStore()
@@ -129,25 +130,49 @@ const fetchServiceShow = async () => {
   await serviceStore.getServiceShow(route.params.id)
 }
 
-const fechAllComment = async () => {
+const fetchAllComments = async () => {
   await useComment.fetchAllComments(route.params.id)
 }
 
-const image = ref(baseURL + userAuth.user.profile)
 const addComment = async () => {
   const newComment = {
     user_id: userAuth.user.id,
     service_id: route.params.id,
-    image: image.value,
+    image: userAuth.user.profile,
     text: newCommentText.value,
   }
-  await useComment.addComments(route.params.id, newComment)
-  // console.log(newComment)
+  await useComment.addComments(newComment)
+  console.log(newComment)
   newCommentText.value = ''
+  fetchAllComments()
 }
 
+// const replyTo = (comment) => {
+//   comment.showReplyBox = !comment.showReplyBox
+// }
+
+// const addReply = async (comment) => {
+//   if (comment.replyText) {
+//     const newReply = {
+//       user_id: userAuth.user.id,
+//       service_id: route.params.id,
+//       image: userAuth.user.profile,
+//       text: comment.replyText,
+//       parent_id: comment.id,
+//     }
+//     await useComment.addComments(newReply)
+//     comment.replyText = ''
+//     fetchAllComments()
+//   }
+// }
+
+// const removeComment = async (commentId) => {
+//   await useComment.removeComment(commentId)
+//   fetchAllComments()
+// }
+
 onMounted(async () => {
-  fechAllComment()
+  fetchAllComments()
   fetchServiceShow()
 })
 </script>
