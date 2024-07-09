@@ -11,40 +11,34 @@
       </div>
       <!-- Profile Header -->
       <div class="text-center">
-        <img v-if="userAuth.user.profile" class="rounded-circle me-lg-2" :src="userAuth.user.profile" alt=""
-          style="width: 40px; height: 40px">
-        <img v-else class="rounded-circle me-lg-2" src="../Images/default-user-image.png" alt=""
-          style="width: 40px; height: 40px">
-        <h3 class="font-semibold ">{{ userAuth.user.name }}</h3>
+    <img v-if="userAuth.user.profile" class="rounded-circle me-lg-2" :src="userAuth.user.profile" alt="" style="width: 40px; height: 40px">
+    <img v-else class="rounded-circle me-lg-2" src="../Images/default-user-image.png" alt="" style="width: 40px; height: 40px">
+    <h3 class="font-semibold ">{{ userAuth.user.name }}</h3>
 
-        <!-- Button trigger modal -->
-        <button type="button"
-          class="bg-pink-500 hover:bg-pink-600 text-white p-2 rounded transition-colors duration-300"
-          data-bs-toggle="modal" data-bs-target="#profileModal">
-          Update Profile
-        </button>
+    <!-- Button trigger modal -->
+    <button type="button" class="bg-pink-500 hover:bg-pink-600 text-white p-2 rounded transition-colors duration-300" data-bs-toggle="modal" data-bs-target="#profileModal">
+      Update Profile
+    </button>
 
-        <!-- Modal -->
-        <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title text-pink-500" id="profileModalLabel">Update Profile</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <input type="file" class="file-upload">
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">Close</button>
-                <button type="submit"
-                  class="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded transition-colors duration-300">Save
-                  changes</button>
-              </div>
-            </div>
+    <!-- Modal -->
+    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-pink-500" id="profileModalLabel">Update Profile</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <input type="file" class="file-upload">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded transition-colors duration-300" @click="updateUserProfile">Save changes</button>
           </div>
         </div>
       </div>
+    </div>
+  </div>
       <hr>
       <!-- Stats Section -->
       <div class="flex flex-col ml-5">
@@ -153,7 +147,8 @@ export default {
     },
     async updateUserProfile() {
       userAuth.updateUserInfo(this.userAuth.user)
-    }
+      window.alert('You are successfully updated!')
+    },
   }
 }
 </script>

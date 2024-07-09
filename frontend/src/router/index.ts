@@ -46,10 +46,11 @@ const router = createRouter({
       path: '/payment',
       name: 'payment',
       component: () => import('../views/Users/Shops/Payment/ServicePayment.vue'),
-      // meta: {
-      //   requiresAuth: true,
-      //   role: 'User'
-      // }
+    },
+    {
+      path: '/history',
+      name: 'history',
+      component: () => import('../views/Users/History/HistoryBooking.vue')
     },
     // =================ShopOwner=================
     {
