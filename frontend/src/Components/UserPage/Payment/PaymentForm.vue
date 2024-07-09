@@ -1,11 +1,11 @@
 <template>
     <v-app class="bg-pink-500">
       <v-container>
-        <div class="container-lg mt-9">
+        <div class="container-lg mt-5">
           <div class="d-flex flex-row justify-content-center">
   
             <!-- Your Order Card -->
-            <div class="col-md-5 card p-3 mx-3 bg-light max-h-133 overflow-y-auto" >
+            <div class="col-md-5 card p-3 mx-3 bg-light max-h-142 overflow-y-auto" >
               <div>
                 <h3 class="card-title text-center p-2 ">Your Order From</h3>
               </div>
@@ -67,14 +67,17 @@
                       </div>
                       <div class="row mb-3">
                         <div class="col-md-6">
-                          <label for="total" class="form-label" ><strong>Total Price: </strong></label>
-                          <h3 class="text-bold text-pink-600">${{calculateTotalPrice() }}</h3>
+                          <label for="total" class="form-label" ><strong>Total Price: ${{calculateTotalPrice() }} </strong></label>
+                          <input type="text" id="total" class="form-control" required />
                         </div>   
                       </div>
                     </form>
 
                   </div>
                 </div>
+                  <button class="btn btn-primary">
+                    Submit
+                  </button>
               </div>
             </div>
           </div>
@@ -87,7 +90,7 @@
   import { ref, computed, onMounted } from 'vue';
   import { useRoute } from 'vue-router';
   import { useServiceStore } from '../../../stores/service';
-  import {useCardStore} from '../../../stores/pre-booking'
+  import {useCardStore} from '../../../stores/pre-booking';
  
   const route = useRoute();
   const serviceStore = useServiceStore();
