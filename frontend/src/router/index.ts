@@ -37,12 +37,6 @@ const router = createRouter({
       name: 'register',
       component: () => import('../views/Users/Registers/RegisterView.vue')
     },
-    
-    {
-      path: '/message',
-      name: 'message',
-      component: () => import('../views/ShopOwner/Message/Message.vue')
-    },
     // =================ShopOwner=================
     {
       path: '/registerOwner',
@@ -65,7 +59,12 @@ const router = createRouter({
       path: '/listBooking',
       name: 'listBooking',
       component: () => import('../Components/OwnerPage/Booking/ListBooking.vue'),
-    }
+    },
+    {
+      path: '/message',
+      name: 'message',
+      component: () => import('../views/ShopOwner/Message/Message.vue')
+    },
   ],
   linkExactActiveClass: 'bg-danger text-white border-bottom',
 })

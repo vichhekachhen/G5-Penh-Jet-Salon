@@ -1,49 +1,68 @@
 <template>
   <div id="app">
-    <div class="message-list">
-      <div class="header">All Messages</div>
-      <div
-        v-for="message in messages"
-        :key="message.id"
-        class="message-item"
-        @click="selectMessage(message)"
-      >
-        <img :src="message.avatar" alt="Avatar" class="avatar" />
-        <div class="message-info">
-          <div class="name">{{ message.name }}</div>
-          <div class="text"><li class="text1 color-blue">You : </li>{{ message.text }}</div>
+    <div class="sidebar">
+      <div class="search-bar">
+        <input type="text" v-model="searchQuery" placeholder="Search" />
+      </div>
+      <div class="message-list">
+        <div
+          class="message-item"
+          v-for="message in filteredMessages"
+          :key="message.id"
+          @click="selectMessage(message)"
+          :class="{ selected: selectedMessage === message }"
+        >
+          <img :src="message.avatar" alt="Avatar" class="avatar" />
+          <div class="message-info">
+            <div class="name">{{ message.name }}</div>
+            <div class="text" v-html="truncatedText(message.text)"></div>
+          </div>
+          <div class="date">{{ message.date }}</div>
         </div>
-        <div class="date">{{ message.date }}</div>
+        <div v-if="filteredMessages.length === 0" class="no-results">
+          No matching messages found.
+        </div>
       </div>
     </div>
-    <div class="message-content" v-if="selectedMessage">
-      <div class="header">
-        <img :src="selectedMessage.avatar" alt="Avatar" class="avatar" />
-        <div class="name">{{ selectedMessage.name }}</div>
+    <div class="chat-area" v-if="selectedMessage">
+      <div class="chat-header">
+        <div class="contact-info">
+          <div class="contact-name">{{ selectedMessage.name }}</div>
+          <div class="contact-status">Last seen recently</div>
+        </div>
       </div>
       <div class="chat-content">
         <div class="chat-message" v-for="msg in selectedMessage.chat" :key="msg.id">
           <div :class="['chat-bubble', msg.sender === 'me' ? 'my-message' : 'their-message']">
-            {{ msg.text }}
+            <p>{{ msg.text }}</p>
+            <div class="timestamp">{{ msg.date }}</div>
           </div>
         </div>
       </div>
-      <div class="chat-input">
-        <input v-model="newMessage" @keyup.enter="sendMessage" placeholder="Type a message..." />
-        <button @click="sendMessage" class="send-button">
+      <div class="chat-input-container">
+        <input
+          type="text"
+          v-model="newMessage"
+          @keyup.enter="sendMessage"
+          placeholder="Write a message..."
+          aria-label="Write a message"
+          class="chat-input"
+        />
+        <button @click="sendMessage" class="send-button" aria-label="Send message">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
             width="24"
             height="24"
+            viewBox="0 0 24 24"
+            fill="currentColor"
             class="send-icon"
           >
-            <path fill="currentColor" d="M2 21l21-9L2 3v7l15 2-15 2z" />
+            <path d="M2 21l21-9L2 3v7l15 2-15 2z" />
           </svg>
         </button>
       </div>
     </div>
-    <div class="message-content" v-else>
+    <div class="chat-area" v-else>
       <h3>Select a message to view its content</h3>
     </div>
   </div>
@@ -62,10 +81,7 @@ export default {
           text: 'Hey! Are u free?',
           avatar:
             'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS785biEGWYfQ3kCbvts_QRuNPn7IJpvovN4A&s',
-          chat: [
-            { id: 1, sender: 'them', text: 'Hey! Are u free?' },
-            { id: 2, sender: 'me', text: 'Yes, I am free.' }
-          ]
+          chat: [{ id: 1, sender: 'them', text: 'Hey! Are u free?' }]
         },
         {
           id: 2,
@@ -73,10 +89,7 @@ export default {
           date: '12/02/2024',
           text: 'Did u come?',
           avatar: 'https://cdn-icons-png.flaticon.com/512/1253/1253756.png',
-          chat: [
-            { id: 1, sender: 'them', text: 'Did u come?' },
-            { id: 2, sender: 'me', text: 'Yes, I am here.' }
-          ]
+          chat: [{ id: 1, sender: 'them', text: 'Did u come?' }]
         },
         {
           id: 3,
@@ -84,10 +97,7 @@ export default {
           date: '12/02/2024',
           text: 'Hey! free ot?',
           avatar: 'https://cdn-icons-png.flaticon.com/512/4975/4975733.png',
-          chat: [
-            { id: 1, sender: 'them', text: 'Hey! free ot?' },
-            { id: 2, sender: 'me', text: 'Yes, I am free.' }
-          ]
+          chat: [{ id: 1, sender: 'them', text: 'Hey! free ot?' }]
         },
         {
           id: 4,
@@ -96,10 +106,7 @@ export default {
           text: 'Mk ot ng hor',
           avatar:
             'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVFSAv41c8I_YuS8C_Wd0maf8kSN9y0oISIV_zfr0sGeyyFql5diYralDX5BvIHrprxTI&usqp=CAU',
-          chat: [
-            { id: 1, sender: 'them', text: 'Mk ot ng hor' },
-            { id: 2, sender: 'me', text: 'Yes, I am here.' }
-          ]
+          chat: [{ id: 1, sender: 'them', text: 'Mk ot ng hor' }]
         },
         {
           id: 5,
@@ -107,10 +114,7 @@ export default {
           date: '12/02/2024',
           text: 'Are you sure?',
           avatar: 'https://cdn-icons-png.flaticon.com/512/3371/3371977.png',
-          chat: [
-            { id: 1, sender: 'them', text: 'Are you sure?' },
-            { id: 2, sender: 'me', text: 'Yes, I am sure.' }
-          ]
+          chat: [{ id: 1, sender: 'them', text: 'Are you sure?' }]
         },
         {
           id: 6,
@@ -119,10 +123,7 @@ export default {
           text: 'Os rank ot yub ng ha?',
           avatar:
             'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT58-VVT8Wch6ligqL9BVGs4hHtZ2ChZeURvA&s',
-          chat: [
-            { id: 1, sender: 'them', text: 'Os rank ot yub ng ha?' },
-            { id: 2, sender: 'me', text: 'Yes, I am here.' }
-          ]
+          chat: [{ id: 1, sender: 'them', text: 'Os rank ot yub ng ha?' }]
         },
         {
           id: 7,
@@ -130,10 +131,7 @@ export default {
           date: '12/02/2024',
           text: 'Did u come?',
           avatar: 'https://cdn-icons-png.flaticon.com/512/1253/1253756.png',
-          chat: [
-            { id: 1, sender: 'them', text: 'Did u come?' },
-            { id: 2, sender: 'me', text: 'Yes, I am here.' }
-          ]
+          chat: [{ id: 1, sender: 'them', text: 'Did u come?' }]
         },
         {
           id: 8,
@@ -141,10 +139,7 @@ export default {
           date: '12/02/2024',
           text: 'Hey! free ot?',
           avatar: 'https://cdn-icons-png.flaticon.com/512/4975/4975733.png',
-          chat: [
-            { id: 1, sender: 'them', text: 'Hey! free ot?' },
-            { id: 2, sender: 'me', text: 'Yes, I am free.' }
-          ]
+          chat: [{ id: 1, sender: 'them', text: 'Hey! free ot?' }]
         },
         {
           id: 9,
@@ -152,10 +147,7 @@ export default {
           date: '12/02/2024',
           text: 'Did u come?',
           avatar: 'https://cdn-icons-png.flaticon.com/512/1253/1253756.png',
-          chat: [
-            { id: 1, sender: 'them', text: 'Did u come?' },
-            { id: 2, sender: 'me', text: 'Yes, I am here.' }
-          ]
+          chat: [{ id: 1, sender: 'them', text: 'Did u come?' }]
         },
         {
           id: 10,
@@ -163,10 +155,7 @@ export default {
           date: '12/02/2024',
           text: 'Hey! free ot?',
           avatar: 'https://cdn-icons-png.flaticon.com/512/4975/4975733.png',
-          chat: [
-            { id: 1, sender: 'them', text: 'Hey! free ot?' },
-            { id: 2, sender: 'me', text: 'Yes, I am free.' }
-          ]
+          chat: [{ id: 1, sender: 'them', text: 'Hey! free ot?' }]
         },
         {
           id: 11,
@@ -174,10 +163,7 @@ export default {
           date: '12/02/2024',
           text: 'Did u come?',
           avatar: 'https://cdn-icons-png.flaticon.com/512/1253/1253756.png',
-          chat: [
-            { id: 1, sender: 'them', text: 'Did u come?' },
-            { id: 2, sender: 'me', text: 'Yes, I am here.' }
-          ]
+          chat: [{ id: 1, sender: 'them', text: 'Did u come?' }]
         },
         {
           id: 12,
@@ -185,14 +171,25 @@ export default {
           date: '12/02/2024',
           text: 'Hey! free ot?',
           avatar: 'https://cdn-icons-png.flaticon.com/512/4975/4975733.png',
-          chat: [
-            { id: 1, sender: 'them', text: 'Hey! free ot?' },
-            { id: 2, sender: 'me', text: 'Yes, I am free.' }
-          ]
+          chat: [{ id: 1, sender: 'them', text: 'Hey! free ot?' }]
         }
       ],
       selectedMessage: null,
-      newMessage: ''
+      newMessage: '',
+      searchQuery: ''
+    }
+  },
+  computed: {
+    filteredMessages() {
+      if (!this.searchQuery) {
+        return this.messages
+      }
+      const lowerCaseQuery = this.searchQuery.toLowerCase()
+      return this.messages.filter(
+        (message) =>
+          message.name.toLowerCase().includes(lowerCaseQuery) ||
+          message.text.toLowerCase().includes(lowerCaseQuery)
+      )
     }
   },
   methods: {
@@ -200,61 +197,92 @@ export default {
       this.selectedMessage = message
     },
     sendMessage() {
-      if (this.newMessage.trim() !== '') {
-        this.selectedMessage.chat.push({
+      if (this.newMessage.trim()) {
+        const newMsg = {
           id: Date.now(),
           sender: 'me',
-          text: this.newMessage
-        })
+          text: this.newMessage,
+          date: new Date().toLocaleString()
+        }
+        this.selectedMessage.chat.push(newMsg)
+        this.selectedMessage.text = `<strong style="color: blue;">You: ${this.newMessage}</strong>` // Update the preview text in the sidebar
+        this.selectedMessage.date = newMsg.date // Update the date in the message list
         this.newMessage = ''
       }
+    },
+    truncatedText(text) {
+      const words = text.split(' ')
+      if (words.length > 5) {
+        return words.slice(0, 5).join(' ') + '...'
+      }
+      return text
     }
   }
 }
 </script>
 
-<style>
+<style scoped>
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #f5f5f5; /* Light gray background */
+  color: #333; /* Dark text */
+}
+
 #app {
   display: flex;
   height: 100vh;
-  font-family: 'Arial', sans-serif;
+}
+
+.sidebar {
+  width: 400px; /* Increase sidebar width */
+  background-color: #ffffff; /* White sidebar */
+  border-right: 1px solid #ddd; /* Light gray border */
+  display: flex;
+  flex-direction: column;
+}
+
+.search-bar {
+  padding: 10px;
+  background-color: #f0f0f0; /* Light gray search bar */
+  border-bottom: 1px solid #ddd; /* Light gray border */
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd; /* Light gray border */
+  border-radius: 5px;
+  background-color: #ffffff; /* White search input */
+  color: #333; /* Dark text */
 }
 
 .message-list {
-  width: 350px;
-  background-color: #ffffff;
-  border-right: 1px solid #dddfe2;
+  flex: 1;
   overflow-y: auto;
-}
-
-.message-list .header {
-  padding: 15px;
-  background-color: #f5f6f7;
-  font-size: 20px;
-  font-weight: bold;
-  color: #1c1e21;
-  border-bottom: 1px solid #dddfe2;
 }
 
 .message-item {
   display: flex;
   align-items: center;
-  padding: 10px 15px;
+  padding: 10px; /* Increase padding for larger item size */
   cursor: pointer;
   transition: background-color 0.2s;
+  word-wrap: break-word;
+  width: 100%; 
+  box-sizing: border-box; 
 }
 
-.message-item:hover {
-  background-color: #f0f2f5;
+.message-item:hover,
+.message-item.selected {
+  background-color: #9e9fa06d; /* Light blue on hover/selected */
 }
 
 .avatar {
-  width: 50px;
-  height: 50px;
+  width: 60px; /* Increase avatar size */
+  height: 60px; /* Increase avatar size */
   border-radius: 50%;
-  margin-right: 15px;
-  object-fit: cover;
-  flex-shrink: 0; /* Ensure avatars don't shrink */
+  margin-right: 20px; /* Increase margin for better spacing */
 }
 
 .message-info {
@@ -265,123 +293,168 @@ export default {
 
 .name {
   font-weight: bold;
-  color: #050505;
+  font-size: 18px; /* Increase font size */
+  color: #333; /* Dark text */
 }
 
 .text {
-  color: #65676b;
-  font-size: 14px;
+  font-size: 16px; /* Increase font size */
+  color: #777; /* Gray text */
+  overflow: hidden; /* Hide overflow */
+  text-overflow: ellipsis; /* Add ellipsis for overflow text */
+  white-space: nowrap; /* Prevent text from wrapping */
 }
 
 .date {
-  font-size: 12px;
-  color: #90949c;
+  font-size: 14px; /* Increase font size */
+  color: #999; /* Light gray date */
 }
 
-.message-content {
+.chat-area {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background-color: #ffffff;
-  overflow: hidden;
+  background-color: #ffffff; /* White chat area */
 }
 
-.message-content .header {
+.chat-header {
+  padding: 15px;
+  background-color: #f0f0f0; /* Light gray header */
+  border-bottom: 1px solid #ddd; /* Light gray border */
   display: flex;
   align-items: center;
-  padding: 15px;
-  background-color: #f5f6f7;
-  border-bottom: 1px solid #dddfe2;
 }
 
-.message-content .header .avatar {
-  width: 40px;
-  height: 40px;
-  margin-right: 10px;
-  flex-shrink: 0; /* Ensure avatars don't shrink */
+.contact-info {
+  margin-left: 10px;
 }
 
-.message-content .header .name {
+.contact-name {
+  font-size: 18px;
   font-weight: bold;
-  color: #1c1e21;
+  color: #333; /* Dark text */
+}
+
+.contact-status {
+  font-size: 12px;
+  color: #999; /* Light gray status */
 }
 
 .chat-content {
   flex: 1;
   padding: 15px;
   overflow-y: auto;
-  background-color: #e4e6eb;
-  max-height: calc(100vh - 140px); /* Adjust max-height as needed */
+  background-color: #f5f5f5; /* Light gray chat content */
+  border-top: 1px solid #ddd; /* Light gray border */
+  margin: 10px;
+  padding-bottom: 30px;
 }
 
 .chat-message {
   display: flex;
+  flex-direction: column;
   margin-bottom: 10px;
 }
 
 .chat-bubble {
-  display: inline-block;
   padding: 10px 15px;
   border-radius: 20px;
-  max-width: 60%;
+  max-width: 80%;
   word-wrap: break-word;
   font-size: 14px;
-  line-height: 1.4;
+  position: relative;
 }
 
 .my-message {
-  background-color: #0084ff;
+  background-color: #4873e2; /* Blue message background */
   color: white;
   align-self: flex-end;
 }
 
 .their-message {
-  background-color: #ffffff;
-  color: #050505;
+  background-color: #e6e6e6; /* Light gray message background */
+  color: #333; /* Dark text */
   align-self: flex-start;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.timestamp {
+  font-size: 12px;
+  color: #353434dd; /* Light gray timestamp */
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
 }
 
 .chat-input {
   display: flex;
   padding: 10px;
-  border-top: 1px solid #dddfe2;
-  background-color: #f5f6f7;
+  background-color: #f0f0f0; /* Light gray chat input */
+  border-top: 1px solid #ddd; /* Light gray border */
 }
 
 .chat-input input {
   flex: 1;
-  border: none;
+  border: 1px solid #ddd; /* Light gray border */
   padding: 10px;
-  border-radius: 20px;
-  margin-right: 10px;
-  background-color: #e4e6eb;
-  font-size: 14px;
+  border-radius: 5px;
+  background-color: #ffffff; /* White input background */
+  color: #333; /* Dark text */
 }
 
 .chat-input input:focus {
   outline: none;
-  background-color: #ffffff;
+  border-color: #007bff; /* Blue focus border */
 }
 
 .chat-input button {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0;
   margin-left: 10px;
 }
 
 .chat-input button svg {
-  fill: #0084ff;
-  width: 24px;
-  height: 24px;
-  padding: 8px;
-  border-radius: 50%;
-  background-color: #0084ff;
+  fill: #007bff; /* Blue send button */
 }
 
-.chat-input button svg:hover {
-  background-color: #0060af;
+.no-results {
+  padding: 20px;
+  text-align: center;
+  color: #999; /* Light gray no results text */
+}
+
+.chat-input-container {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+}
+
+.chat-input {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.send-button {
+  background-color: #007bff;
+  border: none;
+  padding: 10px;
+  margin-left: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.send-button:hover {
+  background-color: #0056b3;
+}
+
+.send-icon {
+  fill: #fff;
 }
 </style>
