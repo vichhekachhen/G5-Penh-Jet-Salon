@@ -1,10 +1,12 @@
 import { defineStore } from 'pinia'
-import { createService, deleteService, fetchAllService, fetchAllServiceOwner } from '@/api/service'
+import { createService, deleteService, fetchAllService, fetchAllServiceOwner, showService } from '@/api/service'
 
 export const useServiceStore = defineStore('service', {
   state: () => ({
     services: [],
     serviceOwner: [],
+    service: [],
+
   }),
   actions: {
     async getService(id:number) {
@@ -38,6 +40,26 @@ export const useServiceStore = defineStore('service', {
       } catch (error) {
         console.error('Error fetching service owner:', error)
       }
-    }
+    },
+    async getServicebyIdCategory(id:number) {
+      const url = window.location.href;
+      const rout_id = url.substring(url.lastIndexOf('/') + 1);
+      await this.getService(rout_id);
+      const data:[] = [];
+      this.services.forEach(element => {        
+        if (element.category_id === id) {
+          data.push(element);
+        }
+      });
+      this.services = data;
+    },
+    async getServiceShow(id:number) {
+      try {
+        const response = await showService(id)
+        this.service = response.data.data
+      } catch (error) {
+        console.error('Error fetching services:', error)
+      }
+    },
   }
 })

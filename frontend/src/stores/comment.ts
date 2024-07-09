@@ -1,0 +1,26 @@
+import { defineStore } from 'pinia'
+import { createComment, fetchAllComment } from '@/api/comment'
+
+export const useCommentStore = defineStore('comment', {
+    state: () => ({
+      comments: [],
+    }),
+    actions: {
+      async fetchAllComments(id:number) {
+        try{
+          const response = await fetchAllComment(id);
+          this.comments = response.data.data;
+        }catch(error){
+          console.error('Failed to fetch posts:', error);
+        }
+      },
+      async addComments(id:number) {
+        try{
+          const response = await createComment(id);
+          this.comments = response.data.data;
+        }catch(error){
+          console.error('Failed to fetch posts:', error);
+        }
+      },
+    },
+  });

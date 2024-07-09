@@ -3,28 +3,16 @@
   <div>
     <div class="flex items-center justify-center p-3 flex-wrap bg-pink-500 sticky top-0 z-50 md:flex-nowrap">
       <button
-        type="button"
+        type="button" @click="fetchService"
         class="text-blue-700 hover:text-white border border-blue-600 bg-white hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:bg-gray-900 dark:focus:ring-blue-800 md:me-5"
       >
         All categories
       </button>
-      <button
-        type="button"
+      <button v-for="category in useCategory.categories" :key="category.id"
+        type="button" @click="getByCategoryId(category.id)"
         class="text-blue-900 border border-white hover:border-blue-200 dark:border-blue-900 dark:bg-blue-900 dark:hover:border-blue-700 bg-white focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 dark:text-white dark:focus:ring-blue-800 md:me-5"
       >
-        Man
-      </button>
-      <button
-        type="button"
-        class="text-blue-900 border border-white hover:border-gray-200 dark:border-blue-900 dark:bg-blue-900 dark:hover:border-blue-700 bg-white focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 dark:text-white dark:focus:ring-blue-800 md:me-5"
-      >
-        Woman
-      </button>
-      <button
-        type="button"
-        class="text-blue-900 border border-white hover:border-blue-200 dark:border-blue-900 dark:bg-blue-900 dark:hover:border-blue-700 bg-white focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 dark:text-white dark:focus:ring-blue-800 md:me-5"
-      >
-        Product
+        {{ category.name }}
       </button>
       <div class="relative w-full md:w-auto ml-5 mt-3 md:mt-0">
         <div class="absolute inset-y-0 left-0 flex items-center pl-5 pointer-events-none">
@@ -127,54 +115,58 @@
                 <hr>
               </div>
               <div class="flex flex-col space-y-4">
-                <div v-for="item in cardStore.items" :key="item.id" class="flex items-center space-x-4">
-                  <img
-                    class="w-16 h-16 object-cover rounded-lg"
-                    :src="baseURL + item.image"
-                    alt="Item"
-                  />
-                  <div class="flex-1">
-                    <h5 class="text-base font-bold text-gray-900">{{ item.service_name }}</h5>
-                    <p class="text-red-500 text-base font-bold">
-                      ${{ item.discount }}
-                    </p>
-                  </div>
-                  <div class="flex items-center rounded-full">
-                    <button @click="removeFromCart(item.id)" class="border-none bg-white">
-                      <svg
-                        class="h-6 w-6 text-red-500"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        stroke-width="2"
-                        stroke="currentColor"
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      >
-                        <path stroke="none" d="M0 0h24v24H0z" />
-                        <line x1="4" y1="7" x2="20" y2="7" />
-                        <line x1="10" y1="11" x2="10" y2="17" />
-                        <line x1="14" y1="11" x2="14" y2="17" />
-                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12" />
-                        <path d="M9 7v-3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3" />
-                      </svg>
-                    </button>
-                    <span class="text-gray-400 font-bold p-2">{{ item.quantity }}</span>
-                    <button @click="increaseQuantity(item.id)" class="border-none bg-white">
-                      <svg
-                        class="h-6 w-6 text-red-500"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      >
-                        <line x1="12" y1="5" x2="12" y2="19" />
-                        <line x1="5" y1="12" x2="19" y2="12" />
-                      </svg>
-                    </button>
+                <!-- cart items -->
+                <div v-if="cardItems.cards.length > 0">
+                  <div v-for="item in cardItems.cards" :key="item.id" class="flex items-center space-x-4">
+                    <img
+                      class="w-16 h-16 object-cover rounded-lg"
+                      :src="baseURL+item.service.image"
+                      alt="Item"
+                    />
+                    <div class="flex-1">
+                      <h5 class="text-base font-bold text-gray-900"> {{ item.service.service_name }}</h5>
+                      <p class="text-red-500 text-base font-bold">
+                        {{ item.service.price }}
+                      </p>
+                    </div>
+
+                    <div class="flex items-center rounded-full">
+                      <button @click="removeFromCart(item.id)" class="border-none bg-white">
+                        <svg
+                          class="h-6 w-6 text-red-500"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          stroke-width="2"
+                          stroke="currentColor"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" />
+                          <line x1="4" y1="7" x2="20" y2="7" />
+                          <line x1="10" y1="11" x2="10" y2="17" />
+                          <line x1="14" y1="11" x2="14" y2="17" />
+                          <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12" />
+                          <path d="M9 7v-3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3" />
+                        </svg>
+                      </button>
+                      <span class="text-gray-400 font-bold p-2">{{ item.quantity }}</span>
+                      <button @click="addToCart(item.service_id)" class="border-none bg-white">
+                        <svg
+                          class="h-6 w-6 text-red-500"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <line x1="12" y1="5" x2="12" y2="19" />
+                          <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -182,7 +174,7 @@
             <div class="border-t mt-4 pt-4">
               <div class="flex justify-between items-center">
                 <span class="font-semibold text-gray-900">Total:</span>
-                <span class="text-gray-900 text-red font-bold">${{calculateTotalPrice() }}</span>
+                <span class="text-gray-900 text-red">{{calculateTotalPrice() }}</span>
               </div>
               <button class="mt-4 bg-pink-500 text-white w-full py-2 rounded-lg shadow-md">
                 Check Order
@@ -202,7 +194,8 @@ import { useRoute } from 'vue-router';
 import { useServiceStore } from '../../../stores/service';
 import { useCardStore } from '../../../stores/pre-booking';
 import baseURL from '../../../api/url';
-
+import { useCategoryStore } from '../../../stores/category';
+const useCategory = useCategoryStore();
 const route = useRoute();
 const serviceStore = useServiceStore();
 const cardItems = useCardStore();
@@ -211,11 +204,7 @@ const searchQuery = ref('');
 const calculateTotalPrice = () => {
   let totalPrice = 0;
   cardItems.cards.forEach(item => {
-    if (!item.service.discount){
-      totalPrice += item.service.price * item.quantity;
-    }else{
-      totalPrice += item.service.discount * item.quantity;
-    }
+    totalPrice += item.service.price * item.quantity;
   });
   return totalPrice;
 };
@@ -278,8 +267,17 @@ const fetchAllCardService = async () => {
   await cardItems.fetchAllCards();
 };
 
+const getAllCategories = () => {
+  useCategory.getAllCategories();
+}
+
+const getByCategoryId = (id: number) => {
+  serviceStore.getServicebyIdCategory(id);
+};
+
 onMounted(async () => {
   fetchService();
   fetchAllCardService();
+  getAllCategories();
 });
 </script>
