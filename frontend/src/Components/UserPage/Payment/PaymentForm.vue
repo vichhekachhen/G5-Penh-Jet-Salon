@@ -1,11 +1,11 @@
 <template>
   <v-app class="bg-pink-500">
     <v-container>
-      <div class="container-lg mt-5">
+      <div class="container-lg mt-4">
         <div class="d-flex flex-row justify-content-center">
 
           <!-- Your Order Card -->
-          <div class="col-md-5 card p-3 mx-3 bg-light max-h-142 overflow-y-auto">
+          <div class="col-md-5 card p-3 mx-3 bg-light max-h-145 overflow-y-auto">
             <div>
               <h3 class="card-title text-center p-2 ">Your Order From</h3>
             </div>
@@ -20,9 +20,9 @@
               </div>
             </div>
             <div v-else class="text-center text-red font-semibold my-4">
-              Your cart is empty.
+              Your cart is empty!!
             </div>
-            <div class="flex justify-between items-center">
+            <div class="flex justify-between items-center mt-5">
               <h3 class="font-semibold text-gray-900">Total:</h3>
               <h3 class="text-gray-900 text-pink-600 font-bold">${{ calculateTotalPrice() }}</h3>
             </div>
@@ -30,7 +30,7 @@
 
           <!-- Payment Form -->
           <div class="col-md-7 mx-3">
-            <div class="card p-3">
+            <div class="card ">
               <div class="card-body">
                 <h3 class="card-title text-center mb-4">PAYMENT SERVICE</h3>
                 <div v-if="userAuth.isAuthenticated">
@@ -65,20 +65,28 @@
                     </div>
                     <div class="row mb-3">
                       <div class="col-md-6">
-                        <label for="total" class="form-label"><strong>Total Price: ${{ calculateTotalPrice() }}
-                          </strong></label>
+                        <label for="total" class="form-label"><strong>Total Price: ${{ calculateTotalPrice() }}</strong></label>
                         <input type="text" id="total" class="form-control" required v-model="total" />
                       </div>
+                      <div class="col-md-6">
+                        <div class="mt-2 flex flex-row gap-4 items-center">
+                          <img class="w-15 h-50" src="../../../Images/kaa qr.jpg" alt="QR Scan">
+                          <img class="w-15 h-50" src="../../../Images/kaa qr.jpg" alt="QR Scan">
+                          <img class="w-15 h-50" src="../../../Images/kaa qr.jpg" alt="QR Scan">
+                        </div>
+                      </div>
+                      <div class="text-center">
+                        <button type="submit" class="bg-pink-600 text-white p-2 mt-5 rounded transition-colors duration-300 btn-sm w-90 h-10">
+                          Submit
+                        </button>
+                      </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">
-                      Submit
-                    </button>
                   </form>
-                  
                 </div>
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </v-container>
@@ -138,13 +146,19 @@ const { handleSubmit } = useForm({
   validationSchema: formSchema
 });
 
-
 const { value: date, errorMessage: dateError } = useField('date');
 const { value: time, errorMessage: timeError } = useField('time');
 const { value: total, errorMessage: totalError } = useField('total');
 
 const bookingService = handleSubmit(async (values) => {
-  userBooking.createBooking(values);
-})
+  try {
+    await userBooking.createBooking(values);
+    window.alert('You successfully created a booking!');
+    window.location.href = '/'; 
+  } catch (error) {
+    console.error('Error creating booking:', error);
+    window.alert('There was an error creating your booking. Please try again later.');
+  }
+});
 
 </script>

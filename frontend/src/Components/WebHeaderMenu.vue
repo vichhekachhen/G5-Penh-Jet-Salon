@@ -34,8 +34,8 @@
           </a>
           <div class="dropdown-menu dropdown-menu-end">
             <a href="/profile" class="dropdown-item">Profile</a>
-            <a href="#" class="dropdown-item">Settings</a>
-            <a @click="logout()" href="#" class="dropdown-item">Log Out</a>
+            <a href="/history" class="dropdown-item">History</a>
+            <a @click="logout()" href="#" class="dropdown-item">Logout</a>
           </div>
         </div>
       </div>
@@ -63,6 +63,8 @@ const logout = async () => {
     const response = await axiosInstance.post('/logout')
     console.log(response.data.message)
     localStorage.removeItem('token')
+    window.alert('You have been logged out!');
+    window.location.href = '/'; 
     router.push('/')
   } catch (error) {
     console.error('Error logging out:', error)
