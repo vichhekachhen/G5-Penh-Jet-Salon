@@ -94,6 +94,15 @@
         </a>
         @endcanany
 
+        @canany('Service access','Service add','Service edit','Service delete')
+        <a class="flex items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100 {{ Route::currentRouteNamed('admin.services.index') ? 'active' : '' }}" href="{{ route('admin.services.index') }}">
+            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z" />
+            </svg>
+            <span class="mx-3">Service</span>
+        </a>
+        @endcanany
+
 
         @canany('Mail access','Mail edit')
         <a class="flex items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100 {{ Route::currentRouteNamed('admin.mail.index') ? 'active' : '' }}" href="{{ route('admin.mail.index')}}">
