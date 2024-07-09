@@ -91,7 +91,7 @@ import { useRoute } from 'vue-router';
 import { useServiceStore } from '../../../stores/service';
 import { useCardStore } from '../../../stores/pre-booking';
 import { useAuthStore } from '@/stores/auth-store';
-
+import { useBookingStore } from '@/stores/booking';
 import { useField, useForm } from 'vee-validate';
 import * as yup from 'yup';
 
@@ -100,6 +100,7 @@ const userAuth = useAuthStore()
 const route = useRoute();
 const serviceStore = useServiceStore();
 const cardItems = useCardStore();
+const userBooking = useBookingStore();
 
 const calculateTotalPrice = () => {
   let totalPrice = 0;
@@ -133,7 +134,7 @@ const formSchema = yup.object({
   total: yup.number().required().label('Total Price')
 });
 
-const { handleSubmit, isSubmitting } = useForm({
+const { handleSubmit } = useForm({
   validationSchema: formSchema
 });
 
@@ -143,7 +144,7 @@ const { value: time, errorMessage: timeError } = useField('time');
 const { value: total, errorMessage: totalError } = useField('total');
 
 const bookingService = handleSubmit(async (values) => {
-  console.log(values);
+  userBooking.createBooking(values);
 })
 
 </script>

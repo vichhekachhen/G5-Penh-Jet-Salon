@@ -1,22 +1,7 @@
-import axios from 'axios';
+import http from './api'
 
-export async function fetchBooking(formData: Booking) {
-  try {
-    const response = await axios.post('/api/booking', formData);
-    return response.data.result;
-  } catch (error) {
-    console.error('Error creating booking:', error);
-    throw error;
-  }
+export function store(values: object) {
+  return http.post('/booking', values)
 }
 
-interface Booking {
-  user_id: number;
-  store_id: number;
-  total_price: number;
-  date: string;
-  time: string;
-  indebte: boolean;
-  pay: boolean;
-}
 

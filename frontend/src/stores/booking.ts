@@ -1,14 +1,14 @@
 import { defineStore } from 'pinia';
-import { fetchBooking } from '@/api/booking';
+import { store } from '@/api/booking';
 
 export const useBookingStore = defineStore('booking', {
   state: () => ({
-    bookings: [] as Booking[],
+    bookings: [],
   }),
   actions: {
-    async createBooking(formData: Booking) {
+    async createBooking(formData: object) {
       try {
-        const newBooking = await fetchBooking(formData);
+        const newBooking = await store(formData);
         this.bookings.push(newBooking);
       } catch (error) {
         console.error('Error creating booking:', error);
@@ -17,13 +17,4 @@ export const useBookingStore = defineStore('booking', {
   },
 });
 
-interface Booking {
-  user_id: number;
-  store_id: number;
-  total_price: number;
-  date: string;
-  time: string;
-  indebte: boolean;
-  pay: boolean;
-}
 
