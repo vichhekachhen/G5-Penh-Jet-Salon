@@ -177,7 +177,7 @@
             <div class="border-t mt-4 pt-4">
               <div class="flex justify-between items-center">
                 <span class="font-semibold text-gray-900">Total:</span>
-                <span class="text-gray-900 text-red">{{calculateTotalPrice() }}</span>
+                <span class="text-red font-bold">{{calculateTotalPrice() }}</span>
               </div>
               <button class="mt-4 bg-pink-500 text-white w-full py-2 rounded-lg shadow-md">        
                 <router-link to="/payment" class="nav-link">  Check Order</router-link>
