@@ -24,44 +24,6 @@ class BookingController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-
-
-    // public function store(Request $request)
-    // {
-    //     $user = Auth::user();
-    //     $pre_bookings = CardItem::where("user_id", $user->id)->get();
-    //     $store_id = null;
-    //     $total_price = 0;
-    //     $booking = Booking::create([
-    //         "user_id"=> $user->id,
-    //         "store_id"=> $store_id,
-    //         "total_price" => 0,
-    //         "date" => $request->date,
-    //         "time" => $request->time
-    //     ]);
-
-    //     foreach ($pre_bookings as $pre_booking) {
-    //         $service = Service::where("id", $pre_booking->service_id)->first();
-    //         if ($service) {
-    //             $store_id = $service->store_id;
-    //             $total_price += $service->price;
-    //         }
-    //         BookingService::create([
-    //             "booking_id"=> $booking->id,
-    //             "service_id"=> $pre_booking->service_id,
-    //         ]);
-    //     }
-    //     $booking['store_id'] = $store_id;
-    //     $booking['total_price'] = $total_price;
-    //     $booking->save();
-
-    //     return response()->json([
-    //         'success' => true,
-    //         'message' => 'Booking succesfully !!!',
-    //         'result' => $store_id,
-    //     ]);
-    // }
-
     public function store(Request $request)
     {
         $user = Auth::user();
