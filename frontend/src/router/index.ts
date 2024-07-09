@@ -73,7 +73,12 @@ const router = createRouter({
       path: '/listBooking',
       name: 'listBooking',
       component: () => import('../Components/OwnerPage/Booking/ListBooking.vue'),
-    }
+    },
+    {
+      path: '/paymentService',
+      name: 'paymentService',
+      component: () => import('../Components/UserPage/Payment/PaymentService.vue'),
+    },
   ],
   linkExactActiveClass: 'bg-danger text-white border-bottom',
 })
