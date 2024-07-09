@@ -4,8 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\{
     ProfileController,
     MailSettingController,
-    UserController
+    UserController,
+    CategoryController,
 };
+
 
 /*
 |--------------------------------------------------------------------------
@@ -66,6 +68,8 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
         Route::resource('categories','CategoryController');
         Route::resource('slideshows','SlideshowController');
         Route::get('/dashboard', [UserController::class, 'getOwner'])->name('dashboard');
+        Route::resource('services','ServiceController');
+        Route::get('/service.new', [CategoryController::class,'getAllCategory'])->name('categories');
 
 
         Route::get('/profile',[ProfileController::class,'index'])->name('profile');

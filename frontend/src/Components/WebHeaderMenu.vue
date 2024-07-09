@@ -1,6 +1,6 @@
 <template>
-  <header class="bg-light shadow">
-    <div class="container-fluid px-4 py-2 d-flex justify-content-between align-items-center">
+  <header class="bg-light shadow sticky top-0 z-50">
+    <div class="container-fluid px-4 py-2 d-flex justify-content-between align-items-center ">
       <!-- Logo -->
       <div class="ml-5">
         <img style="width: auto; height: 60px" src="../Images/salon.png" alt="">
@@ -34,8 +34,8 @@
           </a>
           <div class="dropdown-menu dropdown-menu-end">
             <a href="/profile" class="dropdown-item">Profile</a>
-            <a href="#" class="dropdown-item">Settings</a>
-            <a @click="logout()" href="#" class="dropdown-item">Log Out</a>
+            <a href="/history" class="dropdown-item">History</a>
+            <a @click="logout()" href="#" class="dropdown-item">Logout</a>
           </div>
         </div>
       </div>
@@ -51,8 +51,8 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import axiosInstance from '@/plugins/axios'
-import { useAuthStore } from '@/stores/auth-store'
 import URL from '@/api/url';
+import { useAuthStore } from '@/stores/auth-store'
 const userAuth = useAuthStore()
 
 const router = useRouter()
@@ -63,6 +63,8 @@ const logout = async () => {
     const response = await axiosInstance.post('/logout')
     console.log(response.data.message)
     localStorage.removeItem('token')
+    window.alert('You have been logged out!');
+    window.location.href = '/'; 
     router.push('/')
   } catch (error) {
     console.error('Error logging out:', error)

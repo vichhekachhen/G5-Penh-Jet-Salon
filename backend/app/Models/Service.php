@@ -19,4 +19,6 @@ class Service extends Model
         'image',
         'category_id',
     ];
+
+
 }
