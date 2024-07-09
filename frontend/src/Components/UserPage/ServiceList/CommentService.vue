@@ -27,8 +27,12 @@
                     </div>
                     <div class="detail mb-3">
                       <h4>Details</h4>
-                      <p>Original price: <b>${{ serviceStore.service.price }}</b></p>
-                      <p>Discount price: <b>${{ serviceStore.service.discount }}</b></p>
+                      <p>
+                        Original price: <b>${{ serviceStore.service.price }}</b>
+                      </p>
+                      <p>
+                        Discount price: <b>${{ serviceStore.service.discount }}</b>
+                      </p>
                       <p>Data start: {{ serviceStore.service.created_at }}</p>
                     </div>
                     <div class="buttons">
@@ -81,7 +85,7 @@
         </div>
         <div class="d-flex align-items-center mt-4 p-3" style="background-color: #f0f0f0">
           <img
-            v-if="userAuth.user.profile"
+            v-if="baseURL + userAuth.user.profile"
             :src="baseURL + userAuth.user.profile"
             alt="User Avatar"
             class="rounded-circle"
@@ -111,7 +115,6 @@
     </section>
   </div>
 </template>
-
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
@@ -134,48 +137,28 @@ const fetchAllComments = async () => {
   await useComment.fetchAllComments(route.params.id)
 }
 
+const image = ref(userAuth.user.profile)
+const user = ref(userAuth.user.id)
+
 const addComment = async () => {
   const newComment = {
-    user_id: userAuth.user.id,
+    user_id: user.value,
     service_id: route.params.id,
-    image: userAuth.user.profile,
-    text: newCommentText.value,
+    image: image.value,
+    newCommentText: newCommentText.value,
   }
-  await useComment.addComments(newComment)
-  console.log(newComment)
+  useComment.addComments(newComment)
   newCommentText.value = ''
   fetchAllComments()
+  console.log(newComment)
 }
-
-// const replyTo = (comment) => {
-//   comment.showReplyBox = !comment.showReplyBox
-// }
-
-// const addReply = async (comment) => {
-//   if (comment.replyText) {
-//     const newReply = {
-//       user_id: userAuth.user.id,
-//       service_id: route.params.id,
-//       image: userAuth.user.profile,
-//       text: comment.replyText,
-//       parent_id: comment.id,
-//     }
-//     await useComment.addComments(newReply)
-//     comment.replyText = ''
-//     fetchAllComments()
-//   }
-// }
-
-// const removeComment = async (commentId) => {
-//   await useComment.removeComment(commentId)
-//   fetchAllComments()
-// }
 
 onMounted(async () => {
   fetchAllComments()
   fetchServiceShow()
 })
 </script>
+
 
 <style scoped>
 .background-gradient {
