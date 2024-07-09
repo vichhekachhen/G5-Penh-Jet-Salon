@@ -4,19 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class CardItem extends Model
+class Reply extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
-        'service_id',
+        'comment_id', 'owner_id', 'text','images'
     ];
-
-    
-    public function service()
-    {
-        return $this->belongsTo(Service::class,'service_id','id');
-    }
 }

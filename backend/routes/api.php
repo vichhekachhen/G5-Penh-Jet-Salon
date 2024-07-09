@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\API\Booking\BookingController;
 use App\Http\Controllers\API\CardItem\CardController;
 use App\Http\Controllers\API\Category\CategoryController;
+use App\Http\Controllers\API\Comment\CommentController;
+use App\Http\Controllers\API\Comment\ReplyController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\APi\Province\ProvinceController;
 use App\Http\Controllers\APi\Service\ServiceController;
@@ -42,7 +45,7 @@ Route::get('province/list', [ProvinceController::class, 'index']);
 //slide show
 Route::get('slideshow/list', [SlideshowController::class, 'index']);
 
-Route::middleware('auth:sanctum')->prefix('service')->group(function (){
+Route::middleware('auth:sanctum')->prefix('service')->group(function () {
     Route::get('/list', [ServiceController::class, 'index']);
     Route::get('/show/{id}', [ServiceController::class, 'show']);
     Route::post('/create', [ServiceController::class, 'store']);
@@ -63,6 +66,24 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/card/list', [CardController::class, 'index']);
     Route::post('/card/add/{service_id}', [CardController::class, 'add']);
     Route::delete('/card/remove/{cardItem_id}', [CardController::class, 'destroy']);
+
+    //booking
+    Route::post('/booking', [BookingController::class, 'store']);
 });
 
-Route::get('/category/list',[CategoryController::class, 'index']);
+Route::get('/category/list', [CategoryController::class, 'index']);
+
+//comment
+Route::middleware('auth:sanctum')->prefix('comment')->group(function () {
+    Route::post('/create/{service_id}', [CommentController::class, 'store']);
+    Route::post('/update/{comment_id}', [CommentController::class, 'update']);
+    Route::delete('/delete/{comment_id}', [CommentController::class, 'destroy']);
+});
+
+Route::middleware('auth:sanctum')->prefix('reply')->group(function () {
+    Route::post('/{comment_id}', [ReplyController::class, 'store']);
+    Route::post('/update/{reply_id}', [ReplyController::class, 'update']);
+    Route::delete('/delete/{reply_id}', [ReplyController::class, 'destroy']);
+});
+Route::get('comment/list/{service_id}', [CommentController::class, 'index']);
+Route::get('reply/list/{comment_id}', [ReplyController::class, 'index']);

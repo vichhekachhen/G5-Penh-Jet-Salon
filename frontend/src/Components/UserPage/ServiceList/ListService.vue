@@ -113,6 +113,7 @@
                 </button>
               </div>
             </div>
+            <!-- end card service -->
           </div>
         </form>
       </div>
@@ -120,9 +121,10 @@
       <div class="col-span-1">
         <div class="sticky z-10">
           <div class="max-w-sm mx-auto bg-white rounded-lg shadow-md overflow-hidden p-3">
-            <div class="max-h-49 overflow-y-auto pl-3">
+            <div class="max-h-77 overflow-y-auto pl-3">
               <div class="text-center">
-                <h4 class="text-pink-500 font-semibold">Service Card</h4>
+                <h4 class="text-pink-500 font-semibold my-2">Services in Cart</h4>
+                <hr>
               </div>
               <div class="flex flex-col space-y-4">
                 <div v-for="item in cardStore.items" :key="item.id" class="flex items-center space-x-4">
@@ -178,18 +180,20 @@
               </div>
             </div>
             <div class="border-t mt-4 pt-4">
-              <div>
+              <div class="flex justify-between items-center">
                 <span class="font-semibold text-gray-900">Total:</span>
-                <span class="text-gray-900 ml-2 text-red">${{ cardStore.totalPrice }}</span>
+                <span class="text-gray-900 text-red font-bold">${{calculateTotalPrice() }}</span>
               </div>
               <button class="mt-4 bg-pink-500 text-white w-full py-2 rounded-lg shadow-md">
-                Booking
+                Check Order
               </button>
             </div>
           </div>
+          
         </div>
       </div>
     </div>
+    
   </div>
 </template>
 <script setup lang="ts">
@@ -201,11 +205,19 @@ import baseURL from '../../../api/url';
 
 const route = useRoute();
 const serviceStore = useServiceStore();
-const createStore = useCardStore();
+const cardItems = useCardStore();
 const searchQuery = ref('');
 
 const calculateTotalPrice = () => {
-  return cardStore.value.items.reduce((total, item) => total + item.discount * item.quantity, 0);
+  let totalPrice = 0;
+  cardItems.cards.forEach(item => {
+    if (!item.service.discount){
+      totalPrice += item.service.price * item.quantity;
+    }else{
+      totalPrice += item.service.discount * item.quantity;
+    }
+  });
+  return totalPrice;
 };
 const cardStore = ref({
   items: [],
@@ -243,23 +255,15 @@ const fetchService = async () => {
   await serviceStore.getService(id);
 };
 
-const createAdd = async () => {
-  const serviceId = route.params.id;
-  cardStore.value.addItem(serviceId);
-};
 
 const addToCart = (serviceId: number) => {
-  cardStore.value.addItem(serviceId);
-  createStore.addCard(serviceId);
+  cardItems.addCard(serviceId);
 };
 
 const removeFromCart = (serviceId: number) => {
-  cardStore.value.removeItem(serviceId);
+  cardItems.removeCard(serviceId);
 };
 
-const increaseQuantity = (serviceId: number) => {
-  cardStore.value.increaseQuantity(serviceId);
-};
 
 const filteredServices = computed(() => {
   if (!searchQuery.value) {
@@ -270,8 +274,12 @@ const filteredServices = computed(() => {
   );
 });
 
+const fetchAllCardService = async () => {
+  await cardItems.fetchAllCards();
+};
+
 onMounted(async () => {
   fetchService();
-  createAdd();
+  fetchAllCardService();
 });
 </script>
