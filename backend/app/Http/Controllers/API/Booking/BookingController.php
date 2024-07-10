@@ -18,7 +18,12 @@ class BookingController extends Controller
      */
     public function index()
     {
-        //
+        $bookings = Booking::all();
+        return response()->json([
+            'success' => true,
+            'message' => 'Bookings fetched successfully',
+            'result' => $bookings
+        ]);
     }
 
     /**
@@ -108,6 +113,12 @@ class BookingController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $booking = Booking::findOrFail($id);
+        $booking->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Booking deleted successfully'
+        ]);
     }
 }
