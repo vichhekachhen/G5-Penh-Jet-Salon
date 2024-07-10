@@ -70,6 +70,7 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
         Route::get('/dashboard', [UserController::class, 'getOwner'])->name('dashboard');
         Route::resource('services','ServiceController');
         Route::get('/service.new', [CategoryController::class,'getAllCategory'])->name('categories');
+        Route::resource('bookings','BookingController');
 
 
         Route::get('/profile',[ProfileController::class,'index'])->name('profile');
