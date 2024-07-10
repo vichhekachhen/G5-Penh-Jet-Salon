@@ -6,3 +6,6 @@ export function fetchAllComment(id:number) {
 export function createComment(id:number) {
   return http.post(`comment/create/${id}`);
 }
+export function deleteComment(id:number) {
+  return http.delete(`comment/delete/${id}`);
+}

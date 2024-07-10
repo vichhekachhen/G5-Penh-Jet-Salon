@@ -62,9 +62,9 @@
                   <strong>{{ comment.user_id }}</strong> <small></small>
                 </p>
                 <div>
-                  <button class="btn btn-secondary btn-sm me-2" @click="replyTo(comment)">
+                  <!-- <button class="btn btn-secondary btn-sm me-2" @click="replyTo(comment)">
                     Reply
-                  </button>
+                  </button> -->
                   <button class="btn btn-danger btn-sm" @click="removeComment(comment.id)">
                     Remove
                   </button>
@@ -137,20 +137,28 @@ const fetchAllComments = async () => {
   await useComment.fetchAllComments(route.params.id)
 }
 
+const removeComment = async(id:number)=>{
+  await useComment.deleteComments(id)
+  fetchAllComments()
+}
+
 const image = ref(userAuth.user.profile)
 const user = ref(userAuth.user.id)
 
 const addComment = async () => {
+  if (!newCommentText.value.trim()) {
+    alert("The text field is required.")
+    return
+  }
   const newComment = {
     user_id: user.value,
     service_id: route.params.id,
     image: image.value,
-    newCommentText: newCommentText.value,
+    text: newCommentText.value.trim(),
   }
   useComment.addComments(newComment)
   newCommentText.value = ''
   fetchAllComments()
-  console.log(newComment)
 }
 
 onMounted(async () => {
@@ -158,7 +166,6 @@ onMounted(async () => {
   fetchServiceShow()
 })
 </script>
-
 
 <style scoped>
 .background-gradient {
