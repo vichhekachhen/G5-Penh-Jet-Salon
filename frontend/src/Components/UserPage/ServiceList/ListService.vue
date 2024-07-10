@@ -182,8 +182,13 @@
                 <span class="font-semibold text-gray-900">Total:</span>
                 <span class="text-red font-bold">${{calculateTotalPrice() }}</span>
               </div>
-              <button class="mt-4 bg-pink-500 text-white w-full py-2 rounded-lg shadow-md">        
-                <router-link to="/payment" class="nav-link">  Check Order</router-link>
+              <button v-if="cardItems.cards.length === 0" class="mt-4 bg-pink-500 text-white w-full py-2 rounded-lg shadow-md"
+              disabled >        
+                <a class="nav-link">  Check Order</a>
+              </button>
+              <button v-else class="mt-4 bg-pink-500 text-white w-full py-2 rounded-lg shadow-md"
+              >        
+                <router-link to="/payment" class="nav-link"> Check Order</router-link>
               </button>
             </div>
           </div>
