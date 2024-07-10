@@ -47,5 +47,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'gender' => Gender::class,
     ];
-
+    public function comment():BelongsTo
+    {
+        return $this->belongsTo(Comment::class);
+    }
 }

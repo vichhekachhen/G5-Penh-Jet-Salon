@@ -62,9 +62,6 @@
                   <strong>{{ comment.user_id }}</strong> <small></small>
                 </p>
                 <div>
-                  <!-- <button class="btn btn-secondary btn-sm me-2" @click="replyTo(comment)">
-                    Reply
-                  </button> -->
                   <button class="btn btn-danger btn-sm" @click="removeComment(comment.id)">
                     Remove
                   </button>
@@ -83,34 +80,25 @@
             </div>
           </div>
         </div>
-        <div class="d-flex align-items-center mt-4 p-3" style="background-color: #f0f0f0">
-          <img
-            v-if="baseURL + userAuth.user.profile"
-            :src="baseURL + userAuth.user.profile"
-            alt="User Avatar"
-            class="rounded-circle"
-            width="50"
-          />
-          <img
-            v-else
-            class="rounded-circle me-lg-2"
-            src="../Images/user/user_none.jpg"
-            alt=""
-            style="width: 40px; height: 40px"
-          />
-          <div class="input-group ms-3">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Add a comment..."
-              v-model="newCommentText"
-              @keyup.enter="addComment"
-            />
-            <button class="btn btn-primary" @click="addComment">
-              <i class="bi bi-send"></i>
-            </button>
+          <div class="d-flex align-items-center mt-4 p-3" style="background-color: #f0f0f0">
+            <!-- <form @click="addComments"> -->
+            <div class="mb-1">
+              <input class="form-control" type="file" id="formFile">
+            </div>
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Add a comment..."
+                v-model="text"
+                @keyup.enter="addComment"
+              />
+              <button class="btn btn-primary" @click="addComment">
+                <i class="bi bi-send"></i>
+              </button>
+            </div>
+        <!-- </form> -->
           </div>
-        </div>
       </div>
     </section>
   </div>
@@ -120,14 +108,11 @@ import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useServiceStore } from '../../../stores/service'
 import { useCommentStore } from '../../../stores/comment'
-import { useAuthStore } from '../../../stores/auth-store'
 import baseURL from '../../../api/url'
 
-const userAuth = useAuthStore()
 const route = useRoute()
 const serviceStore = useServiceStore()
 const useComment = useCommentStore()
-const newCommentText = ref('')
 
 const fetchServiceShow = async () => {
   await serviceStore.getServiceShow(route.params.id)
@@ -137,27 +122,21 @@ const fetchAllComments = async () => {
   await useComment.fetchAllComments(route.params.id)
 }
 
-const removeComment = async(id:number)=>{
-  await useComment.deleteComments(id)
+const removeComment = async (commentId) => {
+  await useComment.deleteComments(commentId)
   fetchAllComments()
 }
 
-const image = ref(userAuth.user.profile)
-const user = ref(userAuth.user.id)
-
+const text = ref("")
 const addComment = async () => {
-  if (!newCommentText.value.trim()) {
-    alert("The text field is required.")
-    return
+  const comment = {
+    text: text.value,
   }
-  const newComment = {
-    user_id: user.value,
-    service_id: route.params.id,
-    image: image.value,
-    text: newCommentText.value.trim(),
-  }
-  useComment.addComments(newComment)
-  newCommentText.value = ''
+  // const formData = new FormData()
+  // formData.append("text", text.value)
+  useComment.addComments(route.params.id, comment)
+  console.log(route.params.id, comment)
+  text.value = ""
   fetchAllComments()
 }
 
@@ -166,6 +145,7 @@ onMounted(async () => {
   fetchServiceShow()
 })
 </script>
+
 
 <style scoped>
 .background-gradient {
