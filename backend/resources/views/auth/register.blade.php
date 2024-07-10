@@ -22,13 +22,15 @@
                             <input name="password_confirmation" id="password_confirmation" type="password" class="bg-gray-100 w-full text-sm text-gray-800 px-4 py-2 focus:bg-transparent outline-orange-300 transition-all" placeholder="Enter confirm password" />
                             <label for="" class="text-gray-500 text-sm">Birhtday</label>
                             <input name="birth" type="date" class="bg-gray-100 w-full text-sm text-gray-800 px-4 py-2 focus:bg-transparent outline-orange-300 transition-all" placeholder="Enter confirm password" />
+                            <input name="shop_name" id="shop_name" type="text" class="bg-gray-100 w-full text-sm text-gray-800 px-4 py-2 focus:bg-transparent outline-orange-300 transition-all" placeholder="Shop Name" />
+                            <label for="shop_profile" class="text-gray-500 text-sm">Upload Profile Shop:</label>
+                            <input name="shop_profile" type="file" class="bg-gray-100 w-full text-sm text-gray-800 px-4 py-2 focus:bg-transparent outline-orange-300 transition-all" placeholder="Enter confirm password" />
                             <select id="province_id" name="province_id" class="bg-gray-100 w-full text-sm text-gray-800 px-4 py-2 focus:bg-transparent outline-orange-300 transition-all">
                                 <option selected disabled>Select Province</option>
                                 @foreach($provinces as $key => $province)
                                 <option value="{{$province->id}}">{{$province->province_name}}</option>
                                 @endforeach
                             </select>
-                            <input name="shop_name" id="shop_name" type="text" class="bg-gray-100 w-full text-sm text-gray-800 px-4 py-2 focus:bg-transparent outline-orange-300 transition-all" placeholder="Shop Name" />
                             <input name="city" id="city" type="text" class="bg-gray-100 w-full text-sm text-gray-800 px-4 py-2 focus:bg-transparent outline-orange-300 transition-all" placeholder="Location Of Shop" />
                             <label for="qr_code" class="text-gray-500 text-sm">Upload QR Code:</label>
                             <input name="qr_code" type="file" class="bg-gray-100 w-full text-sm text-gray-800 px-4 py-2 focus:bg-transparent outline-orange-300 transition-all" placeholder="Enter confirm password" />
