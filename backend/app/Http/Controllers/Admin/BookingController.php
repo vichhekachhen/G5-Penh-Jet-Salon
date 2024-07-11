@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\Province;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\bookingResource;
 
 class BookingController extends Controller
 {
@@ -32,9 +33,8 @@ class BookingController extends Controller
      */
     public function index()
     {
-        $bookings = Booking::paginate(4);
-
-        return view('booking.index', ['bookings' => $bookings]);
+        $bookings = Booking::with('user')->paginate(10); // Ensure 'user' is the name of the relationship
+        return view('booking.index', compact('bookings'));
     }
 
     /**
