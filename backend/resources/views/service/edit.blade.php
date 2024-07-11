@@ -6,6 +6,7 @@
           <div class="p-6 space-y-6">
             <form method="POST" action="{{ route('admin.services.update', $service->id) }}" enctype="multipart/form-data">
               @csrf
+              @method('put')
               <div class="grid grid-cols-6 gap-6">
                 <div class="col-span-6 sm:col-span-3">
                   <label for="service_name" class="text-sm font-medium text-gray-900 block mb-1">Service Name</label>
@@ -36,7 +37,7 @@
                 </div>
                 <div class="col-span-6 sm:col-span-3">
                   <label for="image" class="text-sm font-medium text-gray-900 block mb-1">Image</label>
-                  <input type="file" name="image" id="image" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+                  <input type="file" name="image" id="image" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
                 </div>
                 <div class="col-span-3 sm:col-span-3">
                 <label for="image" class="text-sm font-medium text-gray-900 block mb-1">Current Image</label>
@@ -49,8 +50,8 @@
                 </div>
                   <td class="py-4 px-6 border-b border-grey-light">
                 <div class="col-span-full">
-                  <label for="discription" class="text-sm font-medium text-gray-900 block mb-1">Service Details</label>
-                  <textarea id="discription" rows="3" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-4" placeholder="Details">{{old('description',$service->description)}}</textarea>
+                  <label for="description" class="text-sm font-medium text-gray-900 block mb-1">Service Details</label>
+                  <textarea id="description" name="description" rows="3" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-4" placeholder="Details">{{old('description',$service->description)}}</textarea>
                 </div>
               </div>
               <div class="col-span-12 sm:col-span-3">
