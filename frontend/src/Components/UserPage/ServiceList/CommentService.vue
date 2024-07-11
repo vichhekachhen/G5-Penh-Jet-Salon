@@ -55,13 +55,16 @@
         <h2><i class="bi bi-chat-left-text p-3"></i>Comments</h2>
         <div v-for="comment in useComment.comments" :key="comment.id" class="comment-box mb-4">
           <div class="d-flex align-items-start">
-            <img :src="baseURL + comment.image" alt="User Avatar" class="rounded-circle me-3" width="50" />
+            <img :src="baseURL + comment.user_profile" alt="User Avatar" class="rounded-circle me-3" width="50" />
             <div class="flex-grow-1">
               <div class="d-flex justify-content-between">
                 <p class="mb-1">
                   <strong>{{ comment.user_id }}</strong> <small></small>
                 </p>
                 <div>
+                  <button class="btn btn-secondary btn-sm me-2" @click="replyTo(comment)">
+                    Reply
+                  </button>
                   <button class="btn btn-danger btn-sm" @click="removeComment(comment.id)">
                     Remove
                   </button>
@@ -82,15 +85,15 @@
         </div>
           <div class="d-flex align-items-center mt-4 p-3" style="background-color: #f0f0f0">
             <!-- <form @click="addComments"> -->
-            <div class="mb-1">
-              <input class="form-control" type="file" id="formFile">
+            <div class="mb-3">
+                <input class="form-control" type="file" id="formFile" @change="handleFileUpload">
             </div>
             <div class="input-group">
               <input
                 type="text"
                 class="form-control"
                 placeholder="Add a comment..."
-                v-model="text"
+                v-model="commentAdd"
                 @keyup.enter="addComment"
               />
               <button class="btn btn-primary" @click="addComment">
@@ -127,16 +130,29 @@ const removeComment = async (commentId) => {
   fetchAllComments()
 }
 
-const text = ref("")
+// const handleFileUpload = (event) =>{
+//   const file = event.target.files[0];
+//   imageAdd.value = URL.createObjectURL(file)
+// }
+
+const replyTo = (comment) => {
+  comment.showReplyBox =!comment.showReplyBox
+}
+
+const addReply = async (comment) => {
+  console.log("hello, " + comment)
+  // await useComment.addReply(comment.id, comment.replyText)
+  // comment.replyText = ""
+}
+
+const commentAdd = ref("")
 const addComment = async () => {
   const comment = {
-    text: text.value,
+    text: commentAdd.value.toString(),
   }
-  // const formData = new FormData()
-  // formData.append("text", text.value)
   useComment.addComments(route.params.id, comment)
   console.log(route.params.id, comment)
-  text.value = ""
+  commentAdd.value = ""
   fetchAllComments()
 }
 

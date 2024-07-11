@@ -14,9 +14,9 @@ export const useCommentStore = defineStore('comment', {
           console.error('Failed to fetch posts:', error);
         }
       },
-      async addComments(id:number) {
+      async addComments(id:number,value:object) {
         try{
-          const response = await createComment(id);
+          const response = await createComment(id,value);
           this.comments = response.data.data;
         }catch(error){
           console.error('Failed to fetch posts:', error);
