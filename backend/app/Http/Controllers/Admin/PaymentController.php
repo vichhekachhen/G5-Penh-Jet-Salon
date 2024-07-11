@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
 use App\Models\Payment;
 use Illuminate\Http\Request;
-use App\Models\Province;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+use Stripe\Stripe;
+use Stripe\PaymentIntent;
+use Stripe\Exception\ApiErrorException;
 
 class PaymentController extends Controller
 {
@@ -32,10 +32,8 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $categories = Category::paginate(4);
-        // $payments = Payment::all();
-
-        return view('category.index', ['categories' => $categories]);
+        $payments = Payment::paginate(4);
+        return view('payment.index', ['payments' => $payments]);
     }
 
     /**
@@ -54,27 +52,28 @@ class PaymentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-
     public function store(Request $request)
     {
-        // Validate the request including the image
-        $data = $request->validate([
-            'name' => 'required|string|unique:categories,name',
-        ]);
+        // Set your secret key
+        Stripe::setApiKey(env('pk_test_51PZpxHAMbu4kmpB8Atb2EEPdqFjxqgayPZXkREqvUTf6yp5uiQo2pJge2zRnIdI57EoP1U89EvaOEBUBGjAOcQsB00FR3jhwNm'));
 
-        Category::create($data);
+        // dd($request->amount);
+        try {
+            // Create a PaymentIntent to charge a customer
+            $paymentIntent = PaymentIntent::create([
+                'amount' => $request->amount, // Example amount in cents
+                'currency' => 'usd',
+                'payment_method_types' => ['card'],
+                'description' => 'Payment by customer',
+            ]);
 
-        // Redirect back with a success message
-        return redirect('/admin/categories')->with('success', 'Category created successfully !!!');
+            // Return client secret to frontend
+            return response()->json(['clientSecret' => $paymentIntent->client_secret]);
+        } catch (ApiErrorException $e) {
+            // Handle error
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-
 
     /**
      * Show the form for editing the specified resource.
@@ -82,11 +81,10 @@ class PaymentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit(Payment $payment)
     {
-        return view('category.edit', ['category' => $category]);
+        return view('payment.edit', ['payment' => $payment]);
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -95,20 +93,13 @@ class PaymentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
-    public function update(Request $request, $id)
+    public function update(Request $request, Payment $payment)
     {
-        $category = Category::findOrFail($id);
-        $rules = [
-            'name' => 'required|string',
-        ];
-        if ($request->name !== $category->name) {
-            $rules['name'] .= '|unique:categories,name';
-        }
-        $data = $request->validate($rules);
-        $category->update($data);
+        // Update the payment details in the database
+        $payment->amount = $request->amount;
+        $payment->save();
 
-        return redirect('/admin/categories')->with('success', 'Category updated successfully !!!');
+        return redirect()->route('payment.index')->withSuccess('Payment updated successfully.');
     }
 
     /**
@@ -117,9 +108,9 @@ class PaymentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy(Payment $payment)
     {
-        $category->delete();
-        return redirect()->back()->withSuccess('Category deleted !!!');
+        $payment->delete();
+        return redirect()->route('payment.index')->withSuccess('Payment deleted successfully.');
     }
 }

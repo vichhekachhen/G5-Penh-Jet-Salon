@@ -3,21 +3,79 @@
     <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
       <div class="container mx-auto px-6 py-1 pb-16">
         <div class="bg-white shadow-md rounded my-6 p-5">
-          <form method="POST" action="{{ route('admin.provinces.store') }}" enctype="multipart/form-data">
-            @csrf
-            <div class="flex flex-col space-y-2">
-              <label for="province_name" class="text-gray-700 select-none font-medium">Province Name</label>
-              <input id="province_name" type="text" name="province_name" value="{{ old('province_name') }}" placeholder="Enter title" class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200" />
+          <section class="bg-white antialiased dark:bg-gray-900">
+            <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
+              <div class="mx-auto max-w-5xl">
+                <h2 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl text-center">Payment</h2>
+                <div class="mt-6 sm:mt-8 lg:flex lg:items-start lg:gap-12">
+                  <form method="POST" action="{{ route('admin.payments.store') }}" enctype="multipart/form-data"
+                    class="w-full rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6 lg:max-w-xl lg:p-8">
+                    @csrf
+                    <div class="mb-6 grid grid-cols-2 gap-4">
+                      <!-- <div class="col-span-2 sm:col-span-1">
+                        <label for="amount" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                        Full name (as displayed on card)*
+                        </label>
+                        <input type="text" id="amount" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="Enter name" required />
+                      </div> -->
+                      <div class="col-span-2 sm:col-span-1">
+                        <label for="card-number-input" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                          Card number*
+                        </label>
+                        <input type="text" id="card-number-input" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pe-10 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="xxxx-xxxx-xxxx-xxxx" required />
+                      </div>
+                      <div>
+                        <label for="card-expiration-input" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                          Card expiration*
+                        </label>
+                        <div class="relative">
+                          <div class="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3.5">
+                            <svg class="h-4 w-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                              <path fill-rule="evenodd" d="M5 5a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1h1a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1h1a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1 2 2 0 0 1 2 2v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a2 2 0 0 1 2-2ZM3 19v-7a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Zm6.01-6a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm2 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm6 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm-10 4a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm6 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm2 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z" clip-rule="evenodd" />
+                            </svg>
+                          </div>
+                          <input datepicker datepicker-format="mm/yy" id="card-expiration-input" type="text" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 ps-9 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500" placeholder="16/24" required />
+                        </div>
+                      </div>
+                      <div>
+                        <label for="cvv-input" class="mb-2 flex items-center gap-1 text-sm font-medium text-gray-900 dark:text-white">
+                          CVV*
+                          <button data-tooltip-target="cvv-desc" data-tooltip-trigger="hover" class="text-gray-400 hover:text-gray-900 dark:text-gray-500 dark:hover:text-white">
+                            <svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                              <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm9.408-5.5a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2h-.01ZM10 10a1 1 0 1 0 0 2h1v3h-1a1 1 0 1 0 0 2h4a1 1 0 1 0 0-2h-1v-4a1 1 0 0 0-1-1h-2Z" clip-rule="evenodd" />
+                            </svg>
+                          </button>
+                          <div id="cvv-desc" role="tooltip" class="tooltip invisible absolute z-10 inline-block rounded-lg bg-gray-900 px-3 py-2 text-sm font-medium text-white opacity-0 shadow-sm transition-opacity duration-300 dark:bg-gray-700">
+                            The last 3 digits on back of card
+                            <div class="tooltip-arrow" data-popper-arrow></div>
+                          </div>
+                        </label>
+                        <input type="number" id="cvv-input" aria-describedby="helper-text-explanation" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="•••" required />
+                      </div>
+                      <div>
+                        <label for="card-expiration-input" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                          Zip code*
+                        </label>
+                        <div class="relative">
+                          <input type="number" id="zip-input" aria-describedby="helper-text-explanation" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="•••••" required />                        </div>
+                      </div>
+                      <div class="col-span-2 sm:col-span-1">
+                        <label for="amount" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                          Amount*
+                        </label>
+                        <input type="text" id="amount" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="Enter amount" required />
+                      </div>
+                    </div>
+                    <div class="text-center">
+                      <button type="submit" class="bg-blue-500 text-white font-bold px-5 py-1 rounded focus:outline-none shadow hover:bg-blue-500 transition-colors">
+                        Submit
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
-            <div class="flex flex-col space-y-2">
-              <label for="image" class="text-gray-700 select-none font-medium">Province Image</label>
-              <input accept="image/*" id="image" type="file" name="image" value="{{ old('image') }}" placeholder="Enter Province Name" class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200" />
-            </div>
-
-            <div class="text-center mt-16 mb-16">
-              <button type="submit" class="bg-blue-500 text-white font-bold px-5 py-1 rounded focus:outline-none shadow hover:bg-blue-500 transition-colors ">Submit</button>
-            </div>
-          </form>
+          </section>
         </div>
       </div>
     </main>
