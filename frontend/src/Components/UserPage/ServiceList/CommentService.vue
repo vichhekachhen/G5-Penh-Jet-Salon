@@ -59,7 +59,7 @@
             <div class="flex-grow-1">
               <div class="d-flex justify-content-between">
                 <p class="mb-1">
-                  <strong>{{ comment.user_id }}</strong> <small></small>
+                  <strong>{{ comment.user_id }}</strong>
                 </p>
                 <div>
                   <button class="btn btn-secondary btn-sm me-2" @click="replyTo(comment)">
@@ -72,38 +72,64 @@
               </div>
               <p>{{ comment.text }}</p>
               <div v-if="comment.showReplyBox" class="mb-3">
+                <!-- <h2>{{ useReply.replies }}</h2> -->
+                <div v-for="list in useReply.replies" :key="list.id" class="comment-box mb-4">
+                  <img :src="baseURL + list.owner_profile" alt="User Avatar" class="rounded-circle me-3" width="50" />
+                  <b>{{list.owner_id}}</b>
+                  <p>{{ list.text }}</p>
+                  <div class="d-flex justify-content-end">
+                    <!-- <button class="btn btn-danger btn-sm" @click="removeCt(comment.id)">
+                      Remove
+                    </button> -->
+                  </div>
+                </div>
+
                 <input
                   type="text"
                   class="form-control"
                   placeholder="Add a reply..."
-                  v-model="comment.replyText"
+                  v-model="replyText"
                   @keyup.enter="addReply(comment)"
                 />
+                <div>
+                </div>
+              </div>
+              <div v-if="comment.replies && comment.replies.length" class="mb-3">
+                <div v-for="reply in comment.replies" :key="reply.id" class="mb-2">
+                  <div class="d-flex align-items-start">
+                    <img :src="baseURL + reply.user_profile" alt="User Avatar" class="rounded-circle me-3" width="50" />
+                    <div class="flex-grow-1">
+                      <p class="mb-1">
+                        <strong>{{ reply.user_id }}</strong>
+                      </p>
+                      <p>{{ reply.text }}</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-          <div class="d-flex align-items-center mt-4 p-3" style="background-color: #f0f0f0">
-            <!-- <form @click="addComments"> -->
-            <div class="mb-3">
-                <input class="form-control" type="file" id="formFile" @change="handleFileUpload">
-            </div>
-            <div class="input-group">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Add a comment..."
-                v-model="commentAdd"
-                @keyup.enter="addComment"
-              />
-              <button class="btn btn-primary" @click="addComment">
-                <i class="bi bi-send"></i>
-              </button>
-            </div>
-        <!-- </form> -->
+        <div class="d-flex align-items-center mt-4 p-3" style="background-color: #f0f0f0">
+          <div class="mb-3">
+            <input class="form-control" type="file" id="formFile" @change="handleFileUpload">
           </div>
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Add a comment..."
+              v-model="commentAdd"
+              @keyup.enter="addComment"
+            />
+            <button class="btn btn-primary" @click="addComment">
+              <i class="bi bi-send"></i>
+            </button>
+          </div>
+        </div>
       </div>
     </section>
+    {{useReply}}
   </div>
 </template>
 <script setup lang="ts">
@@ -111,40 +137,47 @@ import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useServiceStore } from '../../../stores/service'
 import { useCommentStore } from '../../../stores/comment'
+import { useReplyStore } from '../../../stores/replyComment'
 import baseURL from '../../../api/url'
 
 const route = useRoute()
 const serviceStore = useServiceStore()
 const useComment = useCommentStore()
+const useReply = useReplyStore()
 
+// show the service
 const fetchServiceShow = async () => {
   await serviceStore.getServiceShow(route.params.id)
 }
 
+//list all comments
 const fetchAllComments = async () => {
   await useComment.fetchAllComments(route.params.id)
 }
 
+// delete comments
 const removeComment = async (commentId) => {
   await useComment.deleteComments(commentId)
   fetchAllComments()
 }
 
-// const handleFileUpload = (event) =>{
-//   const file = event.target.files[0];
-//   imageAdd.value = URL.createObjectURL(file)
-// }
-
+// when the on click replay
 const replyTo = (comment) => {
-  comment.showReplyBox =!comment.showReplyBox
+  comment.showReplyBox = !comment.showReplyBox
+  // useReply.fetchAllReplies(comment.id)
 }
 
+// replay the comments
+const replyText = ref("");
 const addReply = async (comment) => {
-  console.log("hello, " + comment)
-  // await useComment.addReply(comment.id, comment.replyText)
-  // comment.replyText = ""
+  const reply = {
+    text: replyText.value.toString(), 
+  }
+  useReply.repliesComment(comment.id, reply)
+  replyText.value = ""
 }
 
+// comment the onwer
 const commentAdd = ref("")
 const addComment = async () => {
   const comment = {
@@ -156,9 +189,16 @@ const addComment = async () => {
   fetchAllComments()
 }
 
+const fetchAllReplies= async ()=>{
+  await useReply.fetchAllReplies(8)
+}
+
+// routes showing
 onMounted(async () => {
   fetchAllComments()
   fetchServiceShow()
+  // replyTo(Comment)
+  fetchAllReplies()
 })
 </script>
 

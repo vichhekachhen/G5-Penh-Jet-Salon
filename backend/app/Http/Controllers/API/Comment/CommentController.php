@@ -20,7 +20,7 @@ class CommentController extends Controller
         $comments = Comment::where('service_id', $id)->get();
         return response()->json([
             "success" => true,
-            "data" => CommentResource::collection($comments)
+            "data" => CommentResource::collection($comments),
         ], 200);
     }
 
