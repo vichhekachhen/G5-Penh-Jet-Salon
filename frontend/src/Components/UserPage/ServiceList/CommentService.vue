@@ -72,17 +72,16 @@
               </div>
               <p>{{ comment.text }}</p>
               <div v-if="comment.showReplyBox" class="mb-3">
-                <!-- <h2>{{ useReply.replies }}</h2> -->
-                <div v-for="list in useReply.replies" :key="list.id" class="comment-box mb-4">
+                <!-- <div v-for="list in useReply.replies" :key="list.id" class="comment-box mb-4">
                   <img :src="baseURL + list.owner_profile" alt="User Avatar" class="rounded-circle me-3" width="50" />
                   <b>{{list.owner_id}}</b>
                   <p>{{ list.text }}</p>
                   <div class="d-flex justify-content-end">
-                    <!-- <button class="btn btn-danger btn-sm" @click="removeCt(comment.id)">
+                    <button class="btn btn-danger btn-sm" @click="removeCt(comment.id)">
                       Remove
-                    </button> -->
+                    </button>
                   </div>
-                </div>
+                </div> -->
 
                 <input
                   type="text"
@@ -111,10 +110,8 @@
           </div>
         </div>
         <div class="d-flex align-items-center mt-4 p-3" style="background-color: #f0f0f0">
-          <div class="mb-3">
+          <div class="input-group mb-2">
             <input class="form-control" type="file" id="formFile" @change="handleFileUpload">
-          </div>
-          <div class="input-group">
             <input
               type="text"
               class="form-control"
@@ -208,7 +205,7 @@ onMounted(async () => {
   background: radial-gradient(
     circle at 10% 20%,
     rgb(226, 240, 254) 0%,
-    rgba(194, 44, 177, 0.41) 90%
+    rgba(194, 44, 177, 0.342) 90%
   );
   padding: 30px;
   border-radius: 12px;
@@ -224,7 +221,7 @@ onMounted(async () => {
   object-fit: cover;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.5s ease-in-out;
 }
 
 .product-image img:hover {
@@ -271,32 +268,8 @@ onMounted(async () => {
   transition: transform 0.3s ease-in-out; /* Add transition for smooth effect */
 }
 
-.comment-box:hover {
-  transform: scale(1.01); /* Scale up slightly on hover */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow on hover */
-}
-
 .comment-box img {
   border-radius: 50%;
-}
-
-.comment-box p {
-  margin-bottom: 10px;
-}
-
-.comment-reply {
-  background-color: #fafafa;
-  padding: 10px;
-  border-radius: 8px;
-  transition: transform 0.3s ease-in-out; /* Add transition for smooth effect */
-}
-
-.comment-reply:hover {
-  transform: scale(1.01); /* Scale up slightly on hover */
-}
-
-.comment-reply p {
-  margin-bottom: 5px;
 }
 
 @media (max-width: 768px) {
