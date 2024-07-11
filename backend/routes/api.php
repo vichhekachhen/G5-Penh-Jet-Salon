@@ -70,7 +70,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     //booking
     Route::post('/booking', [BookingController::class, 'store']);
-    Route::get('/', [BookingController::class, 'index']);
+    Route::get('booking/list', [BookingController::class, 'index']);  // tem add history bookings owner
     Route::delete('{id}', [BookingController::class, 'destroy']);
 
 });

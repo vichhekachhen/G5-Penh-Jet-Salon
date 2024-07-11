@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\Booking;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ListBookingResource;
 use App\Models\Booking;
 use App\Models\BookingService;
 use App\Models\CardItem;
@@ -18,11 +19,12 @@ class BookingController extends Controller
      */
     public function index()
     {
-        $bookings = Booking::all();
+        $user = Auth::user();
+        $bookings = Booking::where('user_id', $user->id)->get(); // tem change some code 
         return response()->json([
             'success' => true,
             'message' => 'Bookings fetched successfully',
-            'result' => $bookings
+            'data' => ListBookingResource::collection($bookings)
         ]);
     }
 

@@ -18,4 +18,8 @@ class Booking extends Model
         'indebte',
         'pay',
     ];
+    public function store()
+    {
+        return $this->belongsTo(Store::class,'store_id','id');
+    }
 }
