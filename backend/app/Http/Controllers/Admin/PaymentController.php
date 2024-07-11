@@ -54,21 +54,33 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        // Set your secret key
-        Stripe::setApiKey(env('pk_test_51PZpxHAMbu4kmpB8Atb2EEPdqFjxqgayPZXkREqvUTf6yp5uiQo2pJge2zRnIdI57EoP1U89EvaOEBUBGjAOcQsB00FR3jhwNm'));
+        $user = Auth::user();
 
-        // dd($request->amount);
+        // Set your secret key
+        Stripe::setApiKey(env('STRIPE_SECRET'));
+
         try {
-            // Create a PaymentIntent to charge a customer
+            // Create a PaymentIntent to charge a customer use stripe
             $paymentIntent = PaymentIntent::create([
-                'amount' => $request->amount, // Example amount in cents
+                'amount' => $request->amount * 100, 
                 'currency' => 'usd',
                 'payment_method_types' => ['card'],
-                'description' => 'Payment by customer',
+                'description' => 'Example Payment',
             ]);
+            
+            $payment = Payment::create([
+                'owner_id' => $user->id,
+                'amount' => $request->amount,
+                'currency' => $request->amount,
+                'zip_code' => $request->zip_code,
+                'payment_method' => $request->payment_method,
+            ]);
+    
+            $payment->status = 'success';
+            $payment->save();
+              // Redirect back with a success message
+              return redirect('/admin/dashboard')->with('success', 'Payment created successfully !!!');
 
-            // Return client secret to frontend
-            return response()->json(['clientSecret' => $paymentIntent->client_secret]);
         } catch (ApiErrorException $e) {
             // Handle error
             return response()->json(['error' => $e->getMessage()], 500);

@@ -6,7 +6,6 @@ use App\Http\Controllers\API\Category\CategoryController;
 use App\Http\Controllers\API\Comment\CommentController;
 use App\Http\Controllers\API\Comment\ReplyController;
 use App\Http\Controllers\API\PaymentController;
-// use App\Http\Controllers\API\PaymentController as APIPaymentController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\APi\Province\ProvinceController;
 use App\Http\Controllers\APi\Service\ServiceController;
@@ -93,5 +92,3 @@ Route::get('reply/list/{comment_id}', [ReplyController::class, 'index']);
 
 //payment
 Route::post('/stripe/payment', [StripePaymentController::class, 'makePayment']);
-Route::post('/payment/create', [PaymentController::class, 'createPayment']);
-Route::get('/payment/list', [PaymentController::class, 'index']);

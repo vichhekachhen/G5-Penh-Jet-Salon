@@ -7,22 +7,15 @@
             <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
               <div class="mx-auto max-w-5xl">
                 <h2 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl text-center">Payment</h2>
-                <div class="mt-6 sm:mt-8 lg:flex lg:items-start lg:gap-12">
-                  <form method="POST" action="{{ route('admin.payments.store') }}" enctype="multipart/form-data"
-                    class="w-full rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6 lg:max-w-xl lg:p-8">
+                <div class="mt-6 sm:mt-8 lg:flex lg:items-start lg:gap-10">
+                  <form method="POST" action="{{ route('admin.payments.store') }}" enctype="multipart/form-data" id="payment-form" class="w-full rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6 lg:max-w-xl lg:p-8">
                     @csrf
                     <div class="mb-6 grid grid-cols-2 gap-4">
-                      <!-- <div class="col-span-2 sm:col-span-1">
-                        <label for="amount" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
-                        Full name (as displayed on card)*
-                        </label>
-                        <input type="text" id="amount" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="Enter name" required />
-                      </div> -->
                       <div class="col-span-2 sm:col-span-1">
                         <label for="card-number-input" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
                           Card number*
                         </label>
-                        <input type="text" id="card-number-input" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pe-10 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="xxxx-xxxx-xxxx-xxxx" required />
+                        <input type="text" id="payment_method" name="payment_method" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pe-10 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="xxxx-xxxx-xxxx-xxxx" required />
                       </div>
                       <div>
                         <label for="card-expiration-input" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
@@ -57,13 +50,14 @@
                           Zip code*
                         </label>
                         <div class="relative">
-                          <input type="number" id="zip-input" aria-describedby="helper-text-explanation" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="•••••" required />                        </div>
+                          <input type="number" id="zip_code" name="zip_code" aria-describedby="helper-text-explanation" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="•••••" required />
+                        </div>
                       </div>
                       <div class="col-span-2 sm:col-span-1">
                         <label for="amount" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
                           Amount*
                         </label>
-                        <input type="text" id="amount" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="Enter amount" required />
+                        <input type="text" id="amount" name="amount" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="Enter amount" required />
                       </div>
                     </div>
                     <div class="text-center">
@@ -72,6 +66,36 @@
                       </button>
                     </div>
                   </form>
+                  <div class="mt-6 grow sm:mt-8 lg:mt-0">
+                    <div class="space-y-4 rounded-lg border border-gray-100 bg-gray-50 p-6 dark:border-gray-700 dark:bg-gray-800">
+                      <div class="space-y-2">
+                        <dl class="flex items-center justify-between gap-4">
+                          <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Price to Pay</dt>
+                          <dd class="text-base font-medium text-green-500">-$750.00</dd>
+                        </dl>
+                        <dl class="flex items-center justify-between gap-4">
+                          <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Shop price</dt>
+                          <dd class="text-base font-medium text-gray-900 dark:text-white">$750</dd>
+                        </dl>
+                        <dl class="flex items-center justify-between gap-4">
+                          <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Tax</dt>
+                          <dd class="text-base font-medium text-gray-900 dark:text-white">$50</dd>
+                        </dl>
+                      </div>
+                      <dl class="flex items-center justify-between gap-4 border-t border-gray-200 pt-2 dark:border-gray-700">
+                        <dt class="text-base font-bold text-gray-900 dark:text-white">Monthly Payment</dt>
+                        <dd class="text-base font-bold text-gray-900 dark:text-white">$800</dd>
+                      </dl>
+                    </div>
+                    <div class="mt-6 flex items-center justify-center gap-8">
+                      <img class="h-8 w-auto dark:hidden" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/paypal.svg" alt="" />
+                      <img class="hidden h-8 w-auto dark:flex" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/paypal-dark.svg" alt="" />
+                      <img class="h-8 w-auto dark:hidden" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/visa.svg" alt="" />
+                      <img class="hidden h-8 w-auto dark:flex" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/visa-dark.svg" alt="" />
+                      <img class="h-8 w-auto dark:hidden" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/mastercard.svg" alt="" />
+                      <img class="hidden h-8 w-auto dark:flex" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/mastercard-dark.svg" alt="" />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
