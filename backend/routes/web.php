@@ -73,6 +73,7 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
         Route::get('/service.new', [CategoryController::class,'getAllCategory'])->name('categories');
         Route::resource('payments', 'PaymentController');
         
+        Route::resource('bookings','BookingController');
 
 
         Route::get('/profile',[ProfileController::class,'index'])->name('profile');
