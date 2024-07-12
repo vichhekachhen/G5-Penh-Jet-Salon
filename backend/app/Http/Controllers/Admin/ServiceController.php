@@ -124,25 +124,24 @@ class ServiceController extends Controller
 
     public function update(Request $request, $id)
     {
-        $slideshow = Slideshow::findOrFail($id);
+        $service = Service::find($id);
         $rules = [
-            'title' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
 
         $request->validate($rules);
         $data = $request->except('image');
         if ($request->hasFile('image')) {
-            if ($slideshow->image) {
-                $oldImagePath = str_replace('/storage', 'public', $slideshow->image);
+            if ($service->image) {
+                $oldImagePath = str_replace('/storage', 'public', $service->image);
                 Storage::delete($oldImagePath);
             }
 
-            $path = $request->file('image')->store('ProvinceImages', 'public');
+            $path = $request->file('image')->store('ServiceImages', 'public');
             $data['image'] = Storage::url($path);
         }
-        $slideshow->update($data);
-        return redirect('/admin/slideshows')->with('success', 'Slideshow updated successfully !!!');
+        $service->update($data);
+        return redirect('/admin/services')->with('success', 'Service updated successfully !!!');
 
     }
 
