@@ -33,7 +33,7 @@
                       <p>
                         Discount price: <b>${{ serviceStore.service.discount }}</b>
                       </p>
-                      <p>Data start: {{ serviceStore.service.created_at }}</p>
+                      <!-- <p>Data start: {{ serviceStore.service.created_at }}</p> -->
                     </div>
                     <div class="buttons">
                       <router-link to="/listService/1">
@@ -49,84 +49,77 @@
       </div>
     </div>
 
-    <!-- Comments Section -->
-    <section class="py-5">
-      <div class="container mt-5 color-black">
-        <h2><i class="bi bi-chat-left-text p-3"></i>Comments</h2>
-        <div v-for="comment in useComment.comments" :key="comment.id" class="comment-box mb-4">
-          <div class="d-flex align-items-start">
-            <img :src="baseURL + comment.user_profile" alt="User Avatar" class="rounded-circle me-3" width="50" />
-            <div class="flex-grow-1">
-              <div class="d-flex justify-content-between">
-                <p class="mb-1">
-                  <strong>{{ comment.user_id }}</strong>
-                </p>
-                <div>
-                  <button class="btn btn-secondary btn-sm me-2" @click="replyTo(comment)">
-                    Reply
-                  </button>
-                  <button class="btn btn-danger btn-sm" @click="removeComment(comment.id)">
-                    Remove
-                  </button>
-                </div>
+  <!-- Comments Section -->
+  <section class="py-10">
+    <div class="container mt-5 color-black">
+      <h2><i class="bi bi-chat-left-text p-3"></i>Comments</h2>
+      <div v-for="comment in useComment.comments" :key="comment.id" class="comment-box mb-4">
+        <div class="d-flex align-items-start">
+          <img :src="baseURL + comment.user_profile" alt="User Avatar" class="rounded-circle me-3" width="50" />
+          <div class="flex-grow-1">
+            <div class="d-flex justify-content-between">
+              <p class="mb-1">
+                <strong>{{ comment.user_name }}</strong>
+              </p>
+              <div>
+                <button class="btn btn-secondary btn-sm me-2" @click="replyTo(comment)">
+                  Reply
+                </button>
+                <button class="btn btn-danger btn-sm" @click="removeComment(comment.id)">
+                  Remove
+                </button>
               </div>
-              <p>{{ comment.text }}</p>
-              <div v-if="comment.showReplyBox" class="mb-3">
-                <!-- <div v-for="list in useReply.replies" :key="list.id" class="comment-box mb-4">
-                  <img :src="baseURL + list.owner_profile" alt="User Avatar" class="rounded-circle me-3" width="50" />
-                  <b>{{list.owner_id}}</b>
-                  <p>{{ list.text }}</p>
-                  <div class="d-flex justify-content-end">
-                    <button class="btn btn-danger btn-sm" @click="removeCt(comment.id)">
-                      Remove
-                    </button>
-                  </div>
-                </div> -->
-
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Add a reply..."
-                  v-model="replyText"
-                  @keyup.enter="addReply(comment)"
-                />
-                <div>
-                </div>
-              </div>
-              <div v-if="comment.replies && comment.replies.length" class="mb-3">
-                <div v-for="reply in comment.replies" :key="reply.id" class="mb-2">
-                  <div class="d-flex align-items-start">
-                    <img :src="baseURL + reply.user_profile" alt="User Avatar" class="rounded-circle me-3" width="50" />
-                    <div class="flex-grow-1">
-                      <p class="mb-1">
-                        <strong>{{ reply.user_id }}</strong>
-                      </p>
-                      <p>{{ reply.text }}</p>
+            </div>
+            <p>{{ comment.text }}</p>
+            <img v-if="comment.image" :src="baseURL + comment.image" alt="User Avatar" class="rounded-circle me-3" width="50" />
+            <div v-if="comment.replies && comment.replies.length" class="mb-3">
+              <div v-for="reply in comment.replies" :key="reply.id" class="mb-2 card">
+                <div class="d-flex align-items-start pt-3 reply p-3">
+                  <img v-if="reply.owner.profile" :src="baseURL + reply.owner.profile" alt="User Avatar" class="rounded-circle me-3" width="50" />
+                  <div class="flex-grow-1 ">
+                    <p class="mb-1">
+                      <b>{{ reply.owner.name }}</b>
+                    </p>
+                    <div class="d-flex justify-content-end">
+                      <button class="btn btn-danger btn-sm" @click="removeReply(reply.id)">
+                        Remove
+                      </button>
                     </div>
+                    <p>{{ reply.text }}</p>
+                    <img v-if="reply.owner.image" :src="baseURL + reply.owner.image" class="rounded-square" />
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="d-flex align-items-center mt-4 p-3" style="background-color: #f0f0f0">
-          <div class="input-group mb-2">
-            <input class="form-control" type="file" id="formFile" @change="handleFileUpload">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Add a comment..."
-              v-model="commentAdd"
-              @keyup.enter="addComment"
-            />
-            <button class="btn btn-primary" @click="addComment">
-              <i class="bi bi-send"></i>
-            </button>
+            <div v-if="comment.showReplyBox" class="mb-3">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Add a reply..."
+                v-model="replyText"
+                @keyup.enter="addReply(comment)"
+              />
+            </div>
           </div>
         </div>
       </div>
-    </section>
-    {{useReply}}
+      <div class="d-flex align-items-center mt-4 p-3" style="background-color: #f0f0f0">
+        <div class="input-group mb-2">
+          <!-- <input class="form-control" type="file" id="formFile" @change="handleFileUpload" /> -->
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Add a comment..."
+            v-model="commentAdd"
+            @keyup.enter="addComment"
+          />
+          <button class="btn btn-primary" @click="addComment">
+            <i class="bi bi-send"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
   </div>
 </template>
 <script setup lang="ts">
@@ -158,10 +151,14 @@ const removeComment = async (commentId) => {
   fetchAllComments()
 }
 
-// when the on click replay
+// delete replay
+const removeReply = async (replyId) => {
+  await useReply.repliesdealete(replyId)
+  fetchAllComments()
+}
+
 const replyTo = (comment) => {
-  comment.showReplyBox = !comment.showReplyBox
-  // useReply.fetchAllReplies(comment.id)
+  comment.showReplyBox = !comment.showReplyBox 
 }
 
 // replay the comments
@@ -172,6 +169,7 @@ const addReply = async (comment) => {
   }
   useReply.repliesComment(comment.id, reply)
   replyText.value = ""
+  fetchAllComments()
 }
 
 // comment the onwer
@@ -186,21 +184,15 @@ const addComment = async () => {
   fetchAllComments()
 }
 
-const fetchAllReplies= async ()=>{
-  await useReply.fetchAllReplies(8)
-}
-
 // routes showing
 onMounted(async () => {
   fetchAllComments()
   fetchServiceShow()
-  // replyTo(Comment)
-  fetchAllReplies()
 })
 </script>
 
-
 <style scoped>
+
 .background-gradient {
   background: radial-gradient(
     circle at 10% 20%,
@@ -231,6 +223,7 @@ onMounted(async () => {
 .card {
   border: none;
   border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
 
@@ -239,7 +232,7 @@ onMounted(async () => {
 }
 
 .product-details h1 {
-  font-size: 28px;
+  font-size: 28px; 
   margin-bottom: 10px;
 }
 

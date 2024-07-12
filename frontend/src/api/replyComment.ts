@@ -6,3 +6,6 @@ export function fetchAllReplies(id: number) {
 export function repliesComment(id:number,value:object) {
   return http.post(`reply/${id}`, value);
 }
+export function repliesdealete(id:number) {
+  return http.delete(`reply/delete/${id}`);
+}

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { fetchAllReplies, repliesComment } from '@/api/replyComment';
+import { fetchAllReplies, repliesComment, repliesdealete } from '@/api/replyComment';
 
 export const useReplyStore = defineStore('replyComment', {
   state: () => ({
@@ -11,9 +11,7 @@ export const useReplyStore = defineStore('replyComment', {
     async fetchAllReplies(id:number) {
       try{
         const response = await fetchAllReplies(id);
-        // this.replies = response.data.data;
-        console.log(response.data);
-        
+        this.replies = response.data.data;        
       }catch(error){
         console.error('Failed to fetch posts:', error);
       }
@@ -28,5 +26,14 @@ export const useReplyStore = defineStore('replyComment', {
         console.error('Failed to fetch posts:', error);
       }
     },
+    
+    async repliesdealete(id:number){
+      try{
+        const response = await repliesdealete(id);
+        this.replies = response.data.data;
+      }catch(error){
+        console.error('Failed to fetch posts:', error);
+      }
+    }
   },
 });
