@@ -13,9 +13,9 @@
             <div v-if="cardItems.cards.length > 0" class="card p-3 rounded">
               <div v-for="item in cardItems.cards" :key="item.id">
                 <p><strong>Service Name: {{ item.service.service_name }}</strong></p>
-                <p v-if="item.service.discount"><strong>Price:${{ item.service.discount }}</strong></p>
-                <p v-else><strong>Price:${{ item.service.price }}</strong></p>
-                <p><strong>Quantity:{{ item.quantity }}</strong> </p>
+                <p v-if="item.service.discount"><strong>Price: ${{ item.service.discount }}</strong></p>
+                <p v-else><strong>Price: ${{ item.service.price }}</strong></p>
+                <p><strong>Quantity: {{ item.quantity }}</strong> </p>
                 <hr class="border-pink-500">
               </div>
             </div>
@@ -37,7 +37,7 @@
 
                   <form @submit.prevent="bookingService">
                     <div class="mb-3">
-                      <label for="fullName" class="form-label"><strong>User Name:</strong></label>
+                      <label for="fullName" class="form-label"><strong>User Name: </strong></label>
                       <input disabled type="text" id="fullName" class="form-control" :value="userAuth.user.name"
                         required />
                     </div>
@@ -69,16 +69,52 @@
                         <input type="text" id="total" class="form-control" required v-model="total" />
                       </div>
                       <div class="col-md-6">
-                        <div class="mt-2 flex flex-row gap-4 items-center">
-                          <img class="w-15 h-50" src="../../../Images/kaa qr.jpg" alt="QR Scan">
-                          <img class="w-15 h-50" src="../../../Images/kaa qr.jpg" alt="QR Scan">
-                          <img class="w-15 h-50" src="../../../Images/kaa qr.jpg" alt="QR Scan">
+                        <div class="mt-2 d-flex flex-row gap-4 align-items-center">
+                          <img class="w-15 h-50" src="../../../Images/aba.webp" data-bs-toggle="modal" data-bs-target="#exampleModalABA" alt="QR Scan ABA" @click="addQR()">
+                          <img class="w-15 h-50" src="../../../Images/wing.jpg" data-bs-toggle="modal" data-bs-target="#exampleModalWing" alt="QR Scan Wing">
                         </div>
                       </div>
                       <div class="text-center">
                         <button type="submit" class="bg-pink-600 text-white p-2 mt-5 rounded transition-colors duration-300 btn-sm w-90 h-10">
                           Submit
                         </button>
+                        {{QRCode}}
+                      </div>
+
+                      <!-- ABA Modal -->
+                      <div class="modal fade" id="exampleModalABA" tabindex="-1" aria-labelledby="exampleModalLabelABA" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabelABA">QR PAYMENT ABA</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body d-flex justify-content-center" v-for="QR in QRCode.QR" :key="QR.id">
+                              <img class="w-80 h-80" :src="baseURL + QR.qr_code" alt="QR Scan ABA">
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Wing Modal -->
+                      <div class="modal fade" id="exampleModalWing" tabindex="-1" aria-labelledby="exampleModalLabelWing" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabelWing">QR PAYMENT WING</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body d-flex justify-content-center">
+                              <img class="w-80 h-80" src="../../../Images/kaa qr.jpg" alt="QR Scan Wing">
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </form>
@@ -86,7 +122,6 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </v-container>
@@ -94,13 +129,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { useServiceStore } from '../../../stores/service';
 import { useCardStore } from '../../../stores/pre-booking';
-import { useAuthStore } from '@/stores/auth-store';
-import { useBookingStore } from '@/stores/booking';
+import { useAuthStore } from '../../../stores/auth-store';
+import { useBookingStore } from '../../../stores/booking';
 import { useField, useForm } from 'vee-validate';
+import {useListQR} from '../../../stores/QRCode';
+
 import * as yup from 'yup';
 
 
@@ -109,6 +146,11 @@ const route = useRoute();
 const serviceStore = useServiceStore();
 const cardItems = useCardStore();
 const userBooking = useBookingStore();
+const QRCode = useListQR();
+
+const addQR = async()=>{
+  await QRCode.fetchAllQRs(1)
+}
 
 const calculateTotalPrice = () => {
   let totalPrice = 0;
@@ -134,6 +176,7 @@ const fetchAllCardService = async () => {
 onMounted(async () => {
   fetchService();
   fetchAllCardService();
+  // ListQRCode()
 });
 
 const formSchema = yup.object({
