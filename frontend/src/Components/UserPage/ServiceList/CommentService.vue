@@ -52,10 +52,10 @@
         <h3><i class="bi bi-chat-left-text text-pink-500 p-3"></i>Comments</h3>
         <div v-for="comment in useComment.comments" :key="comment.id" class="comment-box mb-4">
           <div class="d-flex align-items-start">
-            <img :src="baseURL + comment.user_profile" alt="User Avatar" class="rounded-circle me-3" width="50" />
+            <img :src="baseURL + comment.user_profile" alt="User Avatar" class="w-10 h-10 mr-2 " />
             <div class="flex-grow-1">
               <div class="d-flex justify-content-between">
-                <strong class="mb-1 text-pink-500">
+                <strong class=" mt-2 text-pink-500">
                   {{ comment.user_name }}
                 </strong>
                 <div>
@@ -92,7 +92,6 @@
                         </button>
                       </div>
                     </div>
-                    <img v-if="reply.owner.profile" :src="baseURL + reply.owner.profile" alt="User Avatar" class="rounded-circle me-3" width="50" />
                     <img v-if="reply.owner.image" :src="baseURL + reply.owner.image" class="rounded-square ml-3" />
                   </div>
                 </div>
