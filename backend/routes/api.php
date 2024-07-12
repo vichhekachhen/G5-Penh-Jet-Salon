@@ -5,6 +5,7 @@ use App\Http\Controllers\API\CardItem\CardController;
 use App\Http\Controllers\API\Category\CategoryController;
 use App\Http\Controllers\API\Comment\CommentController;
 use App\Http\Controllers\API\Comment\ReplyController;
+use App\Http\Controllers\API\Message\MessageController;
 use App\Http\Controllers\API\PaymentController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\APi\Province\ProvinceController;
@@ -97,3 +98,10 @@ Route::get('reply/list/{comment_id}', [ReplyController::class, 'index']);
 
 //payment
 Route::post('/stripe/payment', [StripePaymentController::class, 'makePayment']);
+
+
+
+//chat
+Route::middleware('auth:sanctum')->prefix('chat')->group( function (){
+    Route::post('/create',[MessageController::class, 'store']);
+});
