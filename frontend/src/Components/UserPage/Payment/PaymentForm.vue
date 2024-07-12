@@ -78,7 +78,6 @@
                         <button type="submit" class="bg-pink-600 text-white p-2 mt-5 rounded transition-colors duration-300 btn-sm w-90 h-10">
                           Submit
                         </button>
-                        <!-- {{userAuth}} -->
                       </div>
                       <!-- ABA Modal -->
                       <div class="modal fade" id="exampleModalABA" tabindex="-1" aria-labelledby="exampleModalLabelABA" aria-hidden="true">
@@ -139,7 +138,6 @@ import {useListQR} from '../../../stores/QRCode';
 import baseURL from '../../../api/url'
 
 import * as yup from 'yup';
-
 
 const userAuth = useAuthStore()
 const route = useRoute();
