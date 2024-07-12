@@ -78,9 +78,11 @@ const router = createRouter({
       props: true
     },
     {
-      path: '/listBooking',
-      name: 'listBooking',
-      component: () => import('../Components/OwnerPage/Booking/ListBooking.vue'),
+      path: '/comment/:id',
+      name: 'comment',
+      component: () => import('../views/Users/Shops/Comment/CommentService.vue'),
+      props: true
+
     }
   ],
   linkExactActiveClass: 'bg-danger text-white border-bottom',
