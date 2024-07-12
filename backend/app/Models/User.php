@@ -5,10 +5,12 @@ namespace App\Models;
 use App\Enums\Gender;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo as RelationsBelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class User extends Authenticatable
 {
@@ -47,5 +49,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'gender' => Gender::class,
     ];
+
+    // public function booking():BelongsTo
+    // {
+    //     return $this->belongsTo(Booking::class, 'booking_id', 'id');
+    // }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
 }
