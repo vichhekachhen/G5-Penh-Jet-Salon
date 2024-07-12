@@ -9,7 +9,7 @@
               <th class="py-4 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light">User Name</th>
               <th class="py-4 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light">Total Price</th>
               <th class="py-4 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light">Date</th>
-              <th class="py-4 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light">Time</th>
+              <th class="py-4 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -20,14 +20,18 @@
               <td class="py-4 px-6 border-b border-grey-light">{{ $booking->user->name }}</td>
               <td class="py-4 px-6 border-b border-grey-light">{{ $booking->total_price }}</td>
               <td class="py-4 px-6 border-b border-grey-light">{{ $booking->date }}</td>
-              <td class="py-4 px-6 border-b border-grey-light">{{ $booking->time }}</td>
+              <td class="py-4 px-6 border-b border-grey-light">
+                @can('Booking show')
+                      <a href="{{route('admin.bookings.show',$booking->id)}}" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark text-green-400">Show</a>
+                @endcan
+              </td>
             </tr>
             @endforeach
             @endcan
           </tbody>
         </table>
 
-        @can('Category access')
+        @can('Booking access')
         <div class="text-right p-4 py-10">
           {{ $bookings->links() }}
         </div>

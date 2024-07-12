@@ -10,6 +10,9 @@ use App\Models\Province;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\bookingResource;
+use App\Models\BookingService;
+use App\Models\Service;
+use App\Models\User;
 
 class BookingController extends Controller
 {
@@ -33,7 +36,8 @@ class BookingController extends Controller
      */
     public function index()
     {
-        $bookings = Booking::with('user')->paginate(10); // Ensure 'user' is the name of the relationship
+        $userAuth = Auth::user();
+        $bookings = Booking::where('store_id',$userAuth->store_id)->paginate(10);
         return view('booking.index', compact('bookings'));
     }
 
@@ -73,8 +77,37 @@ class BookingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    // public function show(Booking $booking)
+    // {
+    //     $bookingServices = BookingService::where('booking_id', $booking->id)->get();
+    //     $userBooking = User::where('id', $booking->user_id)->get();
+    //     $services[] = [];
+    //     foreach ($bookingServices as $key => $service) {
+    //         $service[] = $service;
+    //     }
+    //     return view('booking.show', [
+    //         'bookingServices' => $bookingServices,
+    //         'services' => $services,
+    //         'userBooking' => $userBooking,
+    //     ]);
+    // }
 
-
+    public function show(Booking $booking)
+{
+    $bookingServices = BookingService::where('booking_id', $booking->id)->get();
+    $userBooking = User::where('id', $booking->user_id)->get();
+    $services = [];
+    
+    foreach ($bookingServices as $key => $service) {
+        $service = Service::find($service->service_id);
+        $services[] = $service;
+    }
+    
+    return view('booking.show', [
+        'services' => $services,
+        'userBooking' => $userBooking,
+    ]);
+}
     /**
      * Show the form for editing the specified resource.
      *
