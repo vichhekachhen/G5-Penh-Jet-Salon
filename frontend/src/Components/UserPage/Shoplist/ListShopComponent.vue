@@ -3,9 +3,9 @@
     <img class="w-100 h-95" src="../../../Images/shop1.jpg" alt="Image">
     <section>
       <div class="container px-4 px-lg-5 mt-3">
-        <h5 class="my-3 px-lg-2">
+        <h4 class="my-3 px-lg-2">
           <router-link to="/" class="nav-link my-5">Home ></router-link>
-        </h5>
+        </h4>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
           <div class="col" v-for="store in stores" :key="store.id" style="cursor: pointer">
             <router-link class="link-underline link-underline-opacity-0"
