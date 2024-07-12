@@ -66,7 +66,8 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
         Route::resource('categories','CategoryController');
         Route::resource('slideshows','SlideshowController');
         Route::get('/dashboard', [UserController::class, 'getOwner'])->name('dashboard');
-
+        //Messages
+        Route::resource('messages','MessageController');
 
         Route::get('/profile',[ProfileController::class,'index'])->name('profile');
         Route::put('/profile-update',[ProfileController::class,'update'])->name('profile.update');
