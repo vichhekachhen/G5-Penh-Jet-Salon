@@ -1,19 +1,17 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\Request;
-use App\Models\User;
-use PhpParser\Node\Expr\AssignOp\Concat;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
+use App\Models\Province;
+use App\Models\Service;
+use App\Models\Slideshow;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
-
-
-class UserController extends Controller
+class ServiceController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -21,10 +19,11 @@ class UserController extends Controller
      */
     function __construct()
     {
-        $this->middleware('role_or_permission:User access|User create|User edit|User delete', ['only' => ['index', 'show']]);
-        $this->middleware('role_or_permission:User create', ['only' => ['create', 'store']]);
-        $this->middleware('role_or_permission:User edit', ['only' => ['edit', 'update']]);
-        $this->middleware('role_or_permission:User delete', ['only' => ['destroy']]);
+        $this->middleware('role_or_permission:Service access|Service create|Service edit|Service delete', ['only' => ['index', 'show']]);
+        $this->middleware('role_or_permission:Service create', ['only' => ['create', 'store']]);
+        $this->middleware('role_or_permission:Service edit', ['only' => ['edit', 'update']]);
+        $this->middleware('role_or_permission:Service delete', ['only' => ['destroy']]);
+        $this->middleware('role_or_permission:Service show', ['only' => ['show']]);
     }
 
     /**
@@ -34,32 +33,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::latest()->get();
+        $userAuth = Auth::user();
+        $services = Service::where('store_id',$userAuth->store_id)->paginate(10);
 
-        return view('setting.user.index', ['users' => $user]);
+        return view('service.index', compact('services'));
     }
-    public function getOwner()
-    {
-        $users = User::with('roles')->get();
-
-        // $owners = [];
-        $countOwner = 0;
-        $countCustomer = 0;
-
-        foreach ($users as $user) {
-            foreach ($user->roles as $role) {
-                if ($role->name === 'owner' && $user->store_id != 0) {
-                    // $owners[] = $user;
-                    $countOwner++;
-                } elseif ($role->name === 'user') {
-                    $countCustomer++;
-                }
-            }
-        }
-
-        return view('dashboard', ['countOwner' => $countOwner, 'countCustomer' => $countCustomer]);
-    }
-
 
 
     /**
@@ -69,8 +47,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::get();
-        return view('setting.user.new', ['roles' => $roles]);
+        $categories = Category::all();
+        return view('service.new', compact('categories'));
     }
 
     /**
@@ -79,21 +57,38 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
-
+        $user = Auth::user();
+        // dd($user);
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed'
+            'service_name' => 'required|string',
+            'price' => 'required|integer',
+            'discription' => 'nullable|string|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
+
+        $data = $request->except('image');
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('SlideshowImages', 'public');
+            $data['image'] = Storage::url($path);
+        } else {
+            $data['image'] = null;
+        }
+
+        $service = Service::create([
+            'service_name' => $request->service_name,
+            'description' => $request->description,
+            'duration' => $request->duration,
+            'price' => $request->price,
+            'store_id' => $user->store_id,
+            'discount' => $request->discount,
+            'image' => $data['image'],
+            'category_id' => $request->category_id
         ]);
-        $user->syncRoles($request->roles);
-        return redirect()->back()->withSuccess('User created !!!');
+        return redirect('/admin/services')->with('success', 'Service created successfully !!!');
     }
 
     /**
@@ -104,7 +99,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $service = Service::findOrFail($id);
+        return view('service.show', ['service' => $service]);
     }
 
     /**
@@ -113,11 +109,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(Service $service)
     {
-        $role = Role::get();
-        $user->roles;
-        return view('setting.user.edit', ['user' => $user, 'roles' => $role]);
+        $categories = Category::all();
+        return view('service.edit', ['service' => $service, 'categories'=> $categories]);	
     }
 
     /**
@@ -127,24 +122,28 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+
+    public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . $user->id . ',id',
-        ]);
+        $service = Service::find($id);
+        $rules = [
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ];
 
-        if ($request->password != null) {
-            $request->validate([
-                'password' => 'required|confirmed'
-            ]);
-            $validated['password'] = bcrypt($request->password);
+        $request->validate($rules);
+        $data = $request->except('image');
+        if ($request->hasFile('image')) {
+            if ($service->image) {
+                $oldImagePath = str_replace('/storage', 'public', $service->image);
+                Storage::delete($oldImagePath);
+            }
+
+            $path = $request->file('image')->store('ServiceImages', 'public');
+            $data['image'] = Storage::url($path);
         }
+        $service->update($data);
+        return redirect('/admin/services')->with('success', 'Service updated successfully !!!');
 
-        $user->update($validated);
-
-        $user->syncRoles($request->roles);
-        return redirect()->back()->withSuccess('User updated !!!');
     }
 
     /**
@@ -153,9 +152,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Role $role)
+    public function destroy(Service $service)
     {
-        $role->delete();
-        return redirect()->back()->withSuccess('Role deleted !!!');
+        $service->delete();
+        return redirect()->back()->withSuccess('Service deleted !!!');
     }
 }

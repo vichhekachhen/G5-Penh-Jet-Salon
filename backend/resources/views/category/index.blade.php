@@ -17,7 +17,7 @@
             </tr>
           </thead>
           <tbody>
-            @can('Province access')
+            @can('Category access')
             @foreach($categories as $key => $category)
             <tr class="hover:bg-grey-lighter">
               <td class="py-4 px-6 border-b border-grey-light">{{ $key + 1}}</td>

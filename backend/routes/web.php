@@ -4,8 +4,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\{
     ProfileController,
     MailSettingController,
-    UserController
+    UserController,
+    CategoryController,
+    PaymentController,
 };
+
 
 /*
 |--------------------------------------------------------------------------
@@ -68,6 +71,12 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
         Route::get('/dashboard', [UserController::class, 'getOwner'])->name('dashboard');
         //Messages
         Route::resource('messages','MessageController');
+        Route::resource('services','ServiceController');
+        Route::get('/service.new', [CategoryController::class,'getAllCategory'])->name('categories');
+        Route::resource('payments', 'PaymentController');
+        
+        Route::resource('bookings','BookingController');
+
 
         Route::get('/profile',[ProfileController::class,'index'])->name('profile');
         Route::put('/profile-update',[ProfileController::class,'update'])->name('profile.update');

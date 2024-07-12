@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API\Booking;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\BookingServiceListResource;
+use App\Http\Resources\CustomerBookingListResource;
 use App\Models\Booking;
 use App\Models\BookingService;
 use App\Models\CardItem;
@@ -18,7 +20,23 @@ class BookingController extends Controller
      */
     public function index()
     {
-        //
+        //customer side
+        $user = Auth::user();
+        $bookings = Booking::where('user_id', $user->id)->get();
+        return response()->json([
+            'success' => true,
+            'message' => 'Bookings fetched successfully',
+            'result' => CustomerBookingListResource::collection($bookings)
+        ]);
+    }
+
+    public function getBookingService(string $id){
+        $services = BookingService::where('booking_id', $id)->get();
+        return response()->json([
+            'success' => true,
+            'message' => 'Bookings fetched successfully',
+            'result' => BookingServiceListResource::collection($services)
+        ]);
     }
 
     /**
@@ -108,6 +126,12 @@ class BookingController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $booking = Booking::findOrFail($id);
+        $booking->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Booking deleted successfully'
+        ]);
     }
 }

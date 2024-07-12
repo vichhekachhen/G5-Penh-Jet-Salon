@@ -140,11 +140,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import {onMounted } from 'vue';
 import { useField, useForm } from 'vee-validate';
 import * as yup from 'yup';
-import { useProvinceStore } from '@/stores/province-list';
-import { useUserStore } from '@/stores/user';
+import { useProvinceStore } from '../../../stores/province-list';
+import { useUserStore } from '../../../stores/user';
 
 const provinceStore = useProvinceStore();
 
@@ -188,7 +188,7 @@ const { value: province_id, errorMessage: provinceError } = useField('province_i
 const userStore = useUserStore();
 
 const onSubmit = handleSubmit(async (values) => {
-    userStore.createUser(values);
+    userStore.createUserOwner(values); 
 });
 </script>
 

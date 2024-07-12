@@ -55,7 +55,11 @@ const onSubmit = handleSubmit(async (values) => {
   try {
     const { data } = await axiosInstance.post('/login', values)
     localStorage.setItem('access_token', data.access_token)
-    router.push('/')
+    if (data.role[0] === 'owner'){
+      router.push('/dashboard')
+    }else if (data.role[0] === 'user'){
+      router.push('/')
+    } 
   } catch (error) {
     console.warn('Error')
   }

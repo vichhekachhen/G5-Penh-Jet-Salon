@@ -37,12 +37,34 @@ const router = createRouter({
       name: 'register',
       component: () => import('../views/Users/Registers/RegisterView.vue')
     },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: () => import('../Components/Profile/Profile.vue')
+    },
+    {
+      path: '/payment',
+      name: 'payment',
+      component: () => import('../views/Users/Shops/Payment/ServicePayment.vue'),
+    },
+    {
+      path: '/history',
+      name: 'history',
+      component: () => import('../views/Users/History/HistoryBooking.vue')
+    },
     // =================ShopOwner=================
     {
       path: '/registerOwner',
       name: 'registerOwner',
       component: () => import('../views/Users/RegisterOwner/RegisterOwner.vue')
     },
+
+    {
+      path: '/infoDetail',
+      name: 'infoDetail',
+      component: () => import('../views/Users/RegisterOwner/InforDetail.vue')
+    },
+
     {
       path: '/listShop/:id',
       name: 'listShop',
