@@ -33,7 +33,8 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $services = Service::paginate(4);
+        $userAuth = Auth::user();
+        $services = Service::where('store_id',$userAuth->store_id)->paginate(10);
 
         return view('service.index', compact('services'));
     }
