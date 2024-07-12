@@ -17,7 +17,7 @@
                 <img v-else class="card-img-top" :src="'https://via.placeholder.com/100'" alt="Store Image" />
                 <div class="card-body">
                   <div class="text-start">
-                    <h5 class="text-pink-500">Shop: {{ store.shop_name }}
+                    <h5 class="text-pink-500">Shop:{{ store.shop_name }}
                     </h5>
                     <p class="mb-0"><b>Location:</b> {{ store.address.city }}</p>
                   </div>
