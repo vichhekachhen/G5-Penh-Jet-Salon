@@ -70,8 +70,8 @@
                       </div>
                       <div class="col-md-6">
                         <div class="mt-2 d-flex flex-row gap-4 align-items-center">
-                          <img class="w-15 h-50" src="../../../Images/aba.webp" data-bs-toggle="modal" data-bs-target="#exampleModalABA" alt="QR Scan ABA" @click="addQR(1)">
-                          <img class="w-15 h-50" src="../../../Images/wing.jpg" data-bs-toggle="modal" data-bs-target="#exampleModalWing" alt="QR Scan Wing" @click="addQR(2)">
+                          <img class="w-15 h-50" src="../../../Images/aba.webp" data-bs-toggle="modal" data-bs-target="#exampleModalABA" alt="QR Scan ABA" @click="addQR(id)">
+                          <!-- <img class="w-15 h-50" src="../../../Images/wing.jpg" data-bs-toggle="modal" data-bs-target="#exampleModalWing" alt="QR Scan Wing" @click="addQR(id)"> -->
                         </div>
                       </div>
                       <div class="text-center">
@@ -87,7 +87,7 @@
                               <h5 class="modal-title" id="exampleModalLabelABA">QR PAYMENT ABA</h5>
                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div class="modal-body d-flex justify-content-center" v-for="QR in QRCode.QR" :key="QR.id">
+                            <div class="modal-body d-flex justify-content-center" v-for="QR in cardItems.QR" :key="QR.id">
                               <img class="w-80 h-80" :src="baseURL + QR.qr_code" alt="QR Scan ABA">
                             </div>
                             <div class="modal-footer">
@@ -98,14 +98,14 @@
                       </div>
 
                       <!-- Wing Modal -->
-                      <div class="modal fade" id="exampleModalWing" tabindex="-1" aria-labelledby="exampleModalLabelWing" aria-hidden="true">
+                      <!-- <div class="modal fade" id="exampleModalWing" tabindex="-1" aria-labelledby="exampleModalLabelWing" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                           <div class="modal-content">
                             <div class="modal-header">
                               <h5 class="modal-title" id="exampleModalLabelWing">QR PAYMENT WING</h5>
                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div class="modal-body d-flex justify-content-center" v-for="QR in QRCode.QR" :key="QR.id">
+                            <div class="modal-body d-flex justify-content-center" v-for="QR in cardItems.QR" :key="QR.id">
                               <img class="w-80 h-80" :src="baseURL + QR.qr_code" alt="QR Scan Wing">
                             </div>
                             <div class="modal-footer">
@@ -113,7 +113,7 @@
                             </div>
                           </div>
                         </div>
-                      </div>
+                      </div> -->
                     </div>
                   </form>
                 </div>
@@ -170,10 +170,15 @@ const fetchService = async () => {
 const fetchAllCardService = async () => {
   await cardItems.fetchAllCards();
 };
+const listQR = async () => {
+  await cardItems.listQR();
+};
+
 
 onMounted(async () => {
   fetchService();
   fetchAllCardService();
+  listQR();
 });
 
 const formSchema = yup.object({
