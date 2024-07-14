@@ -65,8 +65,8 @@
                     </div>
                     <div class="row mb-3">
                       <div class="col-md-6">
-                        <label for="total" class="form-label"><strong>Total Price: ${{ calculateTotalPrice() }}</strong></label>
-                        <input type="text" id="total" class="form-control" required v-model="total" />
+                        <label for="pay" class="form-label"><strong>Total Price: ${{ calculateTotalPrice() }}</strong></label>
+                        <input type="text" id="pay" class="form-control" required v-model="pay" />
                       </div>
                       <div class="col-md-6">
                         <div class="mt-2 flex flex-row gap-4 items-center">
@@ -139,7 +139,7 @@ onMounted(async () => {
 const formSchema = yup.object({
   date: yup.date().required().label('Date'),
   time: yup.string().required().label('Time'),
-  total: yup.number().required().label('Total Price')
+  pay: yup.number().required().label('Total Price')
 });
 
 const { handleSubmit } = useForm({
@@ -148,7 +148,7 @@ const { handleSubmit } = useForm({
 
 const { value: date, errorMessage: dateError } = useField('date');
 const { value: time, errorMessage: timeError } = useField('time');
-const { value: total, errorMessage: totalError } = useField('total');
+const { value: pay, errorMessage: totalError } = useField('pay');
 
 const bookingService = handleSubmit(async (values) => {
   try {
