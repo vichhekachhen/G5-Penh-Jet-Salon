@@ -3,7 +3,12 @@
 namespace App\Http\Controllers\API\Booking;
 
 use App\Http\Controllers\Controller;
+<<<<<<< HEAD
 use App\Http\Resources\ListBookingResource;
+=======
+use App\Http\Resources\BookingServiceListResource;
+use App\Http\Resources\CustomerBookingListResource;
+>>>>>>> veak-show-QR-owner
 use App\Models\Booking;
 use App\Models\BookingService;
 use App\Models\CardItem;
@@ -19,12 +24,31 @@ class BookingController extends Controller
      */
     public function index()
     {
+<<<<<<< HEAD
         $user = Auth::user();
         $bookings = Booking::where('user_id', $user->id)->get(); // tem change some code 
         return response()->json([
             'success' => true,
             'message' => 'Bookings fetched successfully',
             'data' => ListBookingResource::collection($bookings)
+=======
+        //customer side
+        $user = Auth::user();
+        $bookings = Booking::where('user_id', $user->id)->get();
+        return response()->json([
+            'success' => true,
+            'message' => 'Bookings fetched successfully',
+            'result' => CustomerBookingListResource::collection($bookings)
+        ]);
+    }
+
+    public function getBookingService(string $id){
+        $services = BookingService::where('booking_id', $id)->get();
+        return response()->json([
+            'success' => true,
+            'message' => 'Bookings fetched successfully',
+            'result' => BookingServiceListResource::collection($services)
+>>>>>>> veak-show-QR-owner
         ]);
     }
 

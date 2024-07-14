@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Province;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use PhpParser\Node\Expr\AssignOp\Concat;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -42,8 +44,11 @@ class UserController extends Controller
     public function getOwner()
     {
         $users = User::with('roles')->get();
-        $services = Service::all();
+        $userAuth = Auth::user();
+        $services = Service::where('store_id', $userAuth->store_id)->get();
         $countService = $services->count();
+        $provices = Province::all();
+        $countProvince = $provices->count();
 
         // $owners = [];
         $countOwner = 0;
@@ -60,7 +65,7 @@ class UserController extends Controller
             }
         }
 
-        return view('dashboard', ['countOwner' => $countOwner, 'countCustomer' => $countCustomer, 'services' => $services, 'countService'=> $countService]);
+        return view('dashboard', ['countOwner' => $countOwner, 'countCustomer' => $countCustomer, 'services' => $services, 'countService'=> $countService, 'countProvince' => $countProvince]);
     }
 
 

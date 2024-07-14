@@ -28,3 +28,4 @@ class Booking extends Model
     //                 // Add any additional pivot table fields here
     // }
 }
+

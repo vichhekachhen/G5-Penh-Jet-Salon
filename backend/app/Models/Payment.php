@@ -5,19 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class QRcode extends Model
+class Payment extends Model
 {
     use HasFactory;
-
     protected $fillable = [
-        'qr_code',
-        'store_id',
+        'owner_id',
+        'amount',
+        'currency',
+        'payment_method',
+        'date',
+        'zip_code',
     ];
-
-    
-    public function store()
-    {
-        return $this->belongsTo(Store::class,'store_id','id');
-    }
-
 }

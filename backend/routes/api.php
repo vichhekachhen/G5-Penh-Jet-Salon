@@ -5,6 +5,7 @@ use App\Http\Controllers\API\CardItem\CardController;
 use App\Http\Controllers\API\Category\CategoryController;
 use App\Http\Controllers\API\Comment\CommentController;
 use App\Http\Controllers\API\Comment\ReplyController;
+use App\Http\Controllers\API\PaymentController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\APi\Province\ProvinceController;
 use App\Http\Controllers\APi\Service\ServiceController;
@@ -13,8 +14,10 @@ use App\Http\Controllers\API\Store\StoreController;
 use App\Http\Controllers\API\User\UserController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\StripePaymentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\QR\QRController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,8 +73,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     //booking
     Route::post('/booking', [BookingController::class, 'store']);
-    Route::get('booking/list', [BookingController::class, 'index']);  // tem add history bookings owner
+    Route::get('/booking/list', [BookingController::class, 'index']);
     Route::delete('{id}', [BookingController::class, 'destroy']);
+    Route::get('/services/detail/{booking_id}', [BookingController::class, 'getBookingService']);
 
 });
 
@@ -92,3 +96,6 @@ Route::middleware('auth:sanctum')->prefix('reply')->group(function () {
 Route::get('comment/list/{service_id}', [CommentController::class, 'index']);
 Route::get('reply/list/{comment_id}', [ReplyController::class, 'index']);
 
+//payment
+Route::post('/stripe/payment', [StripePaymentController::class, 'makePayment']);
+Route::get('/list/QR/{store_id}', [QRController::class, 'index']);
