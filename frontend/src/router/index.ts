@@ -77,11 +77,6 @@ const router = createRouter({
       component: () => import('../views/Users/Shops/ListService.vue'),
       props: true
     },
-    {
-      path: '/listBooking',
-      name: 'listBooking',
-      component: () => import('../Components/OwnerPage/Booking/ListBooking.vue'),
-    }
   ],
   linkExactActiveClass: 'bg-danger text-white border-bottom',
 })

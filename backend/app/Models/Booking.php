@@ -22,4 +22,9 @@ class Booking extends Model
     {
         return $this->belongsTo(Store::class,'store_id','id');
     }
+    // public function services()
+    // {
+    //     return $this->belongsToMany(Service::class, 'service_id', 'id');
+    //                 // Add any additional pivot table fields here
+    // }
 }
