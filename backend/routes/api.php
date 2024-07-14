@@ -17,6 +17,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StripePaymentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\BookingService\BookingServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,7 +75,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/booking', [BookingController::class, 'store']);
     Route::get('/booking/list', [BookingController::class, 'index']);
     Route::delete('{id}', [BookingController::class, 'destroy']);
-    Route::get('/services/detail/{booking_id}', [BookingController::class, 'getBookingService']);
+
+    Route::get('/services/detail/{booking_id}', [BookingServiceController::class, 'getBookingService']);
 
 });
 
