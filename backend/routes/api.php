@@ -17,6 +17,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StripePaymentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\QR\QRController;
 
 /*
 |--------------------------------------------------------------------------
@@ -97,3 +98,4 @@ Route::get('reply/list/{comment_id}', [ReplyController::class, 'index']);
 
 //payment
 Route::post('/stripe/payment', [StripePaymentController::class, 'makePayment']);
+Route::get('/list/QR/{store_id}', [QRController::class, 'index']);
