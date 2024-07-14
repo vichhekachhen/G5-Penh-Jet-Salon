@@ -25,6 +25,7 @@
               <td>{{ booking.total_price }}</td>
               <td class="text-blue" data-bs-toggle="modal" data-bs-target="#exampleModal">Details</td>
             </tr>
+            {{ useBooking }}
           </tbody>
         </table>
       </div>
