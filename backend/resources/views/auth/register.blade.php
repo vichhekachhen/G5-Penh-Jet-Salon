@@ -31,7 +31,7 @@
                                 <option value="{{$province->id}}">{{$province->province_name}}</option>
                                 @endforeach
                             </select>
-                            <input name="city" id="city" type="text" class="bg-gray-100 w-full text-sm text-gray-800 px-4 py-2 focus:bg-transparent outline-orange-300 transition-all" placeholder="Location Of Shop" />
+                            <input name="city" id="city" type="text" class="bg-gray-100 w-full text-sm text-gray-800 px-4 py-2 focus:bg-transparent outline-orange-300 transition-all" placeholder="Location Of Shop" id="searchInput" />
                             <label for="qr_code" class="text-gray-500 text-sm">Upload QR Code:</label>
                             <input name="qr_code" type="file" class="bg-gray-100 w-full text-sm text-gray-800 px-4 py-2 focus:bg-transparent outline-orange-300 transition-all" placeholder="Enter confirm password" />
                             <div class="flex items-center">
@@ -62,3 +62,30 @@
 
 
 </x-guest-layout>
+<script setup>
+import { ref, onMounted } from 'vue'
+
+const searchInput = ref('')
+let autocomplete = null
+
+onMounted(() => {
+  autocomplete = new google.maps.places.Autocomplete(document.getElementById('search_input'), {
+    types: ['geocode'],
+    componentRestrictions: {
+      country: 'KH'
+    }
+  })
+
+  google.maps.event.addListener(autocomplete, 'place_changed', () => {
+    const place = autocomplete.getPlace()
+    console.log(place) //object of map
+    console.log(place.formatted_address) //object of map
+    if (place.geometry && place.geometry.location) {
+      const latitude = place.geometry.location.lat();
+      const longitude = place.geometry.location.lng();
+      console.log('Latitude:', latitude);
+      console.log('Longitude:', longitude);
+    }
+  })
+})
+</script>

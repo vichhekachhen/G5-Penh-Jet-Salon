@@ -34,11 +34,10 @@
           <div class="flex items-center border border-red-500 rounded-lg">
             <input
               type="text"
-              placeholder="Enter your address"
               class="w-full py-2 px-4 rounded-lg"
-              ref="autocompleteInput"
-              v-model="inputAddress"
-              name="inputAddress"
+              id="search_input"
+              placeholder="Enter your address"
+              v-model="searchInput"
             />
             <a
               class="py-2 px-4 bg-red-500 text-white rounded-lg ml-2 cursor-pointer"
@@ -53,24 +52,26 @@
     </div>
   </div>
   <div>
-    <div ref="map" style="width: 500px; height: 500px; margin-top: 20px;"></div>
+    <div class="text-center">
+      <div ref="map" style="width: 1200px; height: 390px; margin-top: 20px"></div>
+    </div>
   </div>
 </template>
 
 <script setup>
 import axios from 'axios'
-import component from 'element-plus/es/components/tree-select/src/tree-select-option.mjs';
+import component from 'element-plus/es/components/tree-select/src/tree-select-option.mjs'
 import { ref, onMounted } from 'vue'
 
 const map = ref(null)
 const address = ref('')
-const inputAddress = ref('')
 const error = ref('')
 const spinner = ref(false)
 const latitude = ref('')
 const longitude = ref('')
-const autocompleteInput = ref(null);
-let autocomplete;
+
+const searchInput = ref('')
+let autocomplete = null
 
 const locatorButtonPressed = () => {
   spinner.value = true
@@ -93,6 +94,7 @@ const locatorButtonPressed = () => {
     error.value = 'Geolocation is not supported by this browser.'
     spinner.value = false
   }
+  searchInput.value = ''
 }
 
 const getAddressFrom = (lat, long) => {
@@ -132,20 +134,23 @@ const showLocationOnTheMap = (lat, long) => {
 }
 
 onMounted(() => {
-  let searchInput = document.querySelector('input[name="inputAddress"]')
+  autocomplete = new google.maps.places.Autocomplete(document.getElementById('search_input'), {
+    types: ['geocode'],
+    componentRestrictions: {
+      country: 'KH'
+    }
+  })
 
-  document.addEventListener('DomContentLoaded', function () {
-    let autocomplete = new window.google.maps.places.Autocomplete(
-      searchInput.value,{
-      types: ['geocode'] , 
-      componentRestrictions: {country: 'KH'}
-  }
-    );
-    autocomplete.addListener('place_changed', function() {
-      let near_place =  autocomplete.getPlace();
-    })
-
+  google.maps.event.addListener(autocomplete, 'place_changed', () => {
+    const place = autocomplete.getPlace()
+    // console.log(place) //object of map
+    // console.log(place.formatted_address) //object of map
+    if (place.geometry && place.geometry.location) {
+      const latitude = place.geometry.location.lat();
+      const longitude = place.geometry.location.lng();
+      showLocationOnTheMap(latitude, longitude);
+      address.value = place.formatted_address;
+    }
   })
 })
-
 </script>
