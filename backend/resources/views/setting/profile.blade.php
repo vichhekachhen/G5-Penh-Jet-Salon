@@ -36,10 +36,10 @@
                         </div>
 
                         <div class="flex text-gray-500 mt-5">
-                            <div class="bg-white rounded-lg">
-                              <div class="" x-data="imageData()">
-                                <div x-show="previewUrl == '' && imgurl == ''">
-                                  <p class="text-center uppercase text-bold">
+                          <div class="bg-white rounded-lg">
+                            <div class="" x-data="imageData()">
+                              <div x-show="previewUrl == '' && imgurl == ''">
+                                <p class="text-center uppercase text-bold">
                                     <label for="thumbnailprev" class="cursor-pointer">
                                       Upload a file
                                     </label>
