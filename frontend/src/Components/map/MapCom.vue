@@ -1,23 +1,151 @@
 <template>
-  <div class="container">
-    <h1>Map</h1>
-    <body class="flex items-center justify-center h-screen bg-gray-100">
-      <div class="bg-white p-4 rounded shadow-md flex items-center space-x-2">
-        <input
-          type="text"
-          placeholder="Enter Your Address"
-          class="border border-gray-300 p-2 rounded flex-grow"
-        />
-        <button class="bg-red-500 text-white px-4 py-2 rounded">Go</button>
-      </div>
-    </body>
+  <div class="flex justify-center">
+    <div class="w-1/2">
+      <form class="p-8">
+        <div class="mb-4">
+          <div
+            v-if="error !== ''"
+            class="flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
+            role="alert"
+          >
+            <svg
+              class="flex-shrink-0 inline w-4 h-4 me-3"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
+              />
+            </svg>
+            <span class="sr-only">Info</span>
+            <div>
+              <span class="font-medium">{{ error }}</span>
+            </div>
+          </div>
+          <div
+            v-else
+            class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
+            role="alert"
+          >
+            <span class="font-medium">{{ address }}</span>
+          </div>
+          <div class="flex items-center border border-red-500 rounded-lg">
+            <input
+              type="text"
+              placeholder="Enter your address"
+              class="w-full py-2 px-4 rounded-lg"
+              ref="autocompleteInput"
+              v-model="inputAddress"
+              name="inputAddress"
+            />
+            <a
+              class="py-2 px-4 bg-red-500 text-white rounded-lg ml-2 cursor-pointer"
+              @click.prevent="locatorButtonPressed"
+            >
+              Location
+            </a>
+          </div>
+        </div>
+        <button class="py-2 px-4 bg-blue-500 text-white rounded-lg">Go</button>
+      </form>
+    </div>
+  </div>
+  <div>
+    <div ref="map" style="width: 500px; height: 500px; margin-top: 20px;"></div>
   </div>
 </template>
 
-<script>
-export default {}
+<script setup>
+import axios from 'axios'
+import component from 'element-plus/es/components/tree-select/src/tree-select-option.mjs';
+import { ref, onMounted } from 'vue'
+
+const map = ref(null)
+const address = ref('')
+const inputAddress = ref('')
+const error = ref('')
+const spinner = ref(false)
+const latitude = ref('')
+const longitude = ref('')
+const autocompleteInput = ref(null);
+let autocomplete;
+
+const locatorButtonPressed = () => {
+  spinner.value = true
+
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        getAddressFrom(position.coords.latitude, position.coords.longitude)
+        latitude.value = position.coords.latitude
+        longitude.value = position.coords.longitude
+
+        showLocationOnTheMap(position.coords.latitude, position.coords.longitude)
+      },
+      (error) => {
+        error.value = error.message
+        spinner.value = false
+      }
+    )
+  } else {
+    error.value = 'Geolocation is not supported by this browser.'
+    spinner.value = false
+  }
+}
+
+const getAddressFrom = (lat, long) => {
+  axios
+    .get(
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=AIzaSyDtSAkdlKPhpaKbVV4B_m7QO2b8CrBEGJ8`
+    )
+    .then((response) => {
+      if (response.data.error_message) {
+        error.value = response.data.error_message
+      } else {
+        address.value = response.data.results[0].formatted_address // Adjust index as needed
+      }
+      spinner.value = false
+    })
+    .catch((error) => {
+      error.value = error.message
+      spinner.value = false
+    })
+}
+
+const showLocationOnTheMap = (lat, long) => {
+  if (window.google && window.google.maps && map.value) {
+    const googleMap = new window.google.maps.Map(map.value, {
+      center: { lat, lng: long },
+      zoom: 15
+    })
+
+    new window.google.maps.Marker({
+      position: { lat, lng: long },
+      map: googleMap,
+      title: 'Current Location'
+    })
+  } else {
+    console.error('Google Maps API is not loaded')
+  }
+}
+
+onMounted(() => {
+  let searchInput = document.querySelector('input[name="inputAddress"]')
+
+  document.addEventListener('DomContentLoaded', function () {
+    let autocomplete = new window.google.maps.places.Autocomplete(
+      searchInput.value,{
+      types: ['geocode'] , 
+      componentRestrictions: {country: 'KH'}
+  }
+    );
+    autocomplete.addListener('place_changed', function() {
+      let near_place =  autocomplete.getPlace();
+    })
+
+  })
+})
+
 </script>
-
-<style>
-</style>
-
