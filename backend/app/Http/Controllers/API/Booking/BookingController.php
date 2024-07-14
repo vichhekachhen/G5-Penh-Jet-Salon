@@ -67,11 +67,15 @@ class BookingController extends Controller
 
             if ($service) {
                 $store_id = $service->store_id;
-                $total_price += $service->price;
                 BookingService::create([
                     "booking_id" => $booking->id,
                     "service_id" => $pre_booking->service_id,
                 ]);
+                if ($service->discount !== null){
+                    $total_price += $service->discount;
+                }else{
+                    $total_price += $service->price;
+                }
             }
         }
 
