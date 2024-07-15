@@ -2,7 +2,7 @@
   <WebLayout>
     <div class="container mt-4 p-4 bg-white shadow rounded">
       <div class="text-center mb-4">
-        <h3 class="text-pink-500">History Booking</h3>
+        <h3 class="text-gray-500">History Booking</h3>
       </div>
       <div class="table-responsive">
         <table class="table table-striped">
@@ -22,8 +22,8 @@
               <td>{{ booking.shop_name }}</td>
               <td>{{ booking.date }}</td>
               <td>{{ booking.time }}</td>
-              <td>{{ booking.total_price }}</td>
-              <td class="text-blue">{{ booking.status }}</td>
+              <td>${{ booking.total_price }}</td>
+              <td class="text-green font-bold">{{ booking.status }}</td>
             </tr>
           </tbody>
         </table>
