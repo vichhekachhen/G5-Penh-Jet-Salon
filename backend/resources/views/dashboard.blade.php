@@ -85,7 +85,7 @@
                     <a href="#">
                         <h5 class="mb-2 text-2xl font-semibold tracking-tight text-green-700 dark:text-white">Booking</h5>
                     </a>
-                    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400 font-bold">14</p>
+                    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400 font-bold">0</p>
                 </div>
             </div>
             <div class="flex max-w-sm p-3 bg-white border-l-4 border-pink-500 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
