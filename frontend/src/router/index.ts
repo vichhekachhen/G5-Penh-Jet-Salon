@@ -42,17 +42,47 @@ const router = createRouter({
       name: 'profile',
       component: () => import('../Components/Profile/Profile.vue')
     },
+    {
+      path: '/payment',
+      name: 'payment',
+      component: () => import('../views/Users/Shops/Payment/ServicePayment.vue'),
+    },
+    {
+      path: '/history',
+      name: 'history',
+      component: () => import('../views/Users/History/HistoryBooking.vue')
+    },
     // =================ShopOwner=================
     {
       path: '/registerOwner',
       name: 'registerOwner',
       component: () => import('../views/Users/RegisterOwner/RegisterOwner.vue')
     },
+
+    {
+      path: '/infoDetail',
+      name: 'infoDetail',
+      component: () => import('../views/Users/RegisterOwner/InforDetail.vue')
+    },
+
     {
       path: '/listShop/:id',
       name: 'listShop',
-      component: () => import('../views/Shops/ListShopView.vue'),
+      component: () => import('../views/Users/Shops/ListShops.vue'),
       props: true
+    },
+    {
+      path: '/listService/:id',
+      name: 'listService',
+      component: () => import('../views/Users/Shops/ListService.vue'),
+      props: true
+    },
+    {
+      path: '/comment/:id',
+      name: 'comment',
+      component: () => import('../views/Users/Shops/Comment/CommentService.vue'),
+      props: true
+
     }
   ],
   linkExactActiveClass: 'bg-danger text-white border-bottom',

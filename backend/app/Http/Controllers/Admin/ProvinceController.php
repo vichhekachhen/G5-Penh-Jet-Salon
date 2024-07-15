@@ -105,7 +105,7 @@ class ProvinceController extends Controller
     $province = Province::create($data);
 
     // Redirect back with a success message
-    return redirect()->back()->with('success', 'Province created successfully !!!');
+    return redirect('/admin/provinces')->with('success', 'Province created successfully !!!');
 }
 
     /**
@@ -163,8 +163,8 @@ class ProvinceController extends Controller
         $data['image'] = Storage::url($path);
     }
     $province->update($data);
+    return redirect('/admin/provinces')->with('success', 'Province updated successfully !!!');
 
-    return redirect()->back()->with('success', 'Province updated successfully !!!');
 }
 
     /**

@@ -1,30 +1,33 @@
 <template>
   <div>
-    <img class="w-100 h-95" src="../../../Images/shop1.jpg" alt="Image">
+    <!-- <img class="w-100 h-95" src="../../../Images/shop1.jpg" alt="Image"> -->
     <section>
       <div class="container px-4 px-lg-5 mt-3">
-        <h5 class="my-3 px-lg-2">
-          <router-link to="/" class="nav-link my-5">Home ></router-link> 
-        </h5>
+        <h4 class="my-3 px-lg-2">
+          <router-link to="/" class="nav-link my-5">Home ></router-link>
+        </h4>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
           <div class="col" v-for="store in stores" :key="store.id" style="cursor: pointer">
-            <div @click="handleStoreClick(store)" class="card h-100 hover-shadow">
-              <div v-if="isOnSale(store)" class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">
-                Sale
-              </div>
-              <img v-if="store.shop_profile !== null" class="card-img-top" :src="'http://127.0.0.1:8000'+store.shop_profile" 
-              alt="Store Image" style="width: auto; height:10rem;" />
-              <img v-else class="card-img-top" :src="'https://via.placeholder.com/100'" alt="Store Image" />
-              <div class="card-body">
-                <div class="text-start">
-                  <h5 class="text-pink-500">Shop: {{ store.shop_name }}</h5>
-                  <p class="mb-0"><b>Location:</b> {{ store.address.city }}</p>
+            <router-link class="link-underline link-underline-opacity-0"
+              :to="{ name: 'listService', params: { id: store.id } }">
+              <div @click="handleStoreClick(store)" class="card h-100 hover-shadow">
+                <img v-if="store.shop_profile !== null" class="card-img-top"
+                  :src="'http://127.0.0.1:8000' + store.shop_profile" alt="Store Image"
+                  style="width: auto; height:10rem;" />
+                <img v-else class="card-img-top" :src="'https://via.placeholder.com/100'" alt="Store Image" />
+                <div class="card-body">
+                  <div class="text-start">
+                    <h5 class="text-pink-500">Shop:{{ store.shop_name }}
+                    </h5>
+                    <p class="mb-0"><b>Location:</b> {{ store.address.city }}</p>
+                  </div>
+                  <div class="d-flex justify-content-start ">
+                    <b>Rate:</b>
+                    <div v-for="star in 5" :key="star" class=" bi-star-fill text-warning pl-2"></div>
+                  </div>
                 </div>
-                <div class="d-flex justify-content-start ">
-                  <b>Rate:</b> <div v-for="star in 5" :key="star" class=" bi-star-fill text-warning pl-2"></div>
-                </div>
               </div>
-            </div>
+            </router-link>
           </div>
         </div>
       </div>
@@ -61,10 +64,7 @@ export default defineComponent({
     handleStoreClick(store: any) {
       // Emit an event to the parent component
       this.$emit('storeClicked', store);
-    },
-    isOnSale(store: any): boolean {
-      return store.onSale;
-    },
+    }
   },
 });
 </script>

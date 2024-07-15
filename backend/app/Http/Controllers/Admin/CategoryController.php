@@ -63,8 +63,7 @@ class CategoryController extends Controller
         Category::create($data);
 
         // Redirect back with a success message
-        return redirect()->back()->withSuccess('Category created successfully !!!');
-
+        return redirect('/admin/categories')->with('success', 'Category created successfully !!!');
     }
 
     /**
@@ -86,6 +85,7 @@ class CategoryController extends Controller
         return view('category.edit', ['category' => $category]);
     }
 
+
     /**
      * Update the specified resource in storage.
      *
@@ -106,7 +106,7 @@ class CategoryController extends Controller
         $data = $request->validate($rules);
         $category->update($data);
 
-        return redirect()->back()->withSuccess('Category updated successfully !!!');
+        return redirect('/admin/categories')->with('success', 'Category updated successfully !!!');
     }
 
     /**
