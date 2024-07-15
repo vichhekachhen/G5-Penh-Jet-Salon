@@ -23,12 +23,12 @@
               <td>{{ booking.date }}</td>
               <td>{{ booking.time }}</td>
               <td>{{ booking.total_price }}</td>
-              <td class="text-blue" data-bs-toggle="modal" data-bs-target="#exampleModal">Details</td>
+              <td class="text-blue" data-bs-toggle="modal" data-bs-target="#exampleModal" @click="listDetail(booking.id)">Details</td>
             </tr>
-            {{ useBooking }}
           </tbody>
         </table>
       </div>
+
     </div>
     <!-- {{ store.bookings }} -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel">
@@ -53,7 +53,6 @@
                     </tr>
                   </thead>
                   <tbody>
-
                     
                   </tbody>
                 </table>
@@ -61,8 +60,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
           </div>
         </div>
       </div>
@@ -72,7 +70,7 @@
 
 <script>
 import WebLayout from '@/Components/Layouts/WebLayout.vue';
-import { useBookingStore } from '@/stores/booking'; // Ensure this path is correct
+import { useBookingStore } from '../../../stores/booking'; // Ensure this path is correct
 const useBooking = useBookingStore();
 
 export default {
@@ -90,8 +88,8 @@ export default {
   },
   methods: {
     fetchBookings(){
-      useBooking.fetchAllBokkings();
-    }
+      useBooking.fetchAllBokkings(); 
+    },
   }
 };
 </script>
