@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img class="w-100 h-95" src="../../../Images/shop1.jpg" alt="Image">
+    <!-- <img class="w-100 h-95" src="../../../Images/shop1.jpg" alt="Image"> -->
     <section>
       <div class="container px-4 px-lg-5 mt-3">
         <h4 class="my-3 px-lg-2">

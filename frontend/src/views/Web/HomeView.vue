@@ -6,7 +6,6 @@
       <a href="/register" class="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded transition-colors duration-300">Register now</a>
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-    <MapComponent></MapComponent>
     <WebLayout></WebLayout>
     <SlineShow></SlineShow>
     <CardImageComponentVue></CardImageComponentVue>
@@ -29,7 +28,6 @@ import SlineShow from '@/Components/UserPage/SlineShow/SlineShowComponent.vue'
 import CardImageComponentVue from '@/Components/UserPage/ProvinceCard/CardImageComponents.vue'
 import Footer from '@/Components/Footer/footerComponent.vue'
 import { useAuthStore } from '@/stores/auth-store'
-import MapComponent from '@/Components/map/MapCom.vue'
 
 const userAuth = useAuthStore()
 
