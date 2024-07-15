@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Message;
 use Illuminate\Http\Request;
 use App\Models\Province;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-class CategoryController extends Controller
+class MessageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,10 +20,10 @@ class CategoryController extends Controller
      */
     function __construct()
     {
-        $this->middleware('role_or_permission:Category access|Category create|Category edit|Category delete', ['only' => ['index', 'show']]);
-        $this->middleware('role_or_permission:Category create', ['only' => ['create', 'store']]);
-        $this->middleware('role_or_permission:Category edit', ['only' => ['edit', 'update']]);
-        $this->middleware('role_or_permission:Category delete', ['only' => ['destroy']]);
+        $this->middleware('role_or_permission:Message access|Message create|Message edit|Message delete', ['only' => ['index', 'show']]);
+        $this->middleware('role_or_permission:Message create', ['only' => ['create', 'store']]);
+        $this->middleware('role_or_permission:Message edit', ['only' => ['edit', 'update']]);
+        $this->middleware('role_or_permission:Message delete', ['only' => ['destroy']]);
     }
 
     /**
@@ -31,9 +33,11 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::paginate(4);
+        $users = User::all();
 
-        return view('category.index', ['categories' => $categories]);
+        return view('message.index', [
+            'users' => $users
+        ]);
     }
 
     /**
@@ -43,7 +47,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('category.new');
+        return view('message.new');
     }
 
     /**
@@ -64,7 +68,6 @@ class CategoryController extends Controller
 
         // Redirect back with a success message
         return redirect('/admin/categories')->with('success', 'Category created successfully !!!');
-
     }
 
     /**
@@ -81,9 +84,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit(Message $message)
     {
-        return view('category.edit', ['category' => $category]);
+        return view('message.edit', ['message' => $category]);
     }
 
     /**
@@ -107,7 +110,6 @@ class CategoryController extends Controller
         $category->update($data);
 
         return redirect('/admin/categories')->with('success', 'Category updated successfully !!!');
-
     }
 
     /**
