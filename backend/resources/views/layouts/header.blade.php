@@ -31,6 +31,10 @@
                 @can('Payment create')
                 <a href="{{route('admin.payments.create')}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white">Payment</a>
                 @endcan
+
+                @can('Payment access')
+                <a href="{{route('admin.payments.index')}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white">Account balance</a>
+                @endcan
                 <form method="POST" action="{{ route('admin.logout') }}">
                     @csrf
                     <a href="{{ route('admin.logout') }}" onclick="event.preventDefault();
