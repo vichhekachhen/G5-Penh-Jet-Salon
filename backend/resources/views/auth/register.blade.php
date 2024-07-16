@@ -5,14 +5,11 @@
             <x-auth-session-status class="mb-4" :status="session('status')" />
             <!-- Validation Errors -->
             <x-auth-validation-errors class="mb-4" :errors="$errors" />
+          <h1 class="font-bold text-center text-4xl text-yellow-500">Penh Jet<span class="text-blue-500"> Salon</span></h1>
             <div class="flex flex-col justify-center font-[sans-serif] p-4 ">
-                <div class="max-w-md w-full mx-auto shadow-[0_2px_10px_-2px_rgba(195,169,50,0.5)] p-8 relative mt-12">
-                    <div class="bg-white w-24 h-24 border-[10px] p-1.5 absolute left-0 right-0 mx-auto -top-12 rounded-full overflow-hidden">
-                        <a href="javascript:void(0)"><img src="https://readymadeui.com/readymadeui-short.svg" alt="logo" class='w-full inline-block' />
-                        </a>
-                    </div>
+                <div class="max-w-md w-full mx-auto shadow-[0_2px_10px_-2px_rgba(195,169,50,0.5)] relative">
 
-                    <form class="mt-12 bg-white p-8" method="POST" action="{{ route('admin.register') }}" enctype="multipart/form-data">
+                    <form class="bg-white p-8 rounded-lg shadow" method="POST" action="{{ route('admin.register') }}" enctype="multipart/form-data">
                         @csrf
                         <h3 class="text-xl font-bold text-orange-500 mb-8 text-center">Create free account</h3>
                         <div class="space-y-3">
@@ -60,7 +57,7 @@
                                     Create an account
                                 </button>
                             </div>
-                            <p class="text-sm mt-8 text-center text-gray-800">Already have an account? <a href="javascript:void(0);" class="text-orange-500 font-semibold hover:underline ml-1">Login here</a></p>
+                            <p class="text-sm mt-8 text-center text-gray-800">Already have an account? <a href="/" class="text-orange-500 font-semibold hover:underline ml-1">Login here</a></p>
                     </form>
                 </div>
             </div>

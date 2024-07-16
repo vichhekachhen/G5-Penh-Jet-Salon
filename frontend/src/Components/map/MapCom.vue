@@ -66,7 +66,7 @@
         <div ref="map" style="width: 100%; height: 400px"></div>
       </div>
     </div>
-    {{ shops}}
+    
   </div>
 </template>
 
@@ -74,7 +74,8 @@
 import axios from 'axios'
 import { ref, onMounted } from 'vue'
 import { useSalonStore } from '@/stores/store'
-import { useRoute } from 'vue-router';
+import { useRoute } from 'vue-router'
+import url from '../../api/url'
 
 const route = useRoute()
 const map = ref(null)
@@ -82,15 +83,18 @@ const address = ref('')
 const error = ref('')
 const searchInput = ref('')
 const useSalon = useSalonStore()
+const id = ref(route.params.id)
 const shops = ref([])
-const id = route.params.id;
+let googleMap = null
+let currentLocationMarker = null
+const markers = [] // Store markers to remove later
 
 const locatorButtonPressed = () => {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         getAddressFrom(position.coords.latitude, position.coords.longitude)
-        showLocationOnMap(position.coords.latitude, position.coords.longitude)
+        updateLocationOnMap(position.coords.latitude, position.coords.longitude)
       },
       (error) => {
         handleError(error.message)
@@ -104,9 +108,7 @@ const locatorButtonPressed = () => {
 
 const getAddressFrom = (lat, long) => {
   axios
-    .get(
-      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=AIzaSyDtSAkdlKPhpaKbVV4B_m7QO2b8CrBEGJ8`
-    )
+    .get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=AIzaSyDtSAkdlKPhpaKbVV4B_m7QO2b8CrBEGJ8`)
     .then((response) => {
       if (response.data.error_message) {
         handleError(response.data.error_message)
@@ -119,25 +121,25 @@ const getAddressFrom = (lat, long) => {
     })
 }
 
-const showLocationOnMap = (lat, long) => {
-  if (window.google && window.google.maps && map.value) {
-    const googleMap = new window.google.maps.Map(map.value, {
-      center: { lat, lng: long },
-      zoom: 12
-    })
+const updateLocationOnMap = (lat, long) => {
+  if (window.google && window.google.maps && googleMap) {
+    googleMap.panTo({ lat, lng: long })
 
     const beachFlagImg = {
       url: 'https://cdn-icons-png.flaticon.com/512/12207/12207498.png',
       scaledSize: new google.maps.Size(50, 50)
     }
 
-    new window.google.maps.Marker({
-      position: { lat, lng: long },
-      map: googleMap,
-      icon: beachFlagImg,
-      title: `${lat},${long}`
-    })
-    mapOfSalons(googleMap)
+    if (currentLocationMarker) {
+      currentLocationMarker.setPosition({ lat, lng: long })
+    } else {
+      currentLocationMarker = new window.google.maps.Marker({
+        position: { lat, lng: long },
+        map: googleMap,
+        icon: beachFlagImg,
+        title: `${lat},${long}`
+      })
+    }
   } else {
     console.error('Google Maps API is not loaded')
   }
@@ -147,48 +149,77 @@ const handleError = (errorMessage) => {
   error.value = errorMessage
 }
 
-const mapOfSalons = (googleMap) => {
-  //map
-  if (window.google && window.google.maps && map.value) {
+const mapOfSalons = () => {
+  // Clear existing markers
+  markers.forEach((marker) => {
+    marker.setMap(null)
+  })
+  markers.length = 0
+
+  if (window.google && window.google.maps && googleMap) {
     const salonImage = {
       url: 'https://cdn.iconscout.com/icon/premium/png-256-thumb/salon-location-3818204-3179250.png',
       scaledSize: new google.maps.Size(36, 36)
     }
 
     shops.value.forEach((shop) => {
+      let latitude = parseFloat(shop.address.lat)
+      let longitude = parseFloat(shop.address.lng)
       const marker = new window.google.maps.Marker({
-        position: { lat: shop.lat, lng: shop.lng },
+        position: { lat: latitude, lng: longitude },
         map: googleMap,
         icon: salonImage,
-        title: shop.address
+        title: shop.address.address
+        // animation: google.maps.Animation.DROP
       })
 
       const infoWindow = new window.google.maps.InfoWindow({
         content: `
-          <div>
-            <h5 class="text-center text-pink-500 text-lg">Shop Details</h5>
-            <p class="text-left">Address: ${shop.address}</p>
-            <p class="text-left">Latitude: ${shop.lat}</p>
-            <p class="text-left">Longitude: ${shop.lng}</p>
-          </div>
-        `
+      <div class="bg-white rounded-lg">
+                  <div class="flex-shrink-0">
+                        <img class="w-8 h-8 rounded-full" src="${
+                          url + shop.shop_profile
+                        }" alt="Neil image">
+                    </div>
+          <p class="text-pink-600">${shop.shop_name}</p>
+          <p class="text-gray-600">${shop.address.address}</p>
+      </div>
+              `
       })
 
       marker.addListener('click', () => {
         infoWindow.open(googleMap, marker)
       })
+
+      markers.push(marker) // Store marker for future removal
     })
   }
 }
 
+const fetchStores = () => {
+  useSalon.getAllStores(id.value).then(() => {
+    shops.value = useSalon.stores
+    if (window.google && window.google.maps && map.value && !googleMap) {
+      googleMap = new window.google.maps.Map(map.value, {
+        center: { lat: 11.5344226, lng: 104.8804893 },
+        zoom: 12,
+        gestureHandling: 'smooth'
+      })
+    }
+    mapOfSalons()
+  })
+}
+
 onMounted(() => {
-  //map
+  fetchStores()
+  shops.value = useSalon.stores
   if (window.google && window.google.maps && map.value) {
-    const googleMap = new window.google.maps.Map(map.value, {
+    googleMap = new window.google.maps.Map(map.value, {
       center: { lat: 11.5344226, lng: 104.8804893 },
-      zoom: 12
+      zoom: 12,
+      gestureHandling: 'smooth'
     })
-    mapOfSalons(googleMap)
+    mapOfSalons()
   }
 
   const autocomplete = new google.maps.places.Autocomplete(
@@ -207,19 +238,9 @@ onMounted(() => {
       const latitude = place.geometry.location.lat()
       const longitude = place.geometry.location.lng()
       getAddressFrom(latitude, longitude)
-      showLocationOnMap(latitude, longitude)
+      updateLocationOnMap(latitude, longitude)
     }
   })
 })
-
-
-const fetchStores = () => {
-  useSalon.getAllStores(id)
-  shops.value = useSalon.stores
-  console.log(shops);
-}
-
-onMounted(() => {
-  fetchStores()
-})
 </script>
+
