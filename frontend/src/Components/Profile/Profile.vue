@@ -1,115 +1,244 @@
 <template>
-  <div class="min-h-screen flex flex-col md:flex-row">
+  <div class="min-h-screen flex flex-col md:flex-row bg-gray-100">
     <!-- Sidebar -->
-    <div class="w-full md:w-1/2 p-4 bg-white">
+    <div class="w-full md:w-1/3 p-6 bg-white shadow-lg">
       <!-- Action Button (Return to Home) -->
-      <div class="flex justify-start mb-4">
-        <a href="/" class="bg-pink-600 text-white p-2 rounded transition-colors duration-300 btn-sm">
-          <i class="bi bi-arrow-left me-2"></i>
+      <div class="flex justify-start mb-6">
+        <a
+          href="/"
+          class="bg-pink-600 text-white p-2 rounded-full transition duration-300 hover:bg-pink-700"
+        >
+          <i class="bi bi-arrow-left"></i>
           <span class="sr-only">Back</span>
         </a>
       </div>
       <!-- Profile Header -->
-      <div class="text-center">
-    <img v-if="userAuth.user.profile" class="rounded-circle me-lg-2" :src="userAuth.user.profile" alt="" style="width: 40px; height: 40px">
-    <img v-else class="rounded-circle me-lg-2" src="../Images/default-user-image.png" alt="" style="width: 40px; height: 40px">
-    <h3 class="font-semibold ">{{ userAuth.user.name }}</h3>
+      <div class="text-center mb-6">
+        <img
+          v-if="userAuth.user.profile"
+          :src="userAuth.user.profile"
+          class="rounded-full mx-auto mb-4"
+          alt="Profile Picture"
+          style="width: 80px; height: 80px"
+        />
+        <img
+          v-else
+          src="../Images/default-user-image.png"
+          class="rounded-full mx-auto mb-4"
+          alt="Default User Image"
+          style="width: 80px; height: 80px"
+        />
+        <h3 class="font-semibold text-xl">{{ userAuth.user.name }}</h3>
+        <!-- Button trigger modal -->
+        <button
+          type="button"
+          class="mt-4 bg-pink-500 hover:bg-pink-600 text-white p-2 rounded transition duration-300"
+          data-bs-toggle="modal"
+          data-bs-target="#profileModal"
+        >
+          Update Profile
+        </button>
 
-    <!-- Button trigger modal -->
-    <button type="button" class="bg-pink-500 hover:bg-pink-600 text-white p-2 rounded transition-colors duration-300" data-bs-toggle="modal" data-bs-target="#profileModal">
-      Update Profile
-    </button>
-
-    <!-- Modal -->
-    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title text-pink-500" id="profileModalLabel">Update Profile</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <input type="file" class="file-upload">
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded transition-colors duration-300" @click="updateUserProfile">Save changes</button>
+        <!-- Modal -->
+        <div
+          class="modal fade"
+          id="profileModal"
+          tabindex="-1"
+          aria-labelledby="profileModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title text-pink-500" id="profileModalLabel">Update Profile</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <label for="profileImageUpload" class="block text-gray-700"
+                  >Upload Profile Image</label
+                >
+                <input
+                  type="file"
+                  id="profileImageUpload"
+                  @change="handleImageUpload"
+                  class="mt-1 p-2 border rounded w-full focus:outline-none focus:ring-2 focus:ring-pink-500"
+                />
+                <div v-if="profileImage" class="mt-4">
+                  <img :src="profileImage" alt="Preview" class="rounded w-24 h-24 object-cover" />
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  Close
+                </button>
+                <button
+                  type="button"
+                  class="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded transition duration-300"
+                  @click="updateUserProfile"
+                >
+                  Save changes
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-      <hr>
+      <hr />
       <!-- Stats Section -->
-      <div class="flex flex-col ml-5">
-        <h6 class="text-gray-800 font-semibold">Email</h6>
-        <p>{{ userAuth.user.email }}</p>
-        <h6 class="text-gray-800 font-semibold">Phone number</h6>
-        <p>{{ userAuth.user.phone }}</p>
-        <h6 class="text-gray-800 font-semibold">Date of Birth</h6>
-        <p>{{ userAuth.user.birth }}</p>
-        <h6 class="text-gray-800 font-semibold">Gender</h6>
-        <p>{{ userAuth.user.gender }}</p>
-        <h6 class="text-gray-800 font-semibold">Address</h6>
-        <p>{{ userAuth.user.location }}</p>
+      <div class="text-left mt-6">
+        <div class="mb-4">
+          <h6 class="text-gray-800 font-semibold">Email</h6>
+          <p>{{ userAuth.user.email }}</p>
+        </div>
+        <div class="mb-4">
+          <h6 class="text-gray-800 font-semibold">Phone Number</h6>
+          <p>{{ userAuth.user.phone }}</p>
+        </div>
+        <div class="mb-4">
+          <h6 class="text-gray-800 font-semibold">Date of Birth</h6>
+          <p>{{ userAuth.user.birth }}</p>
+        </div>
+        <div class="mb-4">
+          <h6 class="text-gray-800 font-semibold">Gender</h6>
+          <p>{{ userAuth.user.gender }}</p>
+        </div>
+        <div>
+          <h6 class="text-gray-800 font-semibold">Address</h6>
+          <p>{{ userAuth.user.location }}</p>
+        </div>
       </div>
     </div>
 
     <!-- Main Content Area -->
-    <div class="flex-1 p-5 md:p-10">
+    <div class="flex-1 p-6 md:p-10">
+      <!-- Success Alert -->
+      <div
+        v-if="showSuccessAlert"
+        class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-6"
+        role="alert"
+      >
+        <strong class="font-bold">Success!</strong>
+        <span class="block sm:inline">Your profile has been updated successfully.</span>
+        <span @click="showSuccessAlert = false" class="absolute top-0 bottom-0 right-0 px-4 py-3">
+          <svg
+            class="fill-current h-6 w-6 text-green-500"
+            role="button"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+          >
+            <title>Close</title>
+            <path
+              d="M14.348 5.652a.5.5 0 00-.707 0L10 9.293 6.36 5.652a.5.5 0 10-.707.707l3.64 3.641-3.64 3.641a.5.5 0 00.707.707L10 10.707l3.641 3.64a.5.5 0 00.707-.707L10.707 10l3.641-3.641a.5.5 0 000-.707z"
+            />
+          </svg>
+        </span>
+      </div>
+
       <!-- Navigation Tabs -->
-      <div class="mb-5 md:mb-10">
-        <ul class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-5 border-b md:border-none">
-          <a @click="toggleFormVisibility" href="#" class="text-pink-500 block">
-            Update Information</a>
-        </ul>
+      <div class="mb-6">
+        <button
+          @click="toggleFormVisibility"
+          class="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded transition duration-300"
+        >
+          Update
+        </button>
       </div>
 
       <!-- Form Section -->
-      <form v-if="isUpdate" @submit.prevent="updateUserProfile" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <form
+        v-if="isUpdate"
+        @submit.prevent="submitForm"
+        class="grid grid-cols-1 md:grid-cols-2 gap-6"
+      >
         <div>
-          <label class="block">Username</label>
-          <input type="text" v-model="userAuth.user.name" class="mt-1 p-2 border rounded w-full" />
+          <label class="block text-gray-700">Username</label>
+          <input
+            type="text"
+            v-model="userAuth.user.name"
+            class="mt-1 p-2 border rounded w-full focus:outline-none focus:ring-2 focus:ring-pink-500"
+          />
         </div>
         <div>
-          <label class="block">Phone Number</label>
-          <input type="tel" v-model="userAuth.user.phone" class="mt-1 p-2 border rounded w-full" />
+          <label class="block text-gray-700">Phone Number</label>
+          <input
+            type="tel"
+            v-model="userAuth.user.phone"
+            class="mt-1 p-2 border rounded w-full focus:outline-none focus:ring-2 focus:ring-pink-500"
+          />
         </div>
         <div>
-          <label class="block">Address</label>
-          <input type="text" v-model="userAuth.user.location" class="mt-1 p-2 border rounded w-full" />
+          <label class="block text-gray-700">Address</label>
+          <input
+            type="text"
+            v-model="userAuth.user.location"
+            class="mt-1 p-2 border rounded w-full focus:outline-none focus:ring-2 focus:ring-pink-500"
+          />
         </div>
         <div>
-          <label class="block">Email address</label>
-          <input type="email" v-model="userAuth.user.email" class="mt-1 p-2 border rounded w-full" />
+          <label class="block text-gray-700">Email address</label>
+          <input
+            type="email"
+            v-model="userAuth.user.email"
+            class="mt-1 p-2 border rounded w-full focus:outline-none focus:ring-2 focus:ring-pink-500"
+          />
         </div>
         <div>
-          <label class="block">Date Of Birth</label>
-          <input type="date" v-model="userAuth.user.birth" class="mt-1 p-2 border rounded w-full" />
+          <label class="block text-gray-700">Date Of Birth</label>
+          <input
+            type="date"
+            v-model="userAuth.user.birth"
+            class="mt-1 p-2 border rounded w-full focus:outline-none focus:ring-2 focus:ring-pink-500"
+          />
         </div>
         <div>
-          <label class="block">Gender</label>
-          <el-form-item class="mt-2">
-            <div>
-              <input class="form-check-input mt-2 m-2" type="radio" name="gender" id="male" value="male"
-                v-model="userAuth.user.gender" />
+          <label class="block text-gray-700">Gender</label>
+          <div class="mt-2">
+            <div class="flex items-center mb-2">
+              <input
+                class="form-check-input mt-1 mr-2"
+                type="radio"
+                name="gender"
+                id="male"
+                value="male"
+                v-model="userAuth.user.gender"
+              />
               <label class="form-check-label" for="male">Male</label>
             </div>
-            <div>
-              <input class="form-check-input mt-2 m-2" type="radio" name="gender" id="female" value="female"
-                v-model="userAuth.user.gender" />
+            <div class="flex items-center mb-2">
+              <input
+                class="form-check-input mt-1 mr-2"
+                type="radio"
+                name="gender"
+                id="female"
+                value="female"
+                v-model="userAuth.user.gender"
+              />
               <label class="form-check-label" for="female">Female</label>
             </div>
-            <div>
-              <input class="form-check-input mt-2 m-2" type="radio" name="gender" id="other" value="other"
-                v-model="userAuth.user.gender" />
+            <div class="flex items-center">
+              <input
+                class="form-check-input mt-1 mr-2"
+                type="radio"
+                name="gender"
+                id="other"
+                value="other"
+                v-model="userAuth.user.gender"
+              />
               <label class="form-check-label" for="other">Other</label>
             </div>
-          </el-form-item>
+          </div>
         </div>
 
         <div class="col-span-2 my-5">
-          <button type="submit" class="w-full bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded duration-300">
+          <button
+            type="submit"
+            class="w-full bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded transition duration-300"
+          >
             Update
           </button>
         </div>
@@ -119,36 +248,67 @@
 </template>
 
 <script>
-import { useAuthStore } from '@/stores/auth-store'
+import { useAuthStore } from '@/stores/auth-store';
 import { useUserStore } from '@/stores/user';
-const userAuth = useUserStore();
 
 export default {
   data() {
     return {
       isUpdate: false,
-      isClick: false,
-      num: 15,
-      userAuth: useAuthStore()
-    }
+      showSuccessAlert: false,
+      userAuth: useAuthStore(),
+      profileImage: null,
+    };
   },
   methods: {
     toggleFormVisibility() {
-      this.isUpdate = !this.isUpdate
-      this.isClick = false
+      this.isUpdate = !this.isUpdate;
     },
-    toggleHistory() {
-      this.isClick = !this.isClick
-      this.isUpdate = false
+    handleImageUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.profileImage = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
     },
-    submitForm() {
-      console.log('Form submitted!')
-      this.isUpdate = false
+    updateUserProfile() {
+      if (this.profileImage) {
+        this.userAuth.user.profile = this.profileImage;
+      }
+      this.closeModal('profileModal');
     },
-    async updateUserProfile() {
-      userAuth.updateUserInfo(this.userAuth.user)
-      window.alert('You are successfully updated!')
+    closeModal(modalId) {
+      const modalElement = document.getElementById(modalId);
+      const modal = bootstrap.Modal.getInstance(modalElement);
+      if (modal) {
+        modal.hide();
+      }
     },
-  }
-}
+    async submitForm() {
+      const updatedInfo = {
+        name: this.userAuth.user.name,
+        phone: this.userAuth.user.phone,
+        location: this.userAuth.user.location,
+        email: this.userAuth.user.email,
+        birth: this.userAuth.user.birth,
+        gender: this.userAuth.user.gender,
+        profile: this.userAuth.user.profile,
+      };
+      await useUserStore().updateUserInfo(this.userAuth.user, updatedInfo);
+      this.showSuccessAlert = true;
+      setTimeout(() => {
+        this.showSuccessAlert = false;
+      }, 3000);
+    },
+  },
+};
 </script>
+
+<style scoped>
+.modal-header {
+  background-color: #f8f8f8;
+}
+</style>
