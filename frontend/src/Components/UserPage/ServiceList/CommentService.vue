@@ -18,8 +18,9 @@
               </div>
               <div class="col-md-6">
                 <div class="card-body order-primary">
-                  <h4 class="card-title">
-                    Service: {{ serviceStore.service.service_name }}
+                  <h4 class="card-title d-flex justify-content-between align-items-center">
+                    <span>Service: {{ serviceStore.service.service_name }}</span>
+                    <i class="bi-heart" style="font-size:25px;" id="heart" @click="addFavorite()"></i>
                   </h4>
                   <div class="detail mb-3">
                     <h5 v-if="serviceStore.service.discount === null">
@@ -30,8 +31,7 @@
                     </h5>
                   </div>
                   <div class="d-flex justify-content-start ">
-                    <h5>Rate:</h5>
-                    <div v-for="star in 5" :key="star" class=" bi-star-fill text-orange pl-2"></div>
+                    <!-- <div v-for="star in 5" :key="star" class="bi-heart-fill text-danger pl-2"></div> -->
                   </div>
                   <div class="description mb-3">
                     <h5>Description: </h5>
@@ -138,6 +138,7 @@ import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useServiceStore } from '../../../stores/service'
 import { useCommentStore } from '../../../stores/comment'
+import { useLikeStore } from '../../../stores/like'
 import { useReplyStore } from '../../../stores/replyComment'
 import baseURL from '../../../api/url'
 
@@ -145,7 +146,13 @@ const route = useRoute()
 const serviceStore = useServiceStore()
 const useComment = useCommentStore()
 const useReply = useReplyStore()
+const likeStore = useLikeStore()
 
+const addFavorite = () => {
+  likeStore.addToFav(route.params.id);
+  
+  
+};
 // show the service
 const fetchServiceShow = async () => {
   await serviceStore.getServiceShow(route.params.id)

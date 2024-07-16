@@ -80,7 +80,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     //like servie
     Route::post('/like-service/{service_id}', [LikeController::class, 'likeService']);
-    Route::delete('/unlike', [LikeController::class, 'unlike'])->name('like.destroy');
 
 });
 
