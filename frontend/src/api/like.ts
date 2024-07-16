@@ -1,9 +1,13 @@
 import http from './api'
 
-export function fetchAllLikes() {
-  return http.post('/like-service/{service_id}')
+export function fetchAllLikes(id:number) {
+  return http.get(`/like/list/${id}`)
 }
 
 export function addFavorite(id:number) {
-  return http.post(`like-service/${id}`)
+  return http.post(`/like-service/${id}`)
+}
+
+export function getIsFavorite(id:number) {
+  return http.get(`/like/isFav/${id}`)
 }

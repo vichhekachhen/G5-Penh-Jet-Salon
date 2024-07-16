@@ -79,8 +79,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/services/detail/{booking_id}', [BookingController::class, 'getBookingService']);
 
     //like servie
-    Route::post('/like-service/{service_id}', [LikeController::class, 'likeService']);
-
+    Route::post('/like-service/{service_id}', [LikeController::class, 'store']);
+    Route::get('/like/isFav/{service_id}', [LikeController::class, 'isFavorited']);
 });
 
 Route::get('/category/list', [CategoryController::class, 'index']);
@@ -104,3 +104,5 @@ Route::get('reply/list/{comment_id}', [ReplyController::class, 'index']);
 Route::post('/stripe/payment', [StripePaymentController::class, 'makePayment']);
 Route::get('/list/QR/{store_id}', [QRController::class, 'index']);
 
+//list likes
+Route::get('/like/list/{service_id}', [LikeController::class, 'index']);
