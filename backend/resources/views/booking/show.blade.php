@@ -10,23 +10,23 @@
                         <p class="text-base text-gray-800">Gender: {{$userBooking[0]->gender}}</p>
                     </div>
 
-<!-- Total Price -->
-<div class="w-full sm:w-auto mb-4 sm:mb-0">
-    <?php
-    $totalPrice = 0;
-    $totalDiscount = 0;
-    foreach ($services as $service) {
-        $totalPrice += $service->price;
-        $totalDiscount += $service->discount;
-    }
-    ?>
-    <div class="bg-gray-200 border border-gray-300 rounded-lg shadow p-6 mx-auto" style="max-width: 300px;">
-        <div class="text-center">
-            <p class="text-1.5xl font-bold text-gray-800">Total Service Price: {{$totalPrice}} $</p>
-            <p class="text-1.5xl font-bold text-gray-800">Discounts price: {{$totalDiscount}} $</p>
-        </div>
-    </div>
-</div>
+                    <!-- Total Price -->
+                    <div class="w-full sm:w-auto mb-4 sm:mb-0">
+                        <?php
+                        $totalPrice = 0;
+                        $totalDiscount = 0;
+                        foreach ($services as $service) {
+                            $totalPrice += $service->price;
+                            $totalDiscount += $service->discount;
+                        }
+                        ?>
+                        <div class="bg-gray-200 border border-gray-300 rounded-lg shadow p-6 mx-auto" style="max-width: 300px;">
+                            <div class="text-center">
+                                <p class="text-1.5xl font-bold text-gray-800">Total Service Price: {{$totalPrice}} $</p>
+                                <p class="text-1.5xl font-bold text-gray-800">Discounts price: {{$totalDiscount}} $</p>
+                            </div>
+                        </div>
+                    </div>
 
                     <!-- Contact Info -->
                     <div class="w-full sm:w-auto border-t sm:border-t-0 sm:border-l-2 border-gray-400 sm:pl-6 sm:ml-6 pt-4 sm:pt-0">

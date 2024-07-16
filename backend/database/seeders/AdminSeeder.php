@@ -87,12 +87,14 @@ class AdminSeeder extends Seeder
         $permission = Permission::create(['name' => 'Service edit']);
         $permission = Permission::create(['name' => 'Service create']);
         $permission = Permission::create(['name' => 'Service delete']);
+        $permission = Permission::create(['name' => 'Service show']);
 
         $permission = Permission::create(['name' => 'Payment access']);
         $permission = Permission::create(['name' => 'Payment create']);
 
         $permission = Permission::create(['name' => 'Booking access']);
         $permission = Permission::create(['name' => 'Booking create']);
+        $permission = Permission::create(['name' => 'Booking show']);
 
         
         $admin->assignRole($admin_role);
