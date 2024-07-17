@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Frontuser;
+use App\Models\Province;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -20,7 +21,8 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        return view('front.auth.register');
+        $provinces = Province::all();
+        return view('auth.register', ['provinces' => $provinces]);
     }
 
     /**

@@ -46,10 +46,11 @@ const router = createRouter({
       path: '/payment',
       name: 'payment',
       component: () => import('../views/Users/Shops/Payment/ServicePayment.vue'),
-      // meta: {
-      //   requiresAuth: true,
-      //   role: 'User'
-      // }
+    },
+    {
+      path: '/history',
+      name: 'history',
+      component: () => import('../views/Users/History/HistoryBooking.vue')
     },
     // =================ShopOwner=================
     {
@@ -57,6 +58,13 @@ const router = createRouter({
       name: 'registerOwner',
       component: () => import('../views/Users/RegisterOwner/RegisterOwner.vue')
     },
+
+    {
+      path: '/infoDetail',
+      name: 'infoDetail',
+      component: () => import('../views/Users/RegisterOwner/InforDetail.vue')
+    },
+
     {
       path: '/listShop/:id',
       name: 'listShop',
@@ -70,9 +78,11 @@ const router = createRouter({
       props: true
     },
     {
-      path: '/listBooking',
-      name: 'listBooking',
-      component: () => import('../Components/OwnerPage/Booking/ListBooking.vue'),
+      path: '/comment/:id',
+      name: 'comment',
+      component: () => import('../views/Users/Shops/Comment/CommentService.vue'),
+      props: true
+
     }
   ],
   linkExactActiveClass: 'bg-danger text-white border-bottom',

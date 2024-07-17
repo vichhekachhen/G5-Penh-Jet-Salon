@@ -13,9 +13,9 @@
             <div v-if="cardItems.cards.length > 0" class="card p-3 rounded">
               <div v-for="item in cardItems.cards" :key="item.id">
                 <p><strong>Service Name: {{ item.service.service_name }}</strong></p>
-                <p v-if="item.service.discount"><strong>Price:${{ item.service.discount }}</strong></p>
-                <p v-else><strong>Price:${{ item.service.price }}</strong></p>
-                <p><strong>Quantity:{{ item.quantity }}</strong> </p>
+                <p v-if="item.service.discount"><strong>Price: ${{ item.service.discount }}</strong></p>
+                <p v-else><strong>Price: ${{ item.service.price }}</strong></p>
+                <p><strong>Quantity: {{ item.quantity }}</strong> </p>
                 <hr class="border-pink-500">
               </div>
             </div>
@@ -37,7 +37,7 @@
 
                   <form @submit.prevent="bookingService">
                     <div class="mb-3">
-                      <label for="fullName" class="form-label"><strong>User Name:</strong></label>
+                      <label for="fullName" class="form-label"><strong>User Name: </strong></label>
                       <input disabled type="text" id="fullName" class="form-control" :value="userAuth.user.name"
                         required />
                     </div>
@@ -52,33 +52,53 @@
                     </div>
 
                     <div class="row mb-3">
-                      <!-- Date  -->
+                      <!-- Date -->
                       <div class="col-md-6">
                         <label for="date" class="form-label"><strong>Date:</strong></label>
-                        <input type="date" id="date" class="form-control" v-model="date" required />
+                        <input type="date" id="date" class="form-control" v-model="date" required min="{{ today }}" />
                       </div>
-                      <!-- Time  -->
+                      <!-- Time -->
                       <div class="col-md-6">
                         <label for="time" class="form-label"><strong>Time:</strong></label>
-                        <input type="time" id="time" class="form-control" v-model="time" required />
+                        <input type="time" id="time" class="form-control" v-model="time" required min="08:00"
+                          max="22:00" />
                       </div>
                     </div>
                     <div class="row mb-3">
                       <div class="col-md-6">
-                        <label for="total" class="form-label"><strong>Total Price: ${{ calculateTotalPrice() }}</strong></label>
-                        <input type="text" id="total" class="form-control" required v-model="total" />
+                        <label for="pay" class="form-label"><strong>Total Price: ${{ calculateTotalPrice()
+                            }}</strong></label>
+                        <input type="text" id="pay" class="form-control" required v-model="pay"
+                          placeholder="Enter your payment" />
                       </div>
                       <div class="col-md-6">
-                        <div class="mt-2 flex flex-row gap-4 items-center">
-                          <img class="w-15 h-50" src="../../../Images/kaa qr.jpg" alt="QR Scan">
-                          <img class="w-15 h-50" src="../../../Images/kaa qr.jpg" alt="QR Scan">
-                          <img class="w-15 h-50" src="../../../Images/kaa qr.jpg" alt="QR Scan">
+                        <div class="mt-2 d-flex flex-row gap-4 align-items-center">
+                          <img class="w-15 h-50" src="../../../Images/aba.webp" data-bs-toggle="modal"
+                            data-bs-target="#exampleModalABA" alt="QR Scan ABA" @click="addQR(id)">
                         </div>
                       </div>
                       <div class="text-center">
-                        <button type="submit" class="bg-pink-600 text-white p-2 mt-5 rounded transition-colors duration-300 btn-sm w-90 h-10">
+                        <button type="submit"
+                          class="bg-pink-600 text-white p-2 mt-5 rounded transition-colors duration-300 btn-sm w-20 h-10">
                           Submit
                         </button>
+                      </div>
+                      <!-- ABA Modal -->
+                      <div class="modal fade " id="exampleModalABA" tabindex="-1" aria-labelledby="exampleModalLabelABA"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabelABA">ABA QR</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body d-flex justify-content-center my-8" v-for="QR in cardItems.QR"
+                              :key="QR.id">
+                              <img class="w-80 h-80" :src="baseURL + QR.qr_code" alt="QR Scan ABA">
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </form>
@@ -86,7 +106,6 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </v-container>
@@ -94,21 +113,28 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { useServiceStore } from '../../../stores/service';
 import { useCardStore } from '../../../stores/pre-booking';
-import { useAuthStore } from '@/stores/auth-store';
-import { useBookingStore } from '@/stores/booking';
+import { useAuthStore } from '../../../stores/auth-store';
+import { useBookingStore } from '../../../stores/booking';
 import { useField, useForm } from 'vee-validate';
+import { useListQR } from '../../../stores/QRCode';
+import baseURL from '../../../api/url'
+import Swal from 'sweetalert2'
 import * as yup from 'yup';
-
 
 const userAuth = useAuthStore()
 const route = useRoute();
 const serviceStore = useServiceStore();
 const cardItems = useCardStore();
 const userBooking = useBookingStore();
+const QRCode = useListQR();
+
+const addQR = async (id) => {
+  await QRCode.fetchAllQRs(id);
+};
 
 const calculateTotalPrice = () => {
   let totalPrice = 0;
@@ -130,16 +156,22 @@ const fetchService = async () => {
 const fetchAllCardService = async () => {
   await cardItems.fetchAllCards();
 };
+const listQR = async () => {
+  await cardItems.listQR();
+};
+
 
 onMounted(async () => {
   fetchService();
   fetchAllCardService();
+  listQR();
 });
+
 
 const formSchema = yup.object({
   date: yup.date().required().label('Date'),
   time: yup.string().required().label('Time'),
-  total: yup.number().required().label('Total Price')
+  pay: yup.number().required().label('Total Price')
 });
 
 const { handleSubmit } = useForm({
@@ -148,16 +180,28 @@ const { handleSubmit } = useForm({
 
 const { value: date, errorMessage: dateError } = useField('date');
 const { value: time, errorMessage: timeError } = useField('time');
-const { value: total, errorMessage: totalError } = useField('total');
+const { value: pay, errorMessage: totalError } = useField('pay');
+
 
 const bookingService = handleSubmit(async (values) => {
   try {
     await userBooking.createBooking(values);
-    window.alert('You successfully created a booking!');
-    window.location.href = '/'; 
+    await Swal.fire({
+      position: 'top-center',
+      icon: 'success',
+      title: 'Your booking has been successful!',
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    window.location.replace('/history');
   } catch (error) {
     console.error('Error creating booking:', error);
-    window.alert('There was an error creating your booking. Please try again later.');
+    await Swal.fire({
+      position: 'top-center',
+      icon: 'error',
+      title: 'There was an error creating your booking. Please try again later.',
+      showConfirmButton: true,
+    });
   }
 });
 

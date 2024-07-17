@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('addresses', function (Blueprint $table) {
-            $table->string('province_id')->after('city');
+        Schema::create('q_rcodes', function (Blueprint $table) {
+            $table->id();
+            $table->string('qr_code');
+            $table->unsignedBigInteger('store_id');
+            $table->timestamps();
+            $table->foreign('store_id')->references('id')->on('stores')->onDelete('cascade');
         });
     }
 
@@ -21,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('addresses', function (Blueprint $table) {
-            $table->dropColumn('province_id');
-        });
+        Schema::dropIfExists('q_rcodes');
     }
 };

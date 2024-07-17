@@ -2,7 +2,12 @@
   <div>
     <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
       <div class="container mx-auto px-6 py-1 pb-16">
-        <div class="bg-white shadow-md rounded my-6 p-5">
+        <a href="{{ route('admin.services.store') }}">
+          <svg class="w-6 h-8 text-blue-800 transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+          </svg>
+        </a>
+        <div class="bg-white shadow-md rounded mb-6 mt-2 p-5">
           <div class="p-6 space-y-6">
             <form method="POST" action="{{ route('admin.services.store') }}" enctype="multipart/form-data">
               @csrf
@@ -17,11 +22,11 @@
                 </div>
                 <div class="col-span-6 sm:col-span-3">
                   <label for="discount" class="text-sm font-medium text-gray-900 block mb-2">Discount</label>
-                  <input type="number" name="discount" id="discount" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" placeholder="Apple" required="">
+                  <input type="number" name="discount" id="discount" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" placeholder="Discount">
                 </div>
                 <div class="col-span-6 sm:col-span-3">
                   <label for="duration" class="text-sm font-medium text-gray-900 block mb-2">Duration</label>
-                  <input type="number" name="duration" id="duration" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" placeholder="$2300" required="">
+                  <input type="number" name="duration" id="duration" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" placeholder="Duration" required="">
                 </div>
                 <div class="col-span-6 sm:col-span-3">
                   <label for="default" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Default select</label>
@@ -36,11 +41,11 @@
                 </div>
                 <div class="col-span-6 sm:col-span-3">
                   <label for="image" class="text-sm font-medium text-gray-900 block mb-2">Image</label>
-                  <input type="file" name="image" id="image" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" placeholder="$2300" required="">
+                  <input type="file" name="image" id="image" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" placeholder="Image Service" required="">
                 </div>
                 <div class="col-span-full">
-                  <label for="discription" class="text-sm font-medium text-gray-900 block mb-2">Service Details</label>
-                  <textarea id="discription" rows="3" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-4" placeholder="Details"></textarea>
+                  <label for="description" class="text-sm font-medium text-gray-900 block mb-2">Service Details</label>
+                  <textarea id="description" name="description" rows="3" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-4" placeholder="Details"></textarea>
                 </div>
               </div>
               <div class="col-span-12 sm:col-span-3">
