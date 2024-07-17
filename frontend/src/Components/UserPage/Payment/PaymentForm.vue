@@ -66,7 +66,7 @@
                     <div class="row mb-3">
                       <div class="col-md-6">
                         <label for="pay" class="form-label"><strong>Total Price: ${{ calculateTotalPrice() }}</strong></label>
-                        <input type="number" id="pay" class="form-control" disabled />
+                        <input type="number" id="pay" class="form-control" />
                       </div>
                       <div class="col-md-6">
                         <div class="mt-2 d-flex flex-row gap-4 align-items-center">
