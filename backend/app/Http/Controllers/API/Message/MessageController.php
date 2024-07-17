@@ -8,45 +8,21 @@ use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $messages = Message::where('sender_id', $request->user()->id)
+            ->orWhere('receiver_id', $request->user()->id)
+            ->get();
+        return response()->json($messages);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        $from_user = Auth::user()->id;
-        $to_user = $request->to_user;
-        dd($from_user);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $message = Message::create([
+            'sender_id' => $request->user()->id,
+            'receiver_id' => $request->receiver_id,
+            'message' => $request->message,
+        ]);
+        return response()->json($message);
     }
 }
