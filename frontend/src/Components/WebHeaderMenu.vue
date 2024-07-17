@@ -41,7 +41,8 @@
       </div>
       <div class="navbar-nav d-flex justify-content-end" v-else>
         <div class="d-flex justify-content-around">
-          <router-link to="/login" class="nav-link bg-pink-500 hover:bg-pink-500 text-white px-4 py-2 rounded transition-colors duration-300"><b>Login</b></router-link>
+          <router-link to="/login"
+            class="nav-link bg-pink-500 hover:bg-pink-500 text-white px-4 py-2 rounded transition-colors duration-300"><b>Login</b></router-link>
         </div>
       </div>
     </div>
@@ -53,26 +54,34 @@ import { useRouter } from 'vue-router'
 import axiosInstance from '@/plugins/axios'
 import URL from '@/api/url';
 import { useAuthStore } from '@/stores/auth-store'
+import Swal from 'sweetalert2'
 const userAuth = useAuthStore()
+
 
 const router = useRouter()
 
-
 const logout = async () => {
   try {
-    const response = await axiosInstance.post('/logout')
-    console.log(response.data.message)
-    localStorage.removeItem('token')
-    window.alert('You have been logged out!');
-    window.location.href = '/'; 
-    router.push('/')
+    const response = await axiosInstance.post('/logout');
+    console.log(response.data.message);
+    localStorage.removeItem('token');
+    await Swal.fire({
+      position: 'top-center',
+      icon: 'success',
+      title: 'You have been logged out!',
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    window.location.replace('/');
   } catch (error) {
-    console.error('Error logging out:', error)
+    console.error('Error logging out:', error);
+    localStorage.removeItem('token');
   }
-}
+};
+
 </script>
 <style>
-.btn-pink:hover{
+.btn-pink:hover {
   background-color: #ff20a6;
   color: aliceblue;
   border-radius: 5px;
