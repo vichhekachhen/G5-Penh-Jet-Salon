@@ -5,6 +5,7 @@ use App\Http\Controllers\API\CardItem\CardController;
 use App\Http\Controllers\API\Category\CategoryController;
 use App\Http\Controllers\API\Comment\CommentController;
 use App\Http\Controllers\API\Comment\ReplyController;
+use App\Http\Controllers\API\Like\LikeController;
 use App\Http\Controllers\API\PaymentController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\APi\Province\ProvinceController;
@@ -77,6 +78,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('{id}', [BookingController::class, 'destroy']);
     Route::get('/services/detail/{booking_id}', [BookingController::class, 'getBookingService']);
 
+    //like servie
+    Route::post('/like-service/{service_id}', [LikeController::class, 'store']);
+    Route::get('/like/isFav/{service_id}', [LikeController::class, 'isFavorited']);
 });
 
 Route::get('/category/list', [CategoryController::class, 'index']);
@@ -99,3 +103,6 @@ Route::get('reply/list/{comment_id}', [ReplyController::class, 'index']);
 //payment
 Route::post('/stripe/payment', [StripePaymentController::class, 'makePayment']);
 Route::get('/list/QR/{store_id}', [QRController::class, 'index']);
+
+//list likes
+Route::get('/like/list/{service_id}', [LikeController::class, 'index']);
