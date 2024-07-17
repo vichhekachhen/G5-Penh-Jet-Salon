@@ -108,13 +108,6 @@
                 </div>
               </div>
               <p>{{ comment.text }}</p>
-              <img
-                v-if="comment.image"
-                :src="baseURL + comment.image"
-                alt="User Avatar"
-                class="rounded-circle me-3"
-                width="50"
-              />
               <div v-if="comment.replies && comment.replies.length" class="mb-3">
                 <div v-for="reply in comment.replies" :key="reply.id" class="mb-2 card">
                   <!-- reply comment  -->
@@ -174,28 +167,22 @@
           </div>
         </div>
         <!-- <form > -->
-          <div class="bg-white rounded-lg p-6 flex items-center">
-            <div class="mr-4">
-              <label for="file-input" class="cursor-pointer">
-                <i class="bi bi-card-image text-xl"></i>
-                <input type="file" class="hidden" id="file-input" />
-              </label>
-            </div>
-            <div class="mr-4"></div>
-            <input
-              class="form-control w-full"
-              type="text"
-              placeholder="Add your comment..."
-              v-model="commentAdd"
-              @keyup.enter="addComment"
-            />
-            <button
-              class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
-              @click="addComment"
-            >
-              <i class="bi bi-send"></i>
-            </button>
-          </div>
+        <div class="bg-white rounded-lg p-6 flex items-center">
+          <div class="mr-4"></div>
+          <input
+            class="form-control w-full"
+            type="text"
+            placeholder="Add your comment..."
+            v-model="commentAdd"
+            @keyup.enter="addComment"
+          />
+          <button
+            class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
+            @click="addComment"
+          >
+            <i class="bi bi-send"></i>
+          </button>
+        </div>
         <!-- </form> -->
       </div>
     </section>
@@ -232,7 +219,7 @@ const fetchServiceShow = async () => {
 }
 
 const fetchIsFavorite = (id: number) => {
-  likeStore.isServiceFavorite(id);
+  likeStore.isServiceFavorite(id)
 }
 //list all comments
 const fetchAllComments = async () => {
@@ -285,10 +272,10 @@ watch(updateIsFavorite, (value) => {
 })
 // routes showing
 onMounted(async () => {
-  fetchAllComments();
-  fetchServiceShow();
-  fetchLikes(route.params.id);
-  fetchIsFavorite(route.params.id);
+  fetchAllComments()
+  fetchServiceShow()
+  fetchLikes(route.params.id)
+  fetchIsFavorite(route.params.id)
 })
 // kkk
 </script>
