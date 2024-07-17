@@ -20,7 +20,6 @@
                 <div class="card-body order-primary">
                   <h4 class="card-title d-flex justify-content-between align-items-center">
                     <span>Service: {{ serviceStore.service.service_name }}</span>
-                    <!-- <i class="bi-heart" style="font-size:25px;" id="heart" @click="addFavorite()"><span>{{ likeStore.totalLike }}</span></i> -->
                     <i
                       :class="['bi', isFavorite ? 'bi-heart-fill' : 'bi-heart']"
                       :style="{ fontSize: '25px', color: isFavorite ? 'red' : 'inherit' }"
@@ -28,8 +27,6 @@
                     >
                       <span>{{ likeStore.totalLike }}</span>
                     </i>
-                    {{ likeStore.isFavorited }}
-                    {{ isFavorite }}
                   </h4>
                   <div class="detail mb-3">
                     <h5 v-if="serviceStore.service.discount === null">
@@ -176,27 +173,36 @@
             </div>
           </div>
         </div>
-        <div class="d-flex align-items-center mt-4 p-3">
-          <div class="input-group mb-2">
-            <!-- <input class="form-control" type="file" id="formFile" @change="handleFileUpload" /> -->
+        <!-- <form > -->
+          <div class="bg-white rounded-lg p-6 flex items-center">
+            <div class="mr-4">
+              <label for="file-input" class="cursor-pointer">
+                <i class="bi bi-card-image text-xl"></i>
+                <input type="file" class="hidden" id="file-input" />
+              </label>
+            </div>
+            <div class="mr-4"></div>
             <input
+              class="form-control w-full"
               type="text"
-              class="form-control"
-              placeholder="Add a comment..."
+              placeholder="Add your comment..."
               v-model="commentAdd"
               @keyup.enter="addComment"
             />
-            <button class="btn btn-primary" @click="addComment">
-              <i class="bi bi-arrow-right"></i>
+            <button
+              class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
+              @click="addComment"
+            >
+              <i class="bi bi-send"></i>
             </button>
           </div>
-        </div>
+        <!-- </form> -->
       </div>
     </section>
   </div>
 </template>
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useServiceStore } from '../../../stores/service'
 import { useCommentStore } from '../../../stores/comment'
@@ -214,7 +220,7 @@ const isFavorite = ref(false)
 const addFavorite = () => {
   likeStore.addToFav(route.params.id)
   fetchLikes(route.params.id)
-  isFavorite.value = true
+  fetchIsFavorite(route.params.id)
 }
 
 const fetchLikes = (id: number) => {
@@ -227,7 +233,6 @@ const fetchServiceShow = async () => {
 
 const fetchIsFavorite = (id: number) => {
   likeStore.isServiceFavorite(id);
-  isFavorite.value = likeStore.isFavorited
 }
 //list all comments
 const fetchAllComments = async () => {
@@ -272,7 +277,12 @@ const addComment = async () => {
   commentAdd.value = ''
   fetchAllComments()
 }
-
+const updateIsFavorite = computed(() => {
+  return likeStore.isFavorited
+})
+watch(updateIsFavorite, (value) => {
+  isFavorite.value = value
+})
 // routes showing
 onMounted(async () => {
   fetchAllComments();
@@ -280,6 +290,7 @@ onMounted(async () => {
   fetchLikes(route.params.id);
   fetchIsFavorite(route.params.id);
 })
+// kkk
 </script>
 
 <style scoped>
