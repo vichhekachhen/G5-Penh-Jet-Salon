@@ -25,31 +25,35 @@
 
     <!-- Register employee -->
     <div class="card">
-      <h1 class="p-13 text-center font-weight-bold text-muted">
+      <h2 class="text-show p-13 text-center font-weight-bold text-muted">
         We are here to help you live life the salon way.<br />Spend more time doing what you love.
         <br />We'll take care of relaxing treatments, stylish cuts, and new looks.
-      </h1>
-      <img class="w-100" style="height: 30rem" src="../../../Images/shop1.jpg" alt="Image" />
-      <div class="card-img-overlay">
-        <div class="pl-10 cardRegister mt-130">
-          <div class="card w-50 bg-light">
-            <div class="card-body">
-              <h3 class="text-pink-500">Join your shop here!</h3>
-              <p class="card-text">
-                Expand your client base and streamline your booking process by becoming a Sala Salon
-                Partner.
-              </p>
-              <p class="card-text">
-                Our centralized online booking system and marketing support make it easy for
-                customers to discover and book appointments at your salon.
-              </p>
-              <button class="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded transition-colors duration-300">
-                <router-link to="/registerOwner" class="nav-link">Register now</router-link>
-              </button>
+      </h2>
+      <div class="contact">
+        <img class="w-100" style="height: 30rem" src="../../../Images/shop1.jpg" alt="Image" />
+        <div class="card-img-overlay">
+          <div class="pl-10 cardRegister mt-130">
+            <div class="card w-50 bg-light">
+              <div class="card-body">
+                <h3 class="text-pink-500">Join your shop here!</h3>
+                <p class="card-text">
+                  Expand your client base and streamline your booking process by becoming a Sala Salon
+                  Partner.
+                </p>
+                <p class="card-text">
+                  Our centralized online booking system and marketing support make it easy for
+                  customers to discover and book appointments at your salon.
+                </p>
+                <button
+                  class="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded transition-colors duration-300">
+                  <router-link to="/email" class="nav-link">Contact now</router-link>
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </template>
@@ -82,3 +86,23 @@ export default {
   }
 }
 </script>
+<style>
+@media (max-width: 768px) {
+  .card-img-overlay {
+    padding: 10px;
+  }
+
+  .text-show {
+    font-size: 20px;
+  }
+
+  .card-img-overlay .card {
+    width: 100%;
+  }
+  .contact {
+    display: none;
+  }
+}
+
+
+</style>

@@ -3,30 +3,16 @@
     <div class="container-fluid px-4 py-2 d-flex justify-content-between align-items-center ">
       <!-- Logo -->
       <div class="ml-5">
-        <img style="width: auto; height: 60px" src="../Images/salon.png" alt="">
+        <a href="/">
+          <img src="../Images/salon.png" alt="" width="auto" height="60">
+        </a>
       </div>
-
-      <!-- Menu Items -->
-      <nav class="navbar navbar-expand-lg navbar-light">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <router-link class="nav-link font-bold text-white rounded-lg hover:bg-slate-100 hover:text-slate-900"
-                to="/post">Post</router-link>
-            </li>
-          </ul>
-        </div>
-      </nav>
 
       <!-- Sign In -->
       <div class="navbar-nav d-flex justify-content-end" v-if="userAuth.isAuthenticated">
         <div class="nav-item dropdown">
           <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-            <img v-if="userAuth.user.profile" class="rounded-circle me-lg-2" :src="URL+userAuth.user.profile" alt=""
+            <img v-if="userAuth.user.profile" class="rounded-circle me-lg-2" :src="URL + userAuth.user.profile" alt=""
               style="width: 40px; height: 40px">
             <img v-else class="rounded-circle me-lg-2" src="../Images/user/user_none.jpg" alt=""
               style="width: 40px; height: 40px">
