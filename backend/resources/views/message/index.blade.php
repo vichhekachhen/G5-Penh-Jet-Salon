@@ -331,9 +331,6 @@
                 console.log(`Update recent message: ${messageText} at ${time}`);
             }
 
-
-
-
             function searchContacts() {
                 const input = document.getElementById('searchInput').value.toLowerCase();
                 const contactItems = document.querySelectorAll('.contact-item');
@@ -446,7 +443,6 @@
                     }
                 }
             }
-
 
             function backToContacts() {
                 const chatContainer = document.getElementById('chatContainer');
