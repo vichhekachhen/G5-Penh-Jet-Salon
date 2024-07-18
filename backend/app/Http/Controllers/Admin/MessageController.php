@@ -34,9 +34,19 @@ class MessageController extends Controller
     public function index()
     {
         $users = User::all();
+        $usersPermission = [];
+
+        foreach ($users as $user) {
+            foreach ($user->roles as $role) {
+                if ($role->name != 'user') {
+                    $usersPermission[] = $user;
+                    break; // Stop checking other roles for this user
+                }
+            }
+        }
 
         return view('message.index', [
-            'users' => $users
+            'usersPermission' => $usersPermission
         ]);
     }
 
@@ -86,7 +96,7 @@ class MessageController extends Controller
      */
     public function edit(Message $message)
     {
-        return view('message.edit', ['message' => $category]);
+        return view('message.edit', ['message' => $message]);
     }
 
     /**
