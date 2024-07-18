@@ -18,6 +18,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StripePaymentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SenderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -106,4 +107,7 @@ Route::middleware('auth:sanctum')->prefix('chat')->group( function (){
     Route::post('/create',[MessageController::class, 'store']);
 });
 
+Route::get('/sender',[MessageController::class, 'index']);
+
 Route::get('/getAllUser', [UserController::class, 'index']);
+Route::get('/getChat', [SenderController::class, 'index']);

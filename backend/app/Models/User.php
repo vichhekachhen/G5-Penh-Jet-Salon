@@ -50,23 +50,9 @@ class User extends Authenticatable
         'gender' => Gender::class,
     ];
 
-    // public function booking():BelongsTo
-    // {
-    //     return $this->belongsTo(Booking::class, 'booking_id', 'id');
-    // }
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-    
-    public function sentMessages()
-    {
-        return $this->hasMany(Message::class, 'sender_id');
-    }
-    
-    public function receivedMessages()
-    {
-        return $this->hasMany(Message::class, 'receiver_id');
     }
 
 }

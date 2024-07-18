@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('messages', function (Blueprint $table) {
+        Schema::create('senders', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('sender_id');
+            $table->unsignedBigInteger('user_id');
             $table->text('message');
+            $table->unsignedBigInteger('message_id');
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('message_id')->references('id')->on('messages')->onDelete('cascade');
             $table->timestamps();
-            
-            $table->foreign('sender_id')->references('id')->on('users')->onDelete('cascade');
-        });        
+        });
     }
 
     /**
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('messages');
+        Schema::dropIfExists('senders');
     }
 };
