@@ -16,6 +16,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StripePaymentController;
 use Illuminate\Http\Request;
+use App\Http\Controllers\API\BookingService\BookingServiceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\QR\QRController;
 
@@ -79,7 +80,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 });
 
-Route::get('/category/list', [CategoryController::class, 'index']);
+Route::get('/booking/list/detail/{booking_id}', [BookingServiceController::class, 'index']);
 
 //comment
 Route::middleware('auth:sanctum')->prefix('comment')->group(function () {
