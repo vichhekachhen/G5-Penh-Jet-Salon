@@ -2,13 +2,19 @@
   <div>
     <!-- <img class="w-100 h-95" src="../../../Images/shop1.jpg" alt="Image"> -->
     <section>
-      <div class="container px-4 px-lg-5 mt-3">
+      <div class="container px-4 px-lg-5 mt-3 pt-3">
+        <input
+          class="form-control"
+          type="search"
+          v-model="searchQuery"
+          placeholder="Search for a shop"
+        />
         <div class="my-3 px-lg-2 flex d-flex align-items-center pb-3 pt-3">
           <router-link to="/" class="nav-link my-3 text-xl font-bold">Home ></router-link>
           <div class="text-lg font-bold text-gray-400">{{ provinceName }}</div>
         </div>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
-          <div class="col mb-10" v-for="store in stores" :key="store.id" style="cursor: pointer">
+          <div class="col mb-10" v-for="store in filteredStores" :key="store.id" style="cursor: pointer">
             <router-link
               class="link-underline link-underline-opacity-0"
               :to="{ name: 'listService', params: { id: store.id } }"
@@ -29,8 +35,8 @@
                 />
                 <div class="card-body">
                   <div class="text-start">
-                    <h5 class="text-pink-500">Shop:{{ store.shop_name }}</h5>
-                    <p class="mb-0"> {{ store.address.address }}</p>
+                    <h5 class="text-pink-500">Shop: {{ store.shop_name }}</h5>
+                    <p class="mb-0">{{ store.address.address }}</p>
                   </div>
                   <div class="d-flex justify-content-start">
                     <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">Open</span>
@@ -51,15 +57,23 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-// import axiosInstance from '@/plugins/axios'
 import { useSalonStore } from '../../../stores/store'
 const useSalon = useSalonStore()
 export default defineComponent({
   data() {
     return {
+      searchQuery: '',
       stores: [],
       provinceName: null,
       selectedProvince: null
+    }
+  },
+  computed: {
+    filteredStores() {
+      return this.stores.filter(store => {
+        const searchLower = this.searchQuery.toLowerCase();
+        return store.shop_name.toLowerCase().includes(searchLower);
+      });
     }
   },
   async mounted() {
