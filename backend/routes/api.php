@@ -81,6 +81,7 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::get('/booking/list/detail/{booking_id}', [BookingServiceController::class, 'index']);
+Route::delete('/delete/{id}', [BookingServiceController::class, 'delete']);
 
 //comment
 Route::middleware('auth:sanctum')->prefix('comment')->group(function () {

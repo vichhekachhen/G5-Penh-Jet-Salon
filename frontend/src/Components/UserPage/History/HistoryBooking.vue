@@ -29,7 +29,7 @@
                     <i class="fas fa-edit">Detail</i>
                   </button>
                 </router-link>
-                <button @click="deleteBooking(booking.id)" class="btn btn-sm btn-danger ml-3">
+                <button @click="deleteBookingShop(booking.id)" class="btn btn-sm btn-danger ml-3">
                   <i class="fas fa-trash-alt">Delete</i>
                 </button>
               </td>
@@ -62,6 +62,10 @@ export default {
   methods: {
     fetchBookings(){
       useBooking.fetchAllBokkings();
+    },
+    deleteBookingShop(id) {
+      useBooking.deleteBookingShop(id);
+      this.fetchBookings();
     }
   }
 };

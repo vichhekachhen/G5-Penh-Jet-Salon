@@ -64,11 +64,14 @@ export default {
     },
     methods: {
         fetchBookings(){
-        useBooking.fetchAllBokkings();
+            useBooking.fetchAllBokkings();
         },
         fetchAllBookingListDetail() {
         const id = this.$route.params.id;
-        useBooking.fetchAllBookingListDetail(id);
+            useBooking.fetchAllBookingListDetail(id);
+        },
+        deleteBooking(id) {
+            useBooking.deleteBooking(id);
         },
     },
     created() {

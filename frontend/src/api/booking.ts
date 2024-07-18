@@ -9,5 +9,11 @@ export function fetchAllBooking() {
 export function fetchAllBookingListDetail(id:number) {
   return http.get(`/booking/list/detail/${id}`)
 }
+export function deleteBooking(id:number) {
+  return http.delete(`/delete/${id}`)
+}
+export function deleteBookingShop(id:number) {
+  return http.delete(`${id}`)
+}
 
 

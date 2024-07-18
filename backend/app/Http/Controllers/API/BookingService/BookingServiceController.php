@@ -51,8 +51,14 @@ class BookingServiceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function delete(string $id)
     {
         //
+        $bookingService = BookingService::find($id);
+        $bookingService->delete();
+        return response()->json([
+            "success" => true,
+            "message" => "Booking Service deleted successfully"
+        ], 200);
     }
 }
