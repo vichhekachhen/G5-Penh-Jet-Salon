@@ -83,6 +83,13 @@ const router = createRouter({
       component: () => import('../views/Users/Shops/Comment/CommentService.vue'),
       props: true
 
+    },
+    {
+      path: '/bookingDetail/:id',
+      name: 'bookingDetail',
+      component: () => import('../views/Users/History/HistoryBookingDetail.vue'),
+      props: true
+
     }
   ],
   linkExactActiveClass: 'bg-danger text-white border-bottom',

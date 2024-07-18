@@ -24,9 +24,9 @@
               <td>{{ booking.time }}</td>
               <td>${{ booking.total_price }}</td>
               <td>
-                <router-link :to="{ name: 'bookingDetail', params: { id: booking.id } }">
+                <router-link to="/bookingDetail">
                   <button class="btn btn-sm btn-primary">
-                    <i class="fas fa-edit">Detail</i>
+                    <i class="fas fa-edit">Booking again</i>
                   </button>
                 </router-link>
                 <button @click="deleteBooking(booking.id)" class="btn btn-sm btn-danger ml-3">
