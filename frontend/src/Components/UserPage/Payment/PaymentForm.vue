@@ -2,101 +2,165 @@
   <v-app class="bg-pink-500">
     <v-container>
       <div class="container-lg mt-4">
-        <div class="d-flex flex-row justify-content-center">
-
+        <div class="d-flex flex-column flex-lg-row justify-content-center align-items-center">
           <!-- Your Order Card -->
-          <div class="col-md-5 card p-3 mx-3 bg-light max-h-145 overflow-y-auto">
+          <div
+            class="col-12 col-lg-5 card p-3 mx-3 bg-light max-h-142 overflow-y-auto mb-3 mb-lg-0 rounded"
+          >
             <div>
-              <h3 class="card-title text-center p-2 ">Your Order From</h3>
+              <h3 class="card-title text-center p-2">Your Order From</h3>
             </div>
-            <hr>
+            <hr />
             <div v-if="cardItems.cards.length > 0" class="card p-3 rounded">
               <div v-for="item in cardItems.cards" :key="item.id">
-                <p><strong>Service Name: {{ item.service.service_name }}</strong></p>
-                <p v-if="item.service.discount"><strong>Price: ${{ item.service.discount }}</strong></p>
-                <p v-else><strong>Price: ${{ item.service.price }}</strong></p>
-                <p><strong>Quantity: {{ item.quantity }}</strong> </p>
-                <hr class="border-pink-500">
+                <p>
+                  <strong>Service Name: {{ item.service.service_name }}</strong>
+                </p>
+                <p v-if="item.service.discount">
+                  <strong>Price: ${{ item.service.discount }}</strong>
+                </p>
+                <p v-else>
+                  <strong>Price: ${{ item.service.price }}</strong>
+                </p>
+                <p>
+                  <strong>Quantity: {{ item.quantity }}</strong>
+                </p>
+                <hr class="border-pink-500" />
               </div>
             </div>
-            <div v-else class="text-center text-red font-semibold my-4">
-              Your cart is empty!!
-            </div>
-            <div class="flex justify-between items-center mt-5">
+            <div v-else class="text-center text-red font-semibold my-4">Your cart is empty!!</div>
+            <div class="d-flex justify-content-between align-items-center mt-5">
               <h3 class="font-semibold text-gray-900">Total:</h3>
               <h3 class="text-gray-900 text-pink-600 font-bold">${{ calculateTotalPrice() }}</h3>
             </div>
           </div>
 
           <!-- Payment Form -->
-          <div class="col-md-7 mx-3">
-            <div class="card ">
+          <div class="col-12 col-lg-7 mx-3">
+            <div class="card">
               <div class="card-body">
                 <h3 class="card-title text-center mb-4">PAYMENT SERVICE</h3>
                 <div v-if="userAuth.isAuthenticated">
-
                   <form @submit.prevent="bookingService">
                     <div class="mb-3">
-                      <label for="fullName" class="form-label"><strong>User Name: </strong></label>
-                      <input disabled type="text" id="fullName" class="form-control" :value="userAuth.user.name"
-                        required />
+                      <label for="fullName" class="form-label"><strong>User Name:</strong></label>
+                      <input
+                        disabled
+                        type="text"
+                        id="fullName"
+                        class="form-control"
+                        :value="userAuth.user.name"
+                        required
+                      />
                     </div>
                     <div class="mb-3">
                       <label for="email" class="form-label"><strong>Email:</strong></label>
-                      <input disabled type="email" id="email" class="form-control" :value="userAuth.user.email"
-                        required />
+                      <input
+                        disabled
+                        type="email"
+                        id="email"
+                        class="form-control"
+                        :value="userAuth.user.email"
+                        required
+                      />
                     </div>
                     <div class="mb-3">
                       <label for="phone" class="form-label"><strong>Phone Number:</strong></label>
-                      <input type="tel" id="phone" class="form-control" :value="userAuth.user.phone" required />
+                      <input
+                        type="tel"
+                        id="phone"
+                        class="form-control"
+                        :value="userAuth.user.phone"
+                        required
+                      />
                     </div>
-
                     <div class="row mb-3">
                       <!-- Date -->
-                      <div class="col-md-6">
+                      <div class="col-12 col-md-6 mb-3 mb-md-0">
                         <label for="date" class="form-label"><strong>Date:</strong></label>
-                        <input type="date" id="date" class="form-control" v-model="date" required min="{{ today }}" />
+                        <input
+                          type="date"
+                          id="date"
+                          class="form-control"
+                          v-model="date"
+                          required
+                          :min="today"
+                        />
                       </div>
                       <!-- Time -->
-                      <div class="col-md-6">
+                      <div class="col-12 col-md-6">
                         <label for="time" class="form-label"><strong>Time:</strong></label>
-                        <input type="time" id="time" class="form-control" v-model="time" required min="08:00"
-                          max="22:00" />
+                        <input
+                          type="time"
+                          id="time"
+                          class="form-control"
+                          v-model="time"
+                          required
+                          min="08:00"
+                          max="22:00"
+                        />
                       </div>
                     </div>
                     <div class="row mb-3">
-                      <div class="col-md-6">
-                        <label for="pay" class="form-label"><strong>Total Price: ${{ calculateTotalPrice()
-                            }}</strong></label>
-                        <input type="text" id="pay" class="form-control" required v-model="pay"
-                          placeholder="Enter your payment" />
+                      <div class="col-12 col-md-6 mb-3 mb-md-0">
+                        <label for="pay" class="form-label"
+                          ><strong>Total Price: ${{ calculateTotalPrice() }}</strong></label
+                        >
+                        <input
+                          type="text"
+                          id="pay"
+                          class="form-control"
+                          required
+                          v-model="pay"
+                          placeholder="Enter your payment"
+                        />
                       </div>
-                      <div class="col-md-6">
-                        <div class="mt-2 d-flex flex-row gap-4 align-items-center">
-                          <img class="w-15 h-50" src="../../../Images/aba.webp" data-bs-toggle="modal"
-                            data-bs-target="#exampleModalABA" alt="QR Scan ABA" @click="addQR(id)">
-                        </div>
+                      <div
+                        class="col-12 col-md-6 mt-3 d-flex align-items-center justify-content-center"
+                      >
+                        <img
+                          class="pic w-25 h-auto cursor-pointer rounded"
+                          src="../../../Images/aba.webp"
+                          data-bs-toggle="modal"
+                          data-bs-target="#exampleModalABA"
+                          alt="QR Scan ABA"
+                          @click="addQR(id)"
+                        />
                       </div>
-                      <div class="text-center">
-                        <button type="submit"
-                          class="bg-pink-600 text-white p-2 mt-5 rounded transition-colors duration-300 btn-sm w-20 h-10">
-                          Submit
-                        </button>
-                      </div>
-                      <!-- ABA Modal -->
-                      <div class="modal fade " id="exampleModalABA" tabindex="-1" aria-labelledby="exampleModalLabelABA"
-                        aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabelABA">ABA QR</h5>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body d-flex justify-content-center my-8" v-for="QR in cardItems.QR"
-                              :key="QR.id">
-                              <img class="w-80 h-80" :src="baseURL + QR.qr_code" alt="QR Scan ABA">
-                            </div>
+                    </div>
+                    <div class="text-center">
+                      <button
+                        type="submit"
+                        class="bg-pink-600 text-white p-2 mt-5 rounded transition-colors duration-300 btn-lg w-100"
+                      >
+                        Submit
+                      </button>
+                    </div>
+                    <!-- ABA Modal -->
+                    <div
+                      class="modal fade"
+                      id="exampleModalABA"
+                      tabindex="-1"
+                      aria-labelledby="exampleModalLabelABA"
+                      aria-hidden="true"
+                    >
+                      <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabelABA">ABA QR</h5>
+                            <button
+                              type="button"
+                              class="btn-close"
+                              data-bs-dismiss="modal"
+                              aria-label="Close"
+                            ></button>
+                          </div>
+                          <div
+                            class="modal-body d-flex justify-content-center my-8"
+                            v-for="QR in cardItems.QR"
+                            :key="QR.id"
+                          >
+                            <img class="w-80 h-80" :src="baseURL + QR.qr_code" alt="QR Scan ABA" />
                           </div>
                         </div>
                       </div>
@@ -113,96 +177,134 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
-import { useRoute } from 'vue-router';
-import { useServiceStore } from '../../../stores/service';
-import { useCardStore } from '../../../stores/pre-booking';
-import { useAuthStore } from '../../../stores/auth-store';
-import { useBookingStore } from '../../../stores/booking';
-import { useField, useForm } from 'vee-validate';
-import { useListQR } from '../../../stores/QRCode';
+import { onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+import { useServiceStore } from '../../../stores/service'
+import { useCardStore } from '../../../stores/pre-booking'
+import { useAuthStore } from '../../../stores/auth-store'
+import { useBookingStore } from '../../../stores/booking'
+import { useField, useForm } from 'vee-validate'
+import { useListQR } from '../../../stores/QRCode'
 import baseURL from '../../../api/url'
 import Swal from 'sweetalert2'
-import * as yup from 'yup';
+import * as yup from 'yup'
 
 const userAuth = useAuthStore()
-const route = useRoute();
-const serviceStore = useServiceStore();
-const cardItems = useCardStore();
-const userBooking = useBookingStore();
-const QRCode = useListQR();
+const route = useRoute()
+const serviceStore = useServiceStore()
+const cardItems = useCardStore()
+const userBooking = useBookingStore()
+const QRCode = useListQR()
 
 const addQR = async (id) => {
-  await QRCode.fetchAllQRs(id);
-};
+  await QRCode.fetchAllQRs(id)
+}
 
 const calculateTotalPrice = () => {
-  let totalPrice = 0;
-  cardItems.cards.forEach(item => {
+  let totalPrice = 0
+  cardItems.cards.forEach((item) => {
     if (!item.service.discount) {
-      totalPrice += item.service.price * item.quantity;
+      totalPrice += item.service.price * item.quantity
     } else {
-      totalPrice += item.service.discount * item.quantity;
+      totalPrice += item.service.discount * item.quantity
     }
-  });
-  return totalPrice;
-};
+  })
+  return totalPrice
+}
 
 const fetchService = async () => {
-  const id = route.params.id;
-  await serviceStore.getService(id);
-};
+  const id = route.params.id
+  await serviceStore.getService(id)
+}
 
 const fetchAllCardService = async () => {
-  await cardItems.fetchAllCards();
-};
+  await cardItems.fetchAllCards()
+}
 const listQR = async () => {
-  await cardItems.listQR();
-};
-
+  await cardItems.listQR()
+}
 
 onMounted(async () => {
-  fetchService();
-  fetchAllCardService();
-  listQR();
-});
-
+  fetchService()
+  fetchAllCardService()
+  listQR()
+})
 
 const formSchema = yup.object({
   date: yup.date().required().label('Date'),
   time: yup.string().required().label('Time'),
   pay: yup.number().required().label('Total Price')
-});
+})
 
 const { handleSubmit } = useForm({
   validationSchema: formSchema
-});
+})
 
-const { value: date, errorMessage: dateError } = useField('date');
-const { value: time, errorMessage: timeError } = useField('time');
-const { value: pay, errorMessage: totalError } = useField('pay');
-
+const { value: date, errorMessage: dateError } = useField('date')
+const { value: time, errorMessage: timeError } = useField('time')
+const { value: pay, errorMessage: totalError } = useField('pay')
 
 const bookingService = handleSubmit(async (values) => {
   try {
-    await userBooking.createBooking(values);
+    await userBooking.createBooking(values)
     await Swal.fire({
       position: 'top-center',
       icon: 'success',
       title: 'Your booking has been successful!',
       showConfirmButton: false,
-      timer: 1500,
-    });
-    window.location.replace('/history');
+      timer: 1500
+    })
+    window.location.replace('/history')
   } catch (error) {
-    console.error('Error creating booking:', error);
+    console.error('Error creating booking:', error)
     await Swal.fire({
       position: 'top-center',
       icon: 'error',
       title: 'There was an error creating your booking. Please try again later.',
-      showConfirmButton: true,
-    });
+      showConfirmButton: true
+    })
   }
-});
-
+})
 </script>
+
+<style scoped>
+@media (max-width: 768px) {
+  .col-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .col-lg-5,
+  .col-lg-7 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .text-center button {
+    width: 100%;
+  }
+  .d-flex {
+    flex-direction: column;
+    align-items: center;
+  }
+  .d-flex img {
+    width: 100%;
+    height: auto;
+    max-width: 200px; /* Adjust the max-width as needed */
+  }
+}
+
+@media (min-width: 769px) {
+  .d-flex img {
+    width: 100%;
+    height: auto;
+    max-width: 900px; /* Adjust the max-width as needed */
+  }
+}
+
+@media (min-width: 1024px) {
+  .d-flex img {
+    width: 50%;
+    height: auto;
+    max-width: 1000px;
+  }
+}
+</style>
