@@ -32,7 +32,7 @@
                 </div>
             </div>
             <div class="flex max-w-sm p-3 bg-white border-l-4 border-purple-500 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                <svg  class="w-12 h-12 text-purple-500 dark:text-gray-400 mb-3" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
+                <svg class="w-12 h-12 text-purple-500 dark:text-gray-400 mb-3" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
                     <path d="M40-272q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v32q0 33-23.5 56.5T600-160H120q-33 0-56.5-23.5T40-240v-32Zm698 112q11-18 16.5-38.5T760-240v-40q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v40q0 33-23.5 56.5T840-160H738ZM360-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm400-160q0 66-47 113t-113 47q-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113Z" />
                 </svg>
                 <div class="ml-3">
@@ -43,7 +43,7 @@
                 </div>
             </div>
             <div class="flex max-w-sm p-3 bg-white border-l-4 border-purple-500 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                <svg  class="w-12 h-12 text-purple-500 dark:text-gray-400 mb-3" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
+                <svg class="w-12 h-12 text-purple-500 dark:text-gray-400 mb-3" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
                     <path d="M40-272q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v32q0 33-23.5 56.5T600-160H120q-33 0-56.5-23.5T40-240v-32Zm698 112q11-18 16.5-38.5T760-240v-40q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v40q0 33-23.5 56.5T840-160H738ZM360-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm400-160q0 66-47 113t-113 47q-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113Z" />
                 </svg>
                 <div class="ml-3">
@@ -54,7 +54,7 @@
                 </div>
             </div>
             <div class="flex max-w-sm p-3 bg-white border-l-4 border-purple-500 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                <svg  class="w-12 h-12 text-purple-500 dark:text-gray-400 mb-3" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
+                <svg class="w-12 h-12 text-purple-500 dark:text-gray-400 mb-3" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
                     <path d="M40-272q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v32q0 33-23.5 56.5T600-160H120q-33 0-56.5-23.5T40-240v-32Zm698 112q11-18 16.5-38.5T760-240v-40q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v40q0 33-23.5 56.5T840-160H738ZM360-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm400-160q0 66-47 113t-113 47q-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113Z" />
                 </svg>
                 <div class="ml-3">
@@ -85,7 +85,7 @@
                     <a href="#">
                         <h5 class="mb-2 text-2xl font-semibold tracking-tight text-green-700 dark:text-white">Booking</h5>
                     </a>
-                    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400 font-bold">0</p>
+                    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400 font-bold">{{$countBooking}}</p>
                 </div>
             </div>
             <div class="flex max-w-sm p-3 bg-white border-l-4 border-pink-500 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -96,7 +96,7 @@
                     <a href="#">
                         <h5 class="mb-2 text-2xl font-semibold tracking-tight text-pink-700 dark:text-white">Earning</h5>
                     </a>
-                    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400 font-bold">$760</p>
+                    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400 font-bold">${{$totalPrice}}</p>
                 </div>
             </div>
             <div class="flex max-w-sm p-3 bg-white border-l-4 border-red-500 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">

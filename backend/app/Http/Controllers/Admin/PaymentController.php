@@ -55,32 +55,20 @@ class PaymentController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-
-        // Set your secret key
-        Stripe::setApiKey(env('STRIPE_SECRET'));
-
         try {
-            // Create a PaymentIntent to charge a customer use stripe
-            $paymentIntent = PaymentIntent::create([
-                'amount' => $request->amount * 100, 
-                'currency' => 'usd',
-                'payment_method_types' => ['card'],
-                'description' => 'Example Payment',
-            ]);
-            
+
             $payment = Payment::create([
                 'owner_id' => $user->id,
                 'amount' => $request->amount,
-                'currency' => $request->amount,
+                'currency' => 'USD',
                 'zip_code' => $request->zip_code,
                 'payment_method' => $request->payment_method,
             ]);
-    
+
             $payment->status = 'success';
             $payment->save();
-              // Redirect back with a success message
-              return redirect('/admin/dashboard')->with('success', 'Payment created successfully !!!');
-
+            // Redirect back with a success message
+            return redirect('/admin/dashboard')->with('success', 'Payment created successfully !!!');
         } catch (ApiErrorException $e) {
             // Handle error
             return response()->json(['error' => $e->getMessage()], 500);
