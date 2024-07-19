@@ -122,7 +122,7 @@ import { useBookingStore } from '../../../stores/booking';
 import { useField, useForm } from 'vee-validate';
 import { useListQR } from '../../../stores/QRCode';
 import baseURL from '../../../api/url'
-// import Swal from 'sweetalert2'
+import Swal from 'sweetalert2'
 import * as yup from 'yup';
 
 const userAuth = useAuthStore()
