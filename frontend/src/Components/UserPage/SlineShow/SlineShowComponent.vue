@@ -32,7 +32,7 @@
       <div class="contact">
         <img class="w-100" style="height: 30rem" src="../../../Images/shop1.jpg" alt="Image" />
         <div class="card-img-overlay">
-          <div class="pl-10 cardRegister mt-130">
+          <div class="pl-10 cardRegister mt-120">
             <div class="card w-50 bg-light">
               <div class="card-body">
                 <h3 class="text-pink-500">Join your shop here!</h3>

@@ -1,9 +1,8 @@
 <template>
   <div class="bg-white p-5">
-    <h2 class="text-center mt-5 font-weight-bold ">Find us in your area</h2>
     <div class="row gap-4">
-
       <div class="row gap-4 d-none d-sm-flex">
+        <h2 class="text-center mt-5 font-weight-bold ">Find us in your area</h2>
         <div v-for="location in locations" :key="location.id"
           class="card text-white col-12 col-md-3 shadow card-hover p-1 mb-3">
           <router-link class="link-underline link-underline-opacity-0"
@@ -19,8 +18,11 @@
       </div>
 
       <!-- Responsive layout for phone screens -->
-      <div class="d-block d-sm-none text-center">
-        <div class="row">
+      <div class="d-block d-sm-none">
+        <p class="font-weight-bold text-center fs-3">
+          Find us in your area
+        </p>
+        <div class="d-flex flex-row  gap-4">
           <div v-for="location in locations" :key="location.id"
             class="card text-white col-12 shadow card-hover p-1 mb-3">
             <router-link class="link-underline link-underline-opacity-0"
@@ -39,7 +41,8 @@
     <div class=" about pt-5 my-5 ">
       <hr>
       <h2 class="text-center font-weight-bold my-5 text-pink-500">About Us</h2>
-      <h5 class="text-center text-muted">Penh Jit Salon, we are passionate about beauty, wellness, and empowering our clients to
+      <h5 class="text-center text-muted">Penh Jit Salon, we are passionate about beauty, wellness, and empowering our
+        clients to
         embrace their natural radiance. Our salon has been a trusted name in the community for over a decade, offering a
         wide range of services to cater to your every need.</h5>
     </div>
@@ -101,8 +104,9 @@ export default {
   .about {
     font-size: 15px;
   }
-  .card {
-    width: 100%;
+
+  .row {
+    width: 55%;
   }
 }
 </style>
