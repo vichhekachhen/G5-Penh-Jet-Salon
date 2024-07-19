@@ -42,7 +42,15 @@
                 <p class="text-gray-700">{{ service.description }}</p>
               </div>
               <div class="relative w-30 h-30 mr-5">
-                <img class="w-full h-full object-cover rounded-lg" :src="baseURL + service.image" alt="Service Image" />
+                <router-link 
+                  :to="{ name: 'comment', params: { id: service.id } }"
+                >
+                  <img
+                    class="w-full h-full object-cover rounded-lg"
+                    :src="baseURL + service.image"
+                    alt="Service Image"
+                  />
+                </router-link>
                 <button @click="addToCart(service.id)"
                   class="absolute bottom-2 right-2 bg-white rounded-full p-1 shadow-md">
                   <svg class="h-6 w-6 text-pink-500" viewBox="0 0 24 24" fill="none" stroke="currentColor"
