@@ -15,7 +15,7 @@
       <!-- Profile Header -->
       <div class="text-center mb-6">
         <img
-          :src="profileImage ? profileImagePreview : 'http://127.0.0.1:8000'+userAuth.user.profile"
+          :src="profileImage ? profileImagePreview : 'http://127.0.0.1:8000' + userAuth.user.profile"
           class="rounded-full mx-auto mb-4"
           alt="Profile Picture"
           style="width: 80px; height: 80px"
