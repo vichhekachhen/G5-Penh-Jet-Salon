@@ -12,7 +12,7 @@
                         <div x-data="imageData()" class="w-full text-center relative">
                             <div x-show="previewUrl !== '' || imgurl !== ''"
                                 class="relative w-36 h-36 mx-auto mt-4 group">
-                                <img :src="previewUrl !== '' ? previewUrl : imgurl" alt=""
+                                <img src="{{ auth()->user()->profile }}" alt=""
                                     class="shadow-lg rounded-full max-w-full h-auto align-middle border-none h-full w-full object-cover">
                                 <label for="thumbnailprev"
                                     class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full cursor-pointer">
