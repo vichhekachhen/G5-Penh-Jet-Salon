@@ -15,17 +15,9 @@
       <!-- Profile Header -->
       <div class="text-center mb-6">
         <img
-          v-if="userAuth.user.profile"
-          :src="userAuth.user.profile"
+          :src="profileImage ? profileImagePreview : 'http://127.0.0.1:8000'+userAuth.user.profile"
           class="rounded-full mx-auto mb-4"
           alt="Profile Picture"
-          style="width: 80px; height: 80px"
-        />
-        <img
-          v-else
-          src="../Images/default-user-image.png"
-          class="rounded-full mx-auto mb-4"
-          alt="Default User Image"
           style="width: 80px; height: 80px"
         />
         <h3 class="font-semibold text-xl">{{ userAuth.user.name }}</h3>
@@ -92,23 +84,23 @@
       <!-- Stats Section -->
       <div class="text-left mt-6">
         <div class="mb-4">
-          <h6 class="text-gray-800 font-semibold">Email</h6>
+          <h6 class="text-gray-800 font-semibold"><b>Email</b></h6>
           <p>{{ userAuth.user.email }}</p>
         </div>
         <div class="mb-4">
-          <h6 class="text-gray-800 font-semibold">Phone Number</h6>
+          <h6 class="text-gray-800 font-semibold"><b>Phone Number</b></h6>
           <p>{{ userAuth.user.phone }}</p>
         </div>
         <div class="mb-4">
-          <h6 class="text-gray-800 font-semibold">Date of Birth</h6>
+          <h6 class="text-gray-800 font-semibold"><b>Date of Birth</b></h6>
           <p>{{ userAuth.user.birth }}</p>
         </div>
         <div class="mb-4">
-          <h6 class="text-gray-800 font-semibold">Gender</h6>
+          <h6 class="text-gray-800 font-semibold"><b>Gender</b></h6>
           <p>{{ userAuth.user.gender }}</p>
         </div>
         <div>
-          <h6 class="text-gray-800 font-semibold">Address</h6>
+          <h6 class="text-gray-800 font-semibold"><b>Address</b></h6>
           <p>{{ userAuth.user.location }}</p>
         </div>
       </div>
@@ -140,18 +132,18 @@
       </div>
 
       <!-- Navigation Tabs -->
-      <div class="mb-6">
+      <!-- <div class="mb-6">
         <button
           @click="toggleFormVisibility"
           class="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded transition duration-300"
         >
           Update
         </button>
-      </div>
+      </div> -->
 
       <!-- Form Section -->
       <form
-        v-if="isUpdate"
+
         @submit.prevent="submitForm"
         class="grid grid-cols-1 md:grid-cols-2 gap-6"
       >
