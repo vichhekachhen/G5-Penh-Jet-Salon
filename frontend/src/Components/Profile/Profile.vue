@@ -122,6 +122,7 @@
 import { useAuthStore } from '@/stores/auth-store'
 import { useUserStore } from '@/stores/user';
 const userAuth = useUserStore();
+import Swal from 'sweetalert2'
 
 export default {
   data() {
@@ -147,7 +148,13 @@ export default {
     },
     async updateUserProfile() {
       userAuth.updateUserInfo(this.userAuth.user)
-      window.alert('You are successfully updated!')
+      await Swal.fire({
+      position: 'top-center',
+      icon: 'success',
+      title: 'You updated successfully!',
+      showConfirmButton: false,
+      timer: 1500,
+    });
     },
   }
 }
