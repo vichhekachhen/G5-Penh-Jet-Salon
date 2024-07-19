@@ -42,9 +42,12 @@ class ProfileController extends Controller
         $validated = $request->validate([
             'name'=>'required',
             'email' => 'required|email|unique:users,email,'.$user->id.',id',
+            'phone' => 'required|unique:users',
         ]);
 
-
+        // Update the user's phone number
+        $user->phone = $request->input('phone');
+        $user->save();
 
         if($request->password != null){
             $request->validate([
@@ -62,5 +65,11 @@ class ProfileController extends Controller
         $user->update($validated);
 
         return redirect()->back()->withSuccess('User updated !!!');
+    }
+    private function saveImage($image)
+    {
+        $filename = time() . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('images'), $filename);
+        return $filename;
     }
 }
