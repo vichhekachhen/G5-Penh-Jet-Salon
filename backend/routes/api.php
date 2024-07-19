@@ -18,6 +18,9 @@ use App\Http\Controllers\StripePaymentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\QR\QRController;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendEmail;
+use App\Jobs\SendEmailJob;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +35,26 @@ use App\Http\Controllers\API\QR\QRController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+//send email
+Route::post('/send/email', function (Request $request) {
+    try {
+        $data = [
+            'email' => $request->email,
+            'content' => $request->content
+        ];
+        dispatch(new SendEmailJob($data));
+        return response()->json([
+            'message' => 'Email Sent successfully',
+            'data' => $data
+        ]);
+    } catch (Exception $e) {
+        return response()->json([
+            'message' => 'Failed to send email',
+            'error' => $e->getMessage()
+        ], 500);
+    }
 });
 
 Route::post('/login', [AuthController::class, 'login']);
@@ -76,7 +99,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/booking/list', [BookingController::class, 'index']);
     Route::delete('{id}', [BookingController::class, 'destroy']);
     Route::get('/services/detail/{booking_id}', [BookingController::class, 'getBookingService']);
-
 });
 
 Route::get('/category/list', [CategoryController::class, 'index']);

@@ -25,7 +25,6 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: () => import('../views/Web/HomeView.vue')
-      // component: () => import('../views/Shops/ListShopView.vue')
     },
     {
       path: '/post',
@@ -52,12 +51,6 @@ const router = createRouter({
       name: 'history',
       component: () => import('../views/Users/History/HistoryBooking.vue')
     },
-    // =================ShopOwner=================
-    {
-      path: '/registerOwner',
-      name: 'registerOwner',
-      component: () => import('../views/Users/RegisterOwner/RegisterOwner.vue')
-    },
 
     {
       path: '/infoDetail',
@@ -83,7 +76,13 @@ const router = createRouter({
       component: () => import('../views/Users/Shops/Comment/CommentService.vue'),
       props: true
 
-    }
+    },
+    {
+      path: '/email',
+      name: 'email',
+      component: () => import('../views/Users/Email/Email.vue')
+    },
+
   ],
   linkExactActiveClass: 'bg-danger text-white border-bottom',
 })
