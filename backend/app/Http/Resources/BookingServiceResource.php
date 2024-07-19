@@ -17,6 +17,8 @@ class BookingServiceResource extends JsonResource
         return [
             'id' => $this->id,
             'service_name' => $this->service->service_name,
+            'service_id' => $this->service_id,
+            'service_image' => $this->service->image,
             'booking_id' => $this->booking_id,
             'total' => $this->quantity * $this->service->price,
             'discount' => $this->service->discount,
