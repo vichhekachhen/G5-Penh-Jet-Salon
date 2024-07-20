@@ -12,29 +12,35 @@
                     :src="baseURL + serviceStore.service.image"
                     alt="Product Image"
                     class="w-full object-cover rounded-lg"
-                    style="width: 500px; height: 300px;"
+                    style="width: 500px; height: 300px"
                   />
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="card-body order-primary">
-                  <h4 class="card-title">
-                    Service: {{ serviceStore.service.service_name }}
+                  <h4 class="card-title d-flex justify-content-between align-items-center">
+                    <span>Service: {{ serviceStore.service.service_name }}</span>
+                    <i
+                      :class="['bi', isFavorite ? 'bi-heart-fill' : 'bi-heart']"
+                      :style="{ fontSize: '25px', color: isFavorite ? 'red' : 'inherit' }"
+                      @click="addFavorite()"
+                    >
+                      <span>{{ likeStore.totalLike }}</span>
+                    </i>
                   </h4>
                   <div class="detail mb-3">
                     <h5 v-if="serviceStore.service.discount === null">
                       Price: <b class="text-pink-500">${{ serviceStore.service.price }}</b>
                     </h5>
                     <h5 v-else>
-                      Discount: <b class="text-red"> ${{ serviceStore.service.discount }}</b> 
+                      Discount: <b class="text-red"> ${{ serviceStore.service.discount }}</b>
                     </h5>
                   </div>
-                  <div class="d-flex justify-content-start ">
-                    <h5>Rate:</h5>
-                    <div v-for="star in 5" :key="star" class=" bi-star-fill text-orange pl-2"></div>
+                  <div class="d-flex justify-content-start">
+                    <!-- <div v-for="star in 5" :key="star" class="bi-heart-fill text-danger pl-2"></div> -->
                   </div>
                   <div class="description mb-3">
-                    <h5>Description: </h5>
+                    <h5>Description:</h5>
                     <p>{{ serviceStore.service.description }}</p>
                   </div>
                 </div>
@@ -44,7 +50,6 @@
         </div>
       </div>
     </div>
-   
 
     <!-- Comments Section -->
     <section class="py-10">
@@ -52,29 +57,57 @@
         <h3><i class="bi bi-chat-left-text text-pink-500 p-3"></i>Comments</h3>
         <div v-for="comment in useComment.comments" :key="comment.id" class="comment-box mb-4">
           <div class="d-flex align-items-start">
-            <img :src="baseURL + comment.user_profile" alt="User Avatar" class="w-10 h-10 mr-2 " />
+            <img :src="baseURL + comment.user_profile" alt="User Avatar" class="w-10 h-10 mr-2" />
             <div class="flex-grow-1">
               <div class="d-flex justify-content-between">
-                <strong class=" mt-2 text-pink-500">
+                <strong class="mt-2 text-pink-500">
                   {{ comment.user_name }}
                 </strong>
                 <div>
                   <div>
                     <button class="btn btn-sm" @click="replyTo(comment)">
-                        <svg class="w-6 h-6 text-blue-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.5 8.046H11V6.119c0-.921-.9-1.446-1.524-.894l-5.108 4.49a1.2 1.2 0 0 0 0 1.739l5.108 4.49c.624.556 1.524.027 1.524-.893v-1.928h2a3.023 3.023 0 0 1 3 3.046V19a5.593 5.593 0 0 0-1.5-10.954Z"/>
-                        </svg>
+                      <svg
+                        class="w-6 h-6 text-blue-500 dark:text-white"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M14.5 8.046H11V6.119c0-.921-.9-1.446-1.524-.894l-5.108 4.49a1.2 1.2 0 0 0 0 1.739l5.108 4.49c.624.556 1.524.027 1.524-.893v-1.928h2a3.023 3.023 0 0 1 3 3.046V19a5.593 5.593 0 0 0-1.5-10.954Z"
+                        />
+                      </svg>
                     </button>
                     <button class="btn btn-sm" @click="removeComment(comment.id)">
-                      <svg class="h-6 w-6 text-red-500" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z"/><line x1="4" y1="7" x2="20" y2="7"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12"/><path d="M9 7v-3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/>
+                      <svg
+                        class="h-6 w-6 text-red-500"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        stroke-width="2"
+                        stroke="currentColor"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path stroke="none" d="M0 0h24v24H0z" />
+                        <line x1="4" y1="7" x2="20" y2="7" />
+                        <line x1="10" y1="11" x2="10" y2="17" />
+                        <line x1="14" y1="11" x2="14" y2="17" />
+                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12" />
+                        <path d="M9 7v-3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3" />
                       </svg>
                     </button>
                   </div>
                 </div>
               </div>
               <p>{{ comment.text }}</p>
-              <img v-if="comment.image" :src="baseURL + comment.image" alt="User Avatar" class="rounded-circle me-3" width="50" />
               <div v-if="comment.replies && comment.replies.length" class="mb-3">
                 <div v-for="reply in comment.replies" :key="reply.id" class="mb-2 card">
                   <!-- reply comment  -->
@@ -82,17 +115,37 @@
                     <!-- <img v-if="reply.owner.profile" :src="baseURL + reply.owner.profile" alt="User Avatar" class="rounded-circle me-3" width="50" /> -->
                     <div class="flex-grow-1 d-flex justify-content-between align-items-center">
                       <div class="comment-text">
-                        <strong class="text-pink-500">{{ reply.owner.name }}:</strong> {{ reply.text }}
+                        <strong class="text-pink-500">{{ reply.owner.name }}:</strong>
+                        {{ reply.text }}
                       </div>
                       <div class="ms-auto">
                         <button class="btn btn-sm" @click="removeReply(reply.id)">
-                          <svg class="h-6 w-6 text-red-500" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z"/><line x1="4" y1="7" x2="20" y2="7"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12"/><path d="M9 7v-3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/>
+                          <svg
+                            class="h-6 w-6 text-red-500"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            stroke-width="2"
+                            stroke="currentColor"
+                            fill="none"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          >
+                            <path stroke="none" d="M0 0h24v24H0z" />
+                            <line x1="4" y1="7" x2="20" y2="7" />
+                            <line x1="10" y1="11" x2="10" y2="17" />
+                            <line x1="14" y1="11" x2="14" y2="17" />
+                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12" />
+                            <path d="M9 7v-3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3" />
                           </svg>
                         </button>
                       </div>
                     </div>
-                    <img v-if="reply.owner.image" :src="baseURL + reply.owner.image" class="rounded-square ml-3" />
+                    <img
+                      v-if="reply.owner.image"
+                      :src="baseURL + reply.owner.image"
+                      class="rounded-square ml-3"
+                    />
                   </div>
                 </div>
               </div>
@@ -100,7 +153,7 @@
                 <div class="input-group mb-2">
                   <input
                     type="text"
-                    class="form-control flex-grow-1 "
+                    class="form-control flex-grow-1"
                     placeholder="Add a reply..."
                     v-model="replyText"
                     @keyup.enter="addReply(comment)"
@@ -113,31 +166,34 @@
             </div>
           </div>
         </div>
-        <div class="d-flex align-items-center mt-4 p-3">
-          <div class="input-group mb-2">
-            <!-- <input class="form-control" type="file" id="formFile" @change="handleFileUpload" /> -->
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Add a comment..."
-              v-model="commentAdd"
-              @keyup.enter="addComment"
-            />
-            <button class="btn btn-primary" @click="addComment">
-              <i class="bi bi-arrow-right"></i>
-            </button>
-          </div>
+        <!-- <form > -->
+        <div class="bg-white rounded-lg p-6 flex items-center">
+          <div class="mr-4"></div>
+          <input
+            class="form-control w-full"
+            type="text"
+            placeholder="Add your comment..."
+            v-model="commentAdd"
+            @keyup.enter="addComment"
+          />
+          <button
+            class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
+            @click="addComment"
+          >
+            <i class="bi bi-send"></i>
+          </button>
         </div>
+        <!-- </form> -->
       </div>
     </section>
-
   </div>
 </template>
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useServiceStore } from '../../../stores/service'
 import { useCommentStore } from '../../../stores/comment'
+import { useLikeStore } from '../../../stores/like'
 import { useReplyStore } from '../../../stores/replyComment'
 import baseURL from '../../../api/url'
 
@@ -145,12 +201,26 @@ const route = useRoute()
 const serviceStore = useServiceStore()
 const useComment = useCommentStore()
 const useReply = useReplyStore()
+const likeStore = useLikeStore()
+const isFavorite = ref(false)
 
+const addFavorite = () => {
+  likeStore.addToFav(route.params.id)
+  fetchLikes(route.params.id)
+  fetchIsFavorite(route.params.id)
+}
+
+const fetchLikes = (id: number) => {
+  likeStore.fetchFavorite(id)
+}
 // show the service
 const fetchServiceShow = async () => {
   await serviceStore.getServiceShow(route.params.id)
 }
 
+const fetchIsFavorite = (id: number) => {
+  likeStore.isServiceFavorite(id)
+}
 //list all comments
 const fetchAllComments = async () => {
   await useComment.fetchAllComments(route.params.id)
@@ -169,41 +239,48 @@ const removeReply = async (replyId) => {
 }
 
 const replyTo = (comment) => {
-  comment.showReplyBox = !comment.showReplyBox 
+  comment.showReplyBox = !comment.showReplyBox
 }
 
 // replay the comments
-const replyText = ref("");
+const replyText = ref('')
 const addReply = async (comment) => {
   const reply = {
-    text: replyText.value.toString(), 
+    text: replyText.value.toString()
   }
   useReply.repliesComment(comment.id, reply)
-  replyText.value = ""
+  replyText.value = ''
   fetchAllComments()
 }
 
 // comment the onwer
-const commentAdd = ref("")
+const commentAdd = ref('')
 const addComment = async () => {
   const comment = {
-    text: commentAdd.value.toString(),
+    text: commentAdd.value.toString()
   }
   useComment.addComments(route.params.id, comment)
   console.log(route.params.id, comment)
-  commentAdd.value = ""
+  commentAdd.value = ''
   fetchAllComments()
 }
-
+const updateIsFavorite = computed(() => {
+  return likeStore.isFavorited
+})
+watch(updateIsFavorite, (value) => {
+  isFavorite.value = value
+})
 // routes showing
 onMounted(async () => {
   fetchAllComments()
   fetchServiceShow()
+  fetchLikes(route.params.id)
+  fetchIsFavorite(route.params.id)
 })
+// kkk
 </script>
 
 <style scoped>
-
 .card {
   border: none;
   border-radius: 12px;
@@ -216,7 +293,7 @@ onMounted(async () => {
 }
 
 .product-details h1 {
-  font-size: 28px; 
+  font-size: 28px;
   margin-bottom: 10px;
 }
 
