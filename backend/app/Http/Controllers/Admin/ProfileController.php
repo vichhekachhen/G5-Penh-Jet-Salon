@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -18,10 +19,7 @@ class ProfileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function __construct()
-    {
-
-    }
+    function __construct() {}
 
     /**
      * Display a listing of the resource.
@@ -31,45 +29,43 @@ class ProfileController extends Controller
     public function index()
     {
         $user = auth()->user();
-        return view('setting.profile',['user'=>$user]);
+        return view('setting.profile', ['user' => $user]);
     }
-
 
     public function update(Request $request)
     {
         $user = auth()->user();
 
         $validated = $request->validate([
-            'name'=>'required',
-            'email' => 'required|email|unique:users,email,'.$user->id.',id',
-            'phone' => 'required|unique:users',
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,' . $user->id . ',id',
+            'phone' => 'nullable|unique:users,phone,' . $user->id . ',id',
+            'profile' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validate image file
+            'birth' => 'required|date',
         ]);
 
-        // Update the user's phone number
-        $user->phone = $request->input('phone');
-        $user->save();
+        // Update the user's phone number if it's provided
+        if ($request->filled('phone')) {
+            $user->phone = $request->input('phone');
+        }
 
-        if($request->password != null){
-            $request->validate([
-                'password' => 'required|confirmed'
-            ]);
+        // Update the user's birth date
+        $user->birth = $request->input('birth');
+
+        // Update the password if provided
+        if ($request->filled('password')) {
             $validated['password'] = bcrypt($request->password);
         }
 
-        if($request->hasFile('profile')){
-            if($name = $this->saveImage($request->profile)){
+        // Handle profile image upload
+        if ($request->hasFile('profile')) {
+            if ($name = $this->saveImage($request->file('profile'))) {
                 $validated['profile'] = $name;
             }
         }
 
         $user->update($validated);
 
-        return redirect()->back()->withSuccess('User updated !!!');
-    }
-    private function saveImage($image)
-    {
-        $filename = time() . '.' . $image->getClientOriginalExtension();
-        $image->move(public_path('images'), $filename);
-        return $filename;
+        return redirect()->back()->withSuccess('User updated successfully!');
     }
 }
