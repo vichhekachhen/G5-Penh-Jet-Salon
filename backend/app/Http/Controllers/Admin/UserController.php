@@ -65,7 +65,7 @@ class UserController extends Controller
             }
         }
 
-        return view('dashboard', ['countOwner' => $countOwner, 'countCustomer' => $countCustomer, 'services' => $services, 'countService'=> $countService, 'countProvince' => $countProvince]);
+        return view('dashboard', ['countOwner' => $countOwner, 'countCustomer' => $countCustomer, 'services' => $services, 'countService' => $countService, 'countProvince' => $countProvince]);
     }
 
 

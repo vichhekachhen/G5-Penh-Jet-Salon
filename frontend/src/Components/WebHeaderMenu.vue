@@ -3,7 +3,9 @@
     <div class="container-fluid px-4 py-2 d-flex justify-content-between align-items-center ">
       <!-- Logo -->
       <div class="ml-5">
-        <img style="width: auto; height: 60px" src="../Images/salon.png" alt="">
+        <a href="/">
+          <img style="width: auto; height: 60px" src="../Images/salon.png" alt="">
+        </a>
       </div>
 
       <!-- Menu Items -->
