@@ -2,7 +2,8 @@
   <div class="bg-gray-100">
     <nav class="bg-pink-600 p-4 sticky top-0 z-50">
       <div class="flex items-center justify-between">
-        <h1 class="text-white font-bold text-xl">My App</h1>
+        <h5 class="animate-fade-in text-white font-bold text-2xl md:text-3xl lg:text-4xl uppercase p-4">Welcome to My
+          Salon</h5>
         <button @click="toggleNavbar" class="text-white focus:outline-none md:hidden">
           <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
@@ -14,7 +15,7 @@
         hidden: !isNavbarOpen
       }" class="mt-2 md:flex md:items-center md:justify-between">
         <div class="flex flex-col md:flex-row md:space-x-4">
-          <button class="text-white hover:underline mr-9">All Categories</button>
+          <button class="text-white hover:underline ml-9 mr-9">All Categories</button>
           <button class="text-white hover:underline mr-8">Man</button>
           <button class="text-white hover:underline mr-8">Woman</button>
           <button class="text-white hover:underline mr-8">Product</button>
@@ -178,3 +179,63 @@ onMounted(async () => {
   await fetchAllCardService()
 })
 </script>
+
+<style>
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 2s ease-in-out;
+}
+
+.text-white {
+  color: #ffffff;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+  /* 24px */
+}
+
+.md\:text-3xl {
+  font-size: 1.875rem;
+  /* 30px */
+}
+
+.lg\:text-4xl {
+  font-size: 2.25rem;
+  /* 36px */
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.p-4 {
+  padding: 1rem;
+}
+
+
+@media (min-width: 640px) and (max-width: 1024px) {
+  .md\:space-x-4 {
+    margin-right: 1rem; /* Adjust spacing for tablet */
+  }
+  .bg-white {
+    padding: 1rem; /* Add padding for tablet */
+  }
+  .text-2xl {
+    font-size: 1.75rem; /* Smaller font size for tablet */
+  }
+}
+</style>
