@@ -19,6 +19,13 @@
     </div>
 
     <div class="flex items-center">
+        <a href="{{ route('chatify') }}" class="h-8 w-8 mr-6 relative max-w-xs overflow-hidden bg-cover bg-no-repeat">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="#5f6368" class="transition-colors duration-300 group-hover:text-blue-500">
+                <path d="M11.944 14.753l-1.199 3.77c.171 0 .244-.073.342-.161l2.63-2.426 5.453 3.987c1.002.554 1.723.267 1.975-.927l3.588-16.715.002-.002c.267-1.267-.439-1.853-1.425-1.547l-19.443 7.496c-1.319.509-1.292 1.238-.235 1.566l4.99 1.56 11.575-7.282c.547-.365 1.037-.161.632.224l-9.39 8.519z" />
+            </svg>
+        </a>
+
+
         <div x-data="{ dropdownOpen: false }" class="relative">
             <button @click="dropdownOpen = ! dropdownOpen" class="relative block h-8 w-8 rounded-full overflow-hidden shadow focus:outline-none">
                 <img class="h-full w-full object-cover" src="{{ auth()->user()->profile }}" alt="Your avatar">
