@@ -36,11 +36,11 @@
 </template>
 
 <script setup lang="ts">
-// import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import axiosInstance from '@/plugins/axios'
 import URL from '@/api/url';
 import { useAuthStore } from '@/stores/auth-store'
-// import Swal from 'sweetalert2'
+import Swal from 'sweetalert2'
 const userAuth = useAuthStore()
 
 
