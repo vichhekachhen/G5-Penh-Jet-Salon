@@ -8,7 +8,7 @@ use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Traits\UploadImage;
-
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -19,7 +19,9 @@ class ProfileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function __construct() {}
+    function __construct()
+    {
+    }
 
     /**
      * Display a listing of the resource.
@@ -57,14 +59,27 @@ class ProfileController extends Controller
             $validated['password'] = bcrypt($request->password);
         }
 
-        // Handle profile image upload
-        if ($request->hasFile('profile')) {
-            if ($name = $this->saveImage($request->file('profile'))) {
-                $validated['profile'] = $name;
-            }
-        }
+        // // Handle profile image upload
+        // if ($request->hasFile('profile')) {
+        //     if ($name = $this->saveImage($request->file('profile'))) {
+        //         $validated['profile'] = $name;
+        //     }
+        // }
 
         $user->update($validated);
+
+        if ($request->hasFile('profile')) {
+            if ($user->profile) {
+                $oldImagePath = str_replace('/storage', 'public', $user->profile);
+                Storage::delete($oldImagePath);
+            }
+
+            // Store the new profile and get its path
+            $path = $request->file('profile')->store('Profiles', 'public');
+            $data['profile'] = Storage::url($path);
+        }
+        $user->profile = $data['profile'];
+        $user->save();
 
         return redirect()->back()->withSuccess('User updated successfully!');
     }
