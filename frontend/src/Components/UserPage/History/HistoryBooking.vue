@@ -13,7 +13,7 @@
               <th scope="col">Date</th>
               <th scope="col">Time</th>
               <th scope="col">Price</th>
-              <th scope="col">Status</th>
+              <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -23,13 +23,21 @@
               <td>{{ booking.date }}</td>
               <td>{{ booking.time }}</td>
               <td>${{ booking.total_price }}</td>
-              <td class="text-green font-bold">{{ booking.status }}</td>
+              <td>
+                <router-link :to="{ name: 'bookingDetail', params: { id: booking.id } }">
+                  <button class="btn btn-sm btn-primary">
+                    <i class="fas fa-edit">Detail</i>
+                  </button>
+                </router-link>
+                <button @click="deleteBookingShop(booking.id)" class="btn btn-sm btn-danger ml-3">
+                  <i class="fas fa-trash-alt">Delete</i>
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
-    <!-- {{ store.bookings }} -->
   </WebLayout>
 </template>
 
@@ -54,6 +62,10 @@ export default {
   methods: {
     fetchBookings(){
       useBooking.fetchAllBokkings();
+    },
+    deleteBookingShop(id) {
+      useBooking.deleteBookingShop(id);
+      this.fetchBookings();
     }
   }
 };
