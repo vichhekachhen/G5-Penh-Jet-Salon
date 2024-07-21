@@ -14,7 +14,6 @@ class StripePaymentController extends Controller
         // Set your secret key
         Stripe::setApiKey(env('STRIPE_SECRET'));
 
-        // dd($request->amount);
         try {
             // Create a PaymentIntent to charge a customer
             $paymentIntent = PaymentIntent::create([

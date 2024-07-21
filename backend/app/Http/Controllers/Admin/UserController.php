@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Booking;
+use App\Models\Payment;
 use App\Models\Province;
 use App\Models\Service;
 use Illuminate\Http\Request;
@@ -49,23 +51,33 @@ class UserController extends Controller
         $countService = $services->count();
         $provices = Province::all();
         $countProvince = $provices->count();
-
-        // $owners = [];
+        $countBooking = Booking::where('store_id', $userAuth->store_id)->count();
+        $totalPrice = Booking::where('store_id', $userAuth->store_id)->sum('total_price');
+    
         $countOwner = 0;
         $countCustomer = 0;
-
+        $sumAmount = Payment::sum('amount');
+    
         foreach ($users as $user) {
             foreach ($user->roles as $role) {
                 if ($role->name === 'owner' && $user->store_id != 0) {
-                    // $owners[] = $user;
                     $countOwner++;
                 } elseif ($role->name === 'user') {
                     $countCustomer++;
                 }
             }
         }
-
-        return view('dashboard', ['countOwner' => $countOwner, 'countCustomer' => $countCustomer, 'services' => $services, 'countService'=> $countService, 'countProvince' => $countProvince]);
+    
+        return view('dashboard', [
+            'countOwner' => $countOwner,
+            'countCustomer' => $countCustomer,
+            'services' => $services,
+            'countService' => $countService,
+            'countProvince' => $countProvince,
+            'countBooking' => $countBooking,
+            'totalPrice' => $totalPrice,
+            'sumAmount' => $sumAmount
+        ]);
     }
 
 
