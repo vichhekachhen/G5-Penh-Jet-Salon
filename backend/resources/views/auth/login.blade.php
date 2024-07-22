@@ -18,7 +18,7 @@
               <div class="flex flex-col">
                 <input type="password" name="password" id="password" class="border-2 rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 focus:shadow" placeholder="Password" required autocomplete="current-password"/>
                 <div class="text-center text-blue-500 mt-1">
-                  <a href="">Forgot password</a>
+                  <a href="/forgot-password">Forgot password</a>
                 </div>
               </div>
               <div class="flex flex-col-reverse sm:flex-row sm:justify-between items-center">
