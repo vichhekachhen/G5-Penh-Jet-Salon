@@ -11,7 +11,6 @@
                         {{ $role->name }}
                         @endforeach
                     </b> </p>
-                <!-- <p>{{auth()->user()->roles[0]->name}}</p> -->
 
             </div>
             {{-- In your Blade view --}}

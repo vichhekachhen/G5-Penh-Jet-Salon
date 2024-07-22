@@ -7,7 +7,6 @@ use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
-
 class AdminSeeder extends Seeder
 {
     /**
@@ -17,91 +16,70 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
+        // Create users
         $admin = User::create([
-            'name'=>'Admin',
-            'email'=>'admin@gmail.com',
-            'password'=>bcrypt('password'),
+            'name' => 'Admin',
+            'email' => 'admin@gmail.com',
+            'password' => bcrypt('password'),
             'profile' => 'user.avif',
             'store_id' => 0
         ]);
 
         $writer = User::create([
-            'name'=>'User',
-            'email'=>'user@gmail.com',
-            'password'=>bcrypt('password'),
+            'name' => 'User',
+            'email' => 'user@gmail.com',
+            'password' => bcrypt('password'),
             'store_id' => 0
         ]);
 
         $owner = User::create([
-            'name'=>'Owner',
-            'email'=>'owner@gmail.com',
-            'password'=>bcrypt('password'),
+            'name' => 'Owner',
+            'email' => 'owner@gmail.com',
+            'password' => bcrypt('password'),
             'store_id' => 0
         ]);
-        
 
+        // Create roles
+        $adminRole = Role::create(['name' => 'admin']);
+        $writerRole = Role::create(['name' => 'user']);
+        $ownerRole = Role::create(['name' => 'owner']);
 
-        $admin_role = Role::create(['name' => 'admin']);
-        $writer_role = Role::create(['name' => 'user']);
-        $owner_role = Role::create(['name' => 'owner']);
+        // Define permissions
+        $permissions = [
+            'Post access', 'Post edit', 'Post create', 'Post delete',
+            'Role access', 'Role edit', 'Role create', 'Role delete',
+            'User access', 'User edit', 'User create', 'User delete',
+            'Province access', 'Province edit', 'Province create', 'Province delete',
+            'Category access', 'Category edit', 'Category create', 'Category delete',
+            'Permission access', 'Permission edit', 'Permission create', 'Permission delete',
+            'Slideshow access', 'Slideshow edit', 'Slideshow create', 'Slideshow delete',
+            'Mail access', 'Mail edit',
+            'Service access', 'Service edit', 'Service create', 'Service delete', 'Service show',
+            'Payment access', 'Payment create',
+            'Booking access', 'Booking create', 'Booking show','Schedule access','Schedule show', 'Report access'
+        ];
 
-        $permission = Permission::create(['name' => 'Post access']);
-        $permission = Permission::create(['name' => 'Post edit']);
-        $permission = Permission::create(['name' => 'Post create']);
-        $permission = Permission::create(['name' => 'Post delete']);
+        // Create permissions
+        foreach ($permissions as $permission) {
+            Permission::create(['name' => $permission]);
+        }
 
-        $permission = Permission::create(['name' => 'Role access']);
-        $permission = Permission::create(['name' => 'Role edit']);
-        $permission = Permission::create(['name' => 'Role create']);
-        $permission = Permission::create(['name' => 'Role delete']);
+        // Assign roles to users
+        $admin->assignRole($adminRole);
+        $writer->assignRole($writerRole);
+        $owner->assignRole($ownerRole);
 
-        $permission = Permission::create(['name' => 'User access']);
-        $permission = Permission::create(['name' => 'User edit']);
-        $permission = Permission::create(['name' => 'User create']);
-        $permission = Permission::create(['name' => 'User delete']);
+        // Permissions to be excluded for admin role
+        $excludedAdminPermissions = ['Post access','Report access','Schedule access','Booking access'];
 
-        $permission = Permission::create(['name' => 'Province access']);
-        $permission = Permission::create(['name' => 'Province edit']);
-        $permission = Permission::create(['name' => 'Province create']);
-        $permission = Permission::create(['name' => 'Province delete']);
-        
-        $permission = Permission::create(['name' => 'Category access']);
-        $permission = Permission::create(['name' => 'Category edit']);
-        $permission = Permission::create(['name' => 'Category create']);
-        $permission = Permission::create(['name' => 'Category delete']);
+        // Permissions for admin role
+        $adminPermissions = array_diff($permissions, $excludedAdminPermissions);
 
-        $permission = Permission::create(['name' => 'Permission access']);
-        $permission = Permission::create(['name' => 'Permission edit']);
-        $permission = Permission::create(['name' => 'Permission create']);
-        $permission = Permission::create(['name' => 'Permission delete']);
+        // Assign permissions to roles
+        $adminRole->syncPermissions($adminPermissions);
 
-        $permission = Permission::create(['name' => 'Slideshow access']);
-        $permission = Permission::create(['name' => 'Slideshow edit']);
-        $permission = Permission::create(['name' => 'Slideshow create']);
-        $permission = Permission::create(['name' => 'Slideshow delete']);
-
-        $permission = Permission::create(['name' => 'Mail access']);
-        $permission = Permission::create(['name' => 'Mail edit']);
-
-        $permission = Permission::create(['name' => 'Service access']);
-        $permission = Permission::create(['name' => 'Service edit']);
-        $permission = Permission::create(['name' => 'Service create']);
-        $permission = Permission::create(['name' => 'Service delete']);
-        $permission = Permission::create(['name' => 'Service show']);
-
-        $permission = Permission::create(['name' => 'Payment access']);
-        $permission = Permission::create(['name' => 'Payment create']);
-
-        $permission = Permission::create(['name' => 'Booking access']);
-        $permission = Permission::create(['name' => 'Booking create']);
-        $permission = Permission::create(['name' => 'Booking show']);
-
-        
-        $admin->assignRole($admin_role);
-        $writer->assignRole($writer_role);
-        $owner->assignRole($owner_role);
-
-
-        $admin_role->givePermissionTo(Permission::all());
+        // Assign specific permissions to owner
+        $ownerPermissions = ['Service access', 'Service show', 'Service create', 'Service edit', 'Service delete', 'Booking access', 'Booking show', 'Payment create', 'Province access', 'Category access', 'Schedule access', 'Schedule show', 'Report access'];
+        $ownerRole->givePermissionTo($ownerPermissions);
     }
 }
