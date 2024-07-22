@@ -37,6 +37,12 @@
                     <h5>Description: </h5>
                     <p>{{ serviceStore.service.description }}</p>
                   </div>
+                    <button @click="booking(serviceStore.service.id)">
+                      <router-link to="/payment" class="btn btn-primary">
+                        Booking Now
+                        <i class="bi bi-check2-circle"></i>
+                      </router-link>
+                    </button>
                 </div>
               </div>
             </div>
@@ -44,8 +50,6 @@
         </div>
       </div>
     </div>
-   
-
     <!-- Comments Section -->
     <section class="py-10">
       <div class="container mt-5 color-black">
@@ -79,7 +83,6 @@
                 <div v-for="reply in comment.replies" :key="reply.id" class="mb-2 card">
                   <!-- reply comment  -->
                   <div class="d-flex align-items-end reply bg-light p-3">
-                    <!-- <img v-if="reply.owner.profile" :src="baseURL + reply.owner.profile" alt="User Avatar" class="rounded-circle me-3" width="50" /> -->
                     <div class="flex-grow-1 d-flex justify-content-between align-items-center">
                       <div class="comment-text">
                         <strong class="text-pink-500">{{ reply.owner.name }}:</strong> {{ reply.text }}
@@ -115,7 +118,6 @@
         </div>
         <div class="d-flex align-items-center mt-4 p-3">
           <div class="input-group mb-2">
-            <!-- <input class="form-control" type="file" id="formFile" @change="handleFileUpload" /> -->
             <input
               type="text"
               class="form-control"
@@ -130,7 +132,6 @@
         </div>
       </div>
     </section>
-
   </div>
 </template>
 <script setup lang="ts">
@@ -139,16 +140,30 @@ import { useRoute } from 'vue-router'
 import { useServiceStore } from '../../../stores/service'
 import { useCommentStore } from '../../../stores/comment'
 import { useReplyStore } from '../../../stores/replyComment'
+import { useAuthStore } from '../../../stores/auth-store'
+import { useCardStore } from '../../../stores/pre-booking';
 import baseURL from '../../../api/url'
 
+// Routes of items
 const route = useRoute()
 const serviceStore = useServiceStore()
 const useComment = useCommentStore()
 const useReply = useReplyStore()
+const user_id = useAuthStore()
+const cardItems = useCardStore();
 
 // show the service
 const fetchServiceShow = async () => {
   await serviceStore.getServiceShow(route.params.id)
+}
+
+// booking service
+const booking = async (id) => {
+  const bookingData = {
+    user_id: user_id.user.id,
+    service_id: id,
+  }
+  await cardItems.addCard(id, bookingData);
 }
 
 //list all comments
