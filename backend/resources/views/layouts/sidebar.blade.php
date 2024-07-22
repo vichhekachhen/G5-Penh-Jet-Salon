@@ -6,7 +6,7 @@
                 <path d="M201.694 387.105C231.686 417.098 280.312 417.098 310.305 387.105C325.301 372.109 332.8 352.456 332.8 332.8C332.8 313.144 325.301 293.491 310.305 278.495C295.309 263.498 288 256 275.2 230.4C256 243.2 243.201 320 243.201 345.6C201.694 345.6 179.2 332.8 179.2 332.8C179.2 352.456 186.698 372.109 201.694 387.105Z" fill="white"></path>
             </svg>
             <a href="{{ route('admin.dashboard') }}">
-                <span class="text-white text-2xl mx-2 font-semibold">Dashboard</span>
+                <span class="text-white text-2xl mx-2 font-semibold">Penh Jet Salon</span>
             </a>
         </div>
     </div>
@@ -117,6 +117,15 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
             <span class="mx-3">Calendar</span>
+        </a>
+        @endcanany
+
+        @canany('Report access','Report add','Report edit','Report delete')
+        <a class="flex items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100 {{ Route::currentRouteNamed('admin.reports.index') ? 'active' : '' }}" href="{{ route('admin.reports.index') }}">
+            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            <span class="mx-3">Report</span>
         </a>
         @endcanany
 
