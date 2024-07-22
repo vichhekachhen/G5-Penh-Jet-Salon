@@ -1,7 +1,7 @@
 <x-app-layout>
     <div>
         <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
-            <div class="container mx-auto px-6 py-8">
+            <div class="container mx-auto px-6 py-4">
 
 
                 <h3 class="text-gray-700 text-3xl font-medium">Welcome : {{ auth()->user()->name }}</h3>
@@ -118,37 +118,51 @@
                 <canvas class="w-100 mt-5 ml-5" id="ChartGender"></canvas>
             </div>
             <div style="flex: 1;">
-                <!-- Add your other content here -->
-                <p>This is some additional content.</p>
+                <div class="m-10">
+                    <p class="font-bold my-4">Dashboard </p>
+                    <ul class="list-disc list-inside">
+                        <li class="text-gray-700">Users: {{$countCustomer}}</li>
+                        <li class="text-gray-700">Shops: {{$countOwner}}</li>
+                        <li class="text-gray-700">Categories: {{$countAllCategories}}</li>
+                        <li class="text-gray-700">Services: {{$countAllService}}</li>
+                        <li class="text-gray-700">Bookings: {{ $countAllBooking }}</li>
+                    </ul>
+                </div>
             </div>
         </div>
         @endif
     </div>
 </x-app-layout>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>;
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     var ctx = document.getElementById('ChartGender').getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['User', 'Owner', 'Total Amount'],
+            labels: ['User', 'Owner','Service','Booking'],
             datasets: [{
                 label: 'System Distribution',
                 data: [
                     {{ $countCustomer }},
                     {{ $countOwner }},
-                    {{ $sumAmount }}
+                    {{ $countAllService }},
+                    {{ $countAllBooking }},
+            
                 ],
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)'
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 99, 132, 1)',
                 ],
                 borderColor: [
                     'rgba(255, 99, 132, 1)',
                     'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)'
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 99, 132, 1)',
                 ],
                 borderWidth: 1
             }]
