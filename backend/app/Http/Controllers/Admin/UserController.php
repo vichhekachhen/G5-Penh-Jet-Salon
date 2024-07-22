@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
+use App\Models\Category;
 use App\Models\Payment;
 use App\Models\Province;
 use App\Models\Service;
@@ -52,6 +53,9 @@ class UserController extends Controller
         $provices = Province::all();
         $countProvince = $provices->count();
         $countBooking = Booking::where('store_id', $userAuth->store_id)->count();
+        $countAllBooking = Booking::count();
+        $countAllService = Service::count();
+        $countAllCategories = Category::count();
         $totalPrice = Booking::where('store_id', $userAuth->store_id)->sum('total_price');
     
         $countOwner = 0;
@@ -72,11 +76,14 @@ class UserController extends Controller
             'countOwner' => $countOwner,
             'countCustomer' => $countCustomer,
             'services' => $services,
+            'countAllService' => $countAllService,
             'countService' => $countService,
             'countProvince' => $countProvince,
             'countBooking' => $countBooking,
+            'countAllBooking' => $countAllBooking,
             'totalPrice' => $totalPrice,
-            'sumAmount' => $sumAmount
+            'sumAmount' => $sumAmount,
+            'countAllCategories' => $countAllCategories,
         ]);
     }
 
