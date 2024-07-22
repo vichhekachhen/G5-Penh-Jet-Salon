@@ -12,5 +12,37 @@
                 </div>
             </a>
         </div>
+        <div class="container mx-auto px-6 lg:px-12 mt-6">
+            <h1>card comment</h1>
+            <div class="">
+                @foreach ($comments as $comment)
+                <div class="w-full max-w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 pl-3 pr-3"
+                    <div class="flow-root">
+                        <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+                            <li class="py-3 sm:py-4">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0">
+                                        <img class="w-8 h-8 rounded-full" src="{{$comment->user->profile}}" alt="Neil image">
+                                    </div>
+                                    <div class="flex-1 min-w-0 ms-4">
+                                        <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                        {{$comment->user->name}}
+                                        </p>
+                                        <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                            {{$comment->text}}
+                                        </p>
+                                    </div>
+                                    <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                        <a href="">reply</a>
+                                    </div>
+                                </div>
+                        </ul>
+                    </div>
+                </div>
+
+                @endforeach
+            </div>
+
+        </div>
     </main>
 </x-app-layout>
