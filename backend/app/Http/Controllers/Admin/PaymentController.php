@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Payment;
+use App\Models\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Stripe\Stripe;
@@ -43,7 +44,13 @@ class PaymentController extends Controller
      */
     public function create()
     {
-        return view('payment.new');
+        $userAuth = Auth::user();
+        $to_admin = 0;
+        if ($userAuth->store_id != 0){
+            $store = Store::find($userAuth->store_id);
+            $to_admin = $store->to_admin;
+        }
+        return view('payment.new',['to_admin' => $to_admin]);
     }
 
     /**

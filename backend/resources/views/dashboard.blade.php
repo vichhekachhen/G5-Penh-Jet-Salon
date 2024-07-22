@@ -6,12 +6,6 @@
 
                 <h3 class="text-gray-700 text-3xl font-medium">Welcome : {{ auth()->user()->name }}</h3>
 
-                <p>Role : <b>
-                        @foreach(auth()->user()->roles as $role)
-                        {{ $role->name }}
-                        @endforeach
-                    </b> </p>
-
             </div>
             {{-- In your Blade view --}}
 
@@ -106,7 +100,7 @@
                     <a href="#">
                         <h5 class="mb-2 text-2xl font-semibold tracking-tight text-red-900 dark:text-white">Admin %</h5>
                     </a>
-                    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400 font-bold">8%</p>
+                    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400 font-bold">${{$to_admin}}</p>
                 </div>
             </div>
             @endif

@@ -66,6 +66,7 @@ class BookingController extends Controller
             }
 
             $service = Service::find($pre_booking->service_id);
+            
 
             if ($service) {
                 $store_id = $service->store_id;
@@ -80,6 +81,11 @@ class BookingController extends Controller
                 }
             }
         }
+        //pay to admin
+        $store = Store::find($store_id);
+        $to_admin = (10* $total_price)/100;
+        $store->to_admin += $to_admin;
+        $store->save();
 
         if (abs($booking->pay - (float) $total_price) < 0.01) {
             $booking->status = "done";

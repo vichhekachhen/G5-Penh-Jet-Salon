@@ -70,7 +70,7 @@ class AdminSeeder extends Seeder
         $owner->assignRole($ownerRole);
 
         // Permissions to be excluded for admin role
-        $excludedAdminPermissions = ['Post access','Report access','Schedule access','Booking access'];
+        $excludedAdminPermissions = ['Post access','Report access','Schedule access','Booking access','Payment create'];
 
         // Permissions for admin role
         $adminPermissions = array_diff($permissions, $excludedAdminPermissions);
