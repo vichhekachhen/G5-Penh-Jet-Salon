@@ -84,18 +84,6 @@ class CommentController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Service $service)
-    {
-        $categories = Category::all();
-        return view('service.edit', ['service' => $service, 'categories' => $categories]);
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -105,24 +93,15 @@ class CommentController extends Controller
 
     public function update(Request $request, $id)
     {
-        $service = Service::find($id);
-        $rules = [
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ];
+        
+        $reply = Reply::findOrFail($id);
+        $reply->update([
+            'text' => $request->text,
+        ]);
+        $reply->save();
+        return redirect('/admin/services/'.$request->service_id)->with('success', 'Reply edit successfully !!!');
 
-        $request->validate($rules);
-        $data = $request->except('image');
-        if ($request->hasFile('image')) {
-            if ($service->image) {
-                $oldImagePath = str_replace('/storage', 'public', $service->image);
-                Storage::delete($oldImagePath);
-            }
 
-            $path = $request->file('image')->store('ServiceImages', 'public');
-            $data['image'] = Storage::url($path);
-        }
-        $service->update($data);
-        return redirect('/admin/services')->with('success', 'Service updated successfully !!!');
     }
 
     /**
@@ -131,9 +110,10 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Service $service)
+    public function destroy($id)
     {
-        $service->delete();
-        return redirect()->back()->withSuccess('Service deleted !!!');
+        $reply = Reply::findOrFail($id);
+        $reply->delete();
+        return redirect()->back()->withSuccess('Reply deleted !!!');
     }
 }
