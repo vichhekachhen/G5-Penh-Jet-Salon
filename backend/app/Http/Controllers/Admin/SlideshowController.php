@@ -30,7 +30,7 @@ class SlideshowController extends Controller
      */
     public function index()
     {
-        $slideshows = Slideshow::paginate(4);
+        $slideshows = Slideshow::paginate(10);
 
         return view('slideshow.index', compact('slideshows'));
     }

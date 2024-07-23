@@ -65,7 +65,7 @@
                     <path d="M342-80q-28 0-49-17t-28-44l-45-179h520l-45 179q-7 27-28 44t-49 17H342Zm138-560q0-90 61-156t152-80q5-1 9 1t8 5q4 3 5.5 7.5t.5 9.5q-11 79-64.5 137.5T520-644v84h280q17 0 28.5 11.5T840-520v80q0 33-23.5 56.5T760-360H200q-33 0-56.5-23.5T120-440v-80q0-17 11.5-28.5T160-560h280v-84q-78-13-131.5-71.5T244-853q-1-5 .5-9.5t5.5-7.5q4-3 8-5t9-1q91 14 152 80t61 156Z" />
                 </svg>
                 <div class="ml-3">
-                    <a href="#">
+                    <a href="{{route('admin.services.index')}}">
                         <h5 class="mb-2 text-2xl font-semibold tracking-tight text-purple-900 dark:text-white">Service</h5>
                     </a>
                     <p class="mb-3 font-normal text-gray-500 dark:text-gray-400 font-bold">{{$countService}}</p>
@@ -77,7 +77,7 @@
                     <path d="M725-305q-56-58-87.5-126.5T606-591q0-91 31.5-159.5T725-877l50 50q-48 51-73.5 104.5T676-591q0 78 25.5 131.5T775-355l-50 50Zm139-142q-26-28-42-65.5T806-591q0-41 16-78.5t42-65.5l50 50q-18 20-28 42.5T876-591q0 29 10 51.5t28 42.5l-50 50Zm-504 6q-66 0-108-42t-42-108q0-66 42-108t108-42q66 0 108 42t42 108q0 66-42 108t-108 42ZM40-120v-94q0-38 19-64.5t49-41.5q51-26 120.5-43T360-380q62 0 131 17t120 43q30 15 49.5 41.5T680-214v94H40Zm60-60h520v-34q0-16-8.5-29.5T587-266q-48-27-109-40.5T360-320q-57 0-118.5 14.5T132-266q-14 7-23 21.5t-9 30.5v34Zm260-321q39 0 64.5-25.5T450-591q0-39-25.5-64.5T360-681q-39 0-64.5 25.5T270-591q0 39 25.5 64.5T360-501Zm0-90Zm0 411Z" />
                 </svg>
                 <div class="ml-3">
-                    <a href="#">
+                    <a href="{{route('admin.schedules.index')}}">
                         <h5 class="mb-2 text-2xl font-semibold tracking-tight text-green-700 dark:text-white">Booking</h5>
                     </a>
                     <p class="mb-3 font-normal text-gray-500 dark:text-gray-400 font-bold">{{$countBooking}}</p>
@@ -88,7 +88,7 @@
                     <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760H520q-71 0-115.5 44.5T360-600v240q0 71 44.5 115.5T520-200h320q0 33-23.5 56.5T760-120H200Zm320-160q-33 0-56.5-23.5T440-360v-240q0-33 23.5-56.5T520-680h280q33 0 56.5 23.5T880-600v240q0 33-23.5 56.5T800-280H520Zm120-140q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Z" />
                 </svg>
                 <div class="ml-3">
-                    <a href="#">
+                    <a href="{{route('admin.bookings.index')}}">
                         <h5 class="mb-2 text-2xl font-semibold tracking-tight text-pink-700 dark:text-white">Earning</h5>
                     </a>
                     <p class="mb-3 font-normal text-gray-500 dark:text-gray-400 font-bold">${{$totalPrice}}</p>
@@ -99,7 +99,7 @@
                     <path d="M120-160q-33 0-56.5-23.5T40-240v-400q0-17 11.5-28.5T80-680q17 0 28.5 11.5T120-640v400h640q17 0 28.5 11.5T800-200q0 17-11.5 28.5T760-160H120Zm160-160q-33 0-56.5-23.5T200-400v-320q0-33 23.5-56.5T280-800h560q33 0 56.5 23.5T920-720v320q0 33-23.5 56.5T840-320H280Zm80-80q0-33-23.5-56.5T280-480v80h80Zm400 0h80v-80q-33 0-56.5 23.5T760-400Zm-200-40q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35ZM280-640q33 0 56.5-23.5T360-720h-80v80Zm560 0v-80h-80q0 33 23.5 56.5T840-640Z" />
                 </svg>
                 <div class="ml-3">
-                    <a href="#">
+                    <a href="{{route('admin.payments.create')}}">
                         <h5 class="mb-2 text-2xl font-semibold tracking-tight text-red-900 dark:text-white">Admin %</h5>
                     </a>
                     <p class="mb-3 font-normal text-gray-500 dark:text-gray-400 font-bold">${{$to_admin}}</p>
@@ -139,10 +139,10 @@ document.addEventListener('DOMContentLoaded', function() {
             datasets: [{
                 label: 'System Distribution',
                 data: [
-                    {{ $countCustomer }},
-                    {{ $countOwner }},
-                    {{ $countAllService }},
-                    {{ $countAllBooking }},
+                    <?php $countCustomer; ?>,
+                    <?php $countOwner ?>,
+                    <?php $countAllService ?>,
+                    <?php $countAllBooking ?>,
                 ],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',

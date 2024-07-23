@@ -41,7 +41,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::latest()->get();
+        $user = User::latest()->paginate(10);
         foreach ($user as $key => $value) {
             $to_admin = 0;
             if ($value->store_id != 0){
