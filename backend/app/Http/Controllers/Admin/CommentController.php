@@ -14,34 +14,21 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-class ServiceController extends Controller
+class CommentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    function __construct()
-    {
-        $this->middleware('role_or_permission:Service access|Service create|Service edit|Service delete', ['only' => ['index', 'show']]);
-        $this->middleware('role_or_permission:Service create', ['only' => ['create', 'store']]);
-        $this->middleware('role_or_permission:Service edit', ['only' => ['edit', 'update']]);
-        $this->middleware('role_or_permission:Service delete', ['only' => ['destroy']]);
-        $this->middleware('role_or_permission:Service show', ['only' => ['show']]);
-    }
 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $userAuth = Auth::user();
-        $services = Service::where('store_id', $userAuth->store_id)->paginate(10);
+//     public function index()
+//     {
+//         $userAuth = Auth::user();
+//         $services = Service::where('store_id', $userAuth->store_id)->paginate(10);
 
-        return view('service.index', compact('services'));
-    }
+//         return view('service.index', compact('services'));
+//     }
 
 
     /**
@@ -66,33 +53,17 @@ class ServiceController extends Controller
     {
         $user = Auth::user();
         // dd($user);
-        $request->validate([
-            'service_name' => 'required|string',
-            'price' => 'required|integer',
-            'discription' => 'nullable|string|max:2048',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        $data = $request->validate([
+            'text' => 'required|string',
+            'comment_id' => 'required|integer',
+        ]);
+        $reply = Reply::create([
+            'text' => $data['text'],
+            'comment_id' => $data['comment_id'],
+            'owner_id' => $user->id,
         ]);
 
-        $data = $request->except('image');
-
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('SlideshowImages', 'public');
-            $data['image'] = Storage::url($path);
-        } else {
-            $data['image'] = null;
-        }
-
-        $service = Service::create([
-            'service_name' => $request->service_name,
-            'description' => $request->description,
-            'duration' => $request->duration,
-            'price' => $request->price,
-            'store_id' => $user->store_id,
-            'discount' => $request->discount,
-            'image' => $data['image'],
-            'category_id' => $request->category_id
-        ]);
-        return redirect('/admin/services')->with('success', 'Service created successfully !!!');
+        return redirect('/admin/services/'.$request->service_id)->with('success', 'Reply created successfully !!!');
     }
 
     /**
@@ -108,12 +79,6 @@ class ServiceController extends Controller
         foreach ($comments as $key => $comment) {
             $user = User::findOrFail($comment->user_id);
             $comments[$key]->user = $user;
-            $replies = Reply::where('comment_id', $comments[$key]->id)->get();
-            foreach ($replies as $key2 => $reply) {
-                $replyUser = User::findOrFail($reply->owner_id);
-                $replies[$key2]->owner = $replyUser;
-            }
-            $comments[$key]->replies = $replies;
         }
         return view('service.show', ['service' => $service, 'comments' => $comments]);
     }
