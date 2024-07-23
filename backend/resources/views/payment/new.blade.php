@@ -57,7 +57,7 @@
                         <label for="amount" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
                           Amount*
                         </label>
-                        <input type="text" id="amount" name="amount" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="Enter amount" required />
+                        <input type="text" id="amount" name="amount" value="{{$to_admin + 3}}" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="Enter amount" required />
                       </div>
                     </div>
                     <div class="text-center">
@@ -71,20 +71,20 @@
                       <div class="space-y-2">
                         <dl class="flex items-center justify-between gap-4">
                           <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Price to Pay</dt>
-                          <dd class="text-base font-medium text-green-500">-$750.00</dd>
+                          <dd class="text-base font-medium text-green-500">$ {{$to_admin}}</dd>
                         </dl>
                         <dl class="flex items-center justify-between gap-4">
                           <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Shop price</dt>
-                          <dd class="text-base font-medium text-gray-900 dark:text-white">$750</dd>
+                          <dd class="text-base font-medium text-gray-900 dark:text-white">$ {{$to_admin}}</dd>
                         </dl>
                         <dl class="flex items-center justify-between gap-4">
                           <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Tax</dt>
-                          <dd class="text-base font-medium text-gray-900 dark:text-white">$50</dd>
+                          <dd class="text-base font-medium text-gray-900 dark:text-white">$ 3</dd>
                         </dl>
                       </div>
                       <dl class="flex items-center justify-between gap-4 border-t border-gray-200 pt-2 dark:border-gray-700">
                         <dt class="text-base font-bold text-gray-900 dark:text-white">Monthly Payment</dt>
-                        <dd class="text-base font-bold text-gray-900 dark:text-white">$800</dd>
+                        <dd class="text-base font-bold text-gray-900 dark:text-white">$ {{$to_admin + 3}}</dd>
                       </dl>
                     </div>
                     <div class="mt-6 flex items-center justify-center gap-8">

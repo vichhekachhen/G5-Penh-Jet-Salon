@@ -108,3 +108,6 @@ Route::get('/list/QR/{store_id}', [QRController::class, 'index']);
 
 //list likes
 Route::get('/like/list/{service_id}', [LikeController::class, 'index']);
+
+//category list
+Route::get('/category/list', [CategoryController::class, 'index']);

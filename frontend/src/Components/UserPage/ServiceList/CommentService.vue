@@ -43,6 +43,12 @@
                     <h5>Description:</h5>
                     <p>{{ serviceStore.service.description }}</p>
                   </div>
+                    <button @click="booking(serviceStore.service.id)">
+                      <router-link to="/payment" class="btn btn-primary">
+                        Booking Now
+                        <i class="bi bi-check2-circle"></i>
+                      </router-link>
+                    </button>
                 </div>
               </div>
             </div>
@@ -112,33 +118,12 @@
                 <div v-for="reply in comment.replies" :key="reply.id" class="mb-2 card">
                   <!-- reply comment  -->
                   <div class="d-flex align-items-end reply bg-light p-3">
-                    <!-- <img v-if="reply.owner.profile" :src="baseURL + reply.owner.profile" alt="User Avatar" class="rounded-circle me-3" width="50" /> -->
                     <div class="flex-grow-1 d-flex justify-content-between align-items-center">
                       <div class="comment-text">
                         <strong class="text-pink-500">{{ reply.owner.name }}:</strong>
                         {{ reply.text }}
                       </div>
                       <div class="ms-auto">
-                        <button class="btn btn-sm" @click="removeReply(reply.id)">
-                          <svg
-                            class="h-6 w-6 text-red-500"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            stroke-width="2"
-                            stroke="currentColor"
-                            fill="none"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                          >
-                            <path stroke="none" d="M0 0h24v24H0z" />
-                            <line x1="4" y1="7" x2="20" y2="7" />
-                            <line x1="10" y1="11" x2="10" y2="17" />
-                            <line x1="14" y1="11" x2="14" y2="17" />
-                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12" />
-                            <path d="M9 7v-3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3" />
-                          </svg>
-                        </button>
                       </div>
                     </div>
                     <img
@@ -166,22 +151,19 @@
             </div>
           </div>
         </div>
-        <!-- <form > -->
-        <div class="bg-white rounded-lg p-6 flex items-center">
-          <div class="mr-4"></div>
-          <input
-            class="form-control w-full"
-            type="text"
-            placeholder="Add your comment..."
-            v-model="commentAdd"
-            @keyup.enter="addComment"
-          />
-          <button
-            class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
-            @click="addComment"
-          >
-            <i class="bi bi-send"></i>
-          </button>
+        <div class="d-flex align-items-center mt-4 p-3">
+          <div class="input-group mb-2">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Add a comment..."
+              v-model="commentAdd"
+              @keyup.enter="addComment"
+            />
+            <button class="btn btn-primary" @click="addComment">
+              <i class="bi bi-arrow-right"></i>
+            </button>
+          </div>
         </div>
         <!-- </form> -->
       </div>
@@ -195,14 +177,19 @@ import { useServiceStore } from '../../../stores/service'
 import { useCommentStore } from '../../../stores/comment'
 import { useLikeStore } from '../../../stores/like'
 import { useReplyStore } from '../../../stores/replyComment'
+import { useAuthStore } from '../../../stores/auth-store'
+import { useCardStore } from '../../../stores/pre-booking';
 import baseURL from '../../../api/url'
 
+// Routes of items
 const route = useRoute()
 const serviceStore = useServiceStore()
 const useComment = useCommentStore()
 const useReply = useReplyStore()
 const likeStore = useLikeStore()
 const isFavorite = ref(false)
+const user_id = useAuthStore()
+const cardItems = useCardStore();
 
 const addFavorite = () => {
   likeStore.addToFav(route.params.id)
@@ -221,6 +208,15 @@ const fetchServiceShow = async () => {
 const fetchIsFavorite = (id: number) => {
   likeStore.isServiceFavorite(id)
 }
+// booking service
+const booking = async (id) => {
+  const bookingData = {
+    user_id: user_id.user.id,
+    service_id: id,
+  }
+  await cardItems.addCard(id, bookingData);
+}
+
 //list all comments
 const fetchAllComments = async () => {
   await useComment.fetchAllComments(route.params.id)
@@ -229,12 +225,6 @@ const fetchAllComments = async () => {
 // delete comments
 const removeComment = async (commentId) => {
   await useComment.deleteComments(commentId)
-  fetchAllComments()
-}
-
-// delete replay
-const removeReply = async (replyId) => {
-  await useReply.repliesdealete(replyId)
   fetchAllComments()
 }
 

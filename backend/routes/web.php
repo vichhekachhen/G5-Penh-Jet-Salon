@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\{
     CategoryController,
     PaymentController,
     ScheduleController,
+    ReportController,
+    CommentController
 
 };
 use Illuminate\Support\Facades\Mail;
@@ -75,6 +77,8 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
         Route::resource('payments', 'PaymentController');
         Route::resource('schedules', 'ScheduleController');
         Route::resource('bookings', 'BookingController');
+        Route::resource('reports', 'ReportController');
+        Route::resource('comments', 'CommentController');
 
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
         Route::put('/profile-update', [ProfileController::class, 'update'])->name('profile.update');
