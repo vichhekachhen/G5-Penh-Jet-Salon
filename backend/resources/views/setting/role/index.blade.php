@@ -10,24 +10,24 @@
 
               <div class="bg-white shadow-md rounded my-6">
                 <table class="text-left w-full border-collapse">
-                  <thead>
+                  <thead class="bg-blue-800 text-white">
                     <tr>
-                      <th class="py-4 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light w-2/12">Role Name</th>
-                      <th class="py-4 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light">Permissions</th>
-                      <th class="py-4 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light text-right w-2/12">Actions</th>
+                      <th class="py-2 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light w-2/12">Role Name</th>
+                      <th class="py-2 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light">Permissions</th>
+                      <th class="py-2 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light text-right w-2/12">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     @can('Role access')
                       @foreach($roles as $role)
                       <tr class="hover:bg-grey-lighter">
-                        <td class="py-4 px-6 border-b border-grey-light">{{ $role->name }}</td>
-                        <td class="py-4 px-6 border-b border-grey-light">
+                        <td class="py-2 px-6 border-b border-grey-light">{{ $role->name }}</td>
+                        <td class="py-2 px-6 border-b border-grey-light">
                             @foreach($role->permissions as $permission)
                               <span class="inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-white bg-gray-500 rounded-full">{{ $permission->name }}</span>
                             @endforeach
                         </td>
-                        <td class="py-4 px-6 border-b border-grey-light text-right">
+                        <td class="py-2 px-6 border-b border-grey-light text-right">
 
                           @can('Role edit')
                           <a href="{{route('admin.roles.edit',$role->id)}}" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark text-blue-400">Edit</a>

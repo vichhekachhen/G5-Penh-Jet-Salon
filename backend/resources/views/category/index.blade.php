@@ -13,7 +13,9 @@
             <tr>
               <th class="py-2 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light">ID</th>
               <th class="py-2 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light">Name</th>
+              @if (auth()->user()->roles[0]->name === 'admin')
               <th class="py-2 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light text-right w-4/12">Actions</th>
+              @endif
             </tr>
           </thead>
           <tbody>
@@ -22,8 +24,8 @@
             <tr class="hover:bg-grey-lighter">
               <td class="py-2 px-6 border-b border-grey-light">{{ $key + 1}}</td>
               <td class="py-2 px-6 border-b border-grey-light">{{ $category->name }}</td>
+              @if (auth()->user()->roles[0]->name === 'admin')
               <td class="py-2 px-6 border-b border-grey-light text-right">
-
                 @can('Category edit')
                 <a href="{{route('admin.categories.edit',$category->id)}}" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark text-blue-400">Edit</a>
                 @endcan
@@ -36,6 +38,7 @@
                 </form>
                 @endcan
               </td>
+              @endif
             </tr>
             @endforeach
             @endcan

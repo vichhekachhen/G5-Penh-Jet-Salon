@@ -8,7 +8,7 @@
         <div class="bg-white shadow-md rounded my-6">
           <table class="text-left w-full border-collapse" id="myTable">
             <thead>
-            <tr class="bg-gray-500 text-white">
+            <tr class="bg-blue-800 text-white">
                 <th class="py-2 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light">ID</th>
                 <th class="py-2 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light">Customer</th>
                 <th class="py-2 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light">Gender</th>

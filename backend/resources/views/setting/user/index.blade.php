@@ -19,12 +19,12 @@
                         </select>
                     </div>
                     <table class="text-left w-full border-collapse">
-                        <thead>
+                        <thead class="bg-blue-800 text-white">
                             <tr>
-                                <th class="py-4 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light">User Name</th>
-                                <th class="py-4 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light">Role</th>
-                                <th class="py-4 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light w-1/4">Debate</th>
-                                <th class="py-4 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light text-right">Actions</th>
+                                <th class="py-2 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light">User Name</th>
+                                <th class="py-2 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light">Role</th>
+                                <th class="py-2 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light w-1/4">Debate</th>
+                                <th class="py-2 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -32,8 +32,8 @@
                             @foreach($users as $user)
                             @if(empty($selectedRole) || $user->roles->contains('id', $selectedRole))
                             <tr class="user-row @foreach($user->roles as $role) role-{{ $role->name }} @endforeach">
-                                <td class="py-4 px-6 border-b border-grey-light">{{ $user->name }}</td>
-                                <td class="py-4 px-6 border-b border-grey-light">
+                                <td class="py-2 px-6 border-b border-grey-light">{{ $user->name }}</td>
+                                <td class="py-2 px-6 border-b border-grey-light">
                                     @foreach($user->roles as $role)
                                     @php
                                     $colorClass = '';
@@ -52,8 +52,8 @@
                                     <span class="inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-white rounded-full {{ $colorClass }}">{{ $role->name }}</span>
                                     @endforeach
                                 </td>
-                                <td class="py-4 px-6 border-b border-grey-light @if($user->to_admin == 0) text-green-400 @else text-red-400 @endif">$ {{ $user->to_admin }}</td>
-                                <td class="py-4 px-6 border-b border-grey-light text-right">
+                                <td class="py-2 px-6 border-b border-grey-light @if($user->to_admin == 0) text-green-400 @else text-red-400 @endif">$ {{ $user->to_admin }}</td>
+                                <td class="py-2 px-6 border-b border-grey-light text-right">
                                     @can('User edit')
                                     <a href="{{ route('admin.users.edit', $user->id) }}" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark text-blue-400">Edit</a>
                                     @endcan
