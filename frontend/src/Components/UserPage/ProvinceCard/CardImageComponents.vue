@@ -21,18 +21,19 @@
 
       <!-- Responsive layout for phone screens -->
       <div class="d-block d-sm-none">
-        <div class="d-flex flex-row  gap-4">
-          <div v-for="location in locations" :key="location.id"
-            class="card text-white col-12 shadow card-hover p-1 mb-3">
-            <router-link class="link-underline link-underline-opacity-0"
-              :to="{ name: 'listShop', params: { id: location.province_id } }">
-              <img class="card-img-top" :src="location.province_image" alt="" style="height: auto" />
-              <div class="card-img-overlay d-flex align-items-end justify-content-end">
-                <button class="btn bg-light text-dark" type="button">
-                  <b>{{ location.province_name }}</b>
-                </button>
-              </div>
-            </router-link>
+        <div class="row row-cols-1 row-cols-sm-2 g-4 phone">
+          <div v-for="location in locations" :key="location.id" class="col">
+            <div class="card text-white shadow card-hover p-2">
+              <router-link class="link-underline link-underline-opacity-0"
+                :to="{ name: 'listShop', params: { id: location.province_id } }">
+                <img class="card-img-top" :src="location.province_image" alt="" style="height: auto" />
+                <div class="card-img-overlay d-flex align-items-end justify-content-end">
+                  <button class="btn bg-light text-dark" type="button">
+                    <b>{{ location.province_name }}</b>
+                  </button>
+                </div>
+              </router-link>
+            </div>
           </div>
         </div>
       </div>
@@ -102,10 +103,6 @@ export default {
 @media (max-width: 767px) {
   .about {
     font-size: 15px;
-  }
-
-  .row {
-    width: 55%;
   }
 }
 </style>
