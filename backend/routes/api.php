@@ -18,6 +18,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StripePaymentController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\BookingService\BookingServiceController;
+use App\Http\Controllers\API\Mail\MailController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\QR\QRController;
 
@@ -111,3 +112,6 @@ Route::get('/like/list/{service_id}', [LikeController::class, 'index']);
 
 //category list
 Route::get('/category/list', [CategoryController::class, 'index']);
+
+//sent mail
+Route::post('/send-email', [MailController::class, 'sendEmail']);

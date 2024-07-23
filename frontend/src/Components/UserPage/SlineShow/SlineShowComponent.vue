@@ -2,22 +2,40 @@
   <div>
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-indicators">
-        <button v-for="(image, index) in slide.slides" :key="image.id" type="button"
-          :data-bs-target="'#carouselExampleIndicators'" :data-bs-slide-to="index" :class="{ active: index === 0 }"
-          :aria-label="'Slide ' + (index + 1)"></button>
+        <button
+          v-for="(image, index) in slide.slides"
+          :key="image.id"
+          type="button"
+          :data-bs-target="'#carouselExampleIndicators'"
+          :data-bs-slide-to="index"
+          :class="{ active: index === 0 }"
+          :aria-label="'Slide ' + (index + 1)"
+        ></button>
       </div>
       <div class="carousel-inner">
-        <div v-for="(image, index) in slide.slides" :key="image.id" :class="['carousel-item', { active: index === 0 }]">
-          <img :src="baseURL + image.image" class="d-block w-100 h-90 " alt="" />
+        <div
+          v-for="(image, index) in slide.slides"
+          :key="image.id"
+          :class="['carousel-item', { active: index === 0 }]"
+        >
+          <img :src="baseURL + image.image" class="d-block w-100 h-90" alt="" />
         </div>
       </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-        data-bs-slide="prev">
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="prev"
+      >
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
       </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-        data-bs-slide="next">
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="next"
+      >
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
       </button>
@@ -37,38 +55,58 @@
               <div class="card-body">
                 <h3 class="text-pink-500">Join your shop here!</h3>
                 <p class="card-text">
-                  Expand your client base and streamline your booking process by becoming a Sala Salon
-                  Partner.
+                  Expand your client base and streamline your booking process by becoming a Sala
+                  Salon Partner.
                 </p>
                 <p class="card-text">
                   Our centralized online booking system and marketing support make it easy for
                   customers to discover and book appointments at your salon.
                 </p>
-                <button
-                  class="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded transition-colors duration-300">
-                  <router-link to="/email" class="nav-link">Contact now</router-link>
-                </button>
+
+                <form @submit.prevent="sentMail">
+                  <label
+                    for="email"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >Sent an email to be our partner !</label
+                  >
+                  <input
+                    type="email"
+                    id="email"
+                    v-model="email"
+                    aria-describedby="helper-text-explanation"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-2 mb-2"
+                    placeholder="name@flowbite.com"
+                  />
+                  <button
+                    type="submit"
+                    class="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded transition-colors duration-300"
+                  >
+                    Contact now
+                  </button>
+                </form>
               </div>
             </div>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </template>
 <script>
 import 'bootstrap/dist/js/bootstrap.bundle.js'
 import { useSlideStore } from '@/stores/slide'
+import {useMailStore} from '@/stores/mail'
 const slide = useSlideStore()
 import axiosInstance from '@/api/api'
 const base = axiosInstance
+const mail = useMailStore();
 
 export default {
   data() {
     return {
       slide: useSlideStore(),
-      baseURL: ''
+      baseURL: '',
+      email:''
     }
   },
   methods: {
@@ -78,10 +116,14 @@ export default {
     getBaseURL() {
       const url = base.defaults.baseURL
       return url.endsWith('/api') ? url.slice(0, -4) : url
+    },
+
+    sentMail() {
+      mail.toAdmin(this.email);
     }
   },
   mounted() {
-    this.baseURL = this.getBaseURL();
+    this.baseURL = this.getBaseURL()
     this.getSlide()
   }
 }
@@ -103,6 +145,4 @@ export default {
     display: none;
   }
 }
-
-
 </style>
