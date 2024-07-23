@@ -1,8 +1,11 @@
 <template>
   <WebLayout>
     <div class="container mt-4 p-4 bg-white shadow rounded">
+      <router-link to="/" class="bg-pink-500 text-white p-2 rounded transition-colors duration-300 btn-sm">
+          <i class="bi bi-arrow-left me-2"></i>
+      </router-link>
       <div class="text-center mb-4">
-        <h3 class="text-gray-500">History Booking</h3>
+        <h3 class="text-pink-500">History Booking</h3>
       </div>
       <div class="table-responsive">
         <table class="table table-striped">
@@ -29,9 +32,6 @@
                     <i class="fas fa-edit">Detail</i>
                   </button>
                 </router-link>
-                <button @click="deleteBookingShop(booking.id)" class="btn btn-sm btn-danger ml-3">
-                  <i class="fas fa-trash-alt">Delete</i>
-                </button>
               </td>
             </tr>
           </tbody>
@@ -43,7 +43,7 @@
 
 <script>
 import WebLayout from '@/Components/Layouts/WebLayout.vue';
-import { useBookingStore } from '@/stores/booking'; // Ensure this path is correct
+import { useBookingStore } from '@/stores/booking';
 const useBooking = useBookingStore();
 
 export default {
@@ -57,10 +57,10 @@ export default {
     };
   },
   mounted() {
-    this.fetchBookings(); // Fetch all bookings on mount
+    this.fetchBookings();
   },
   methods: {
-    fetchBookings(){
+    fetchBookings() {
       useBooking.fetchAllBokkings();
     },
     deleteBookingShop(id) {

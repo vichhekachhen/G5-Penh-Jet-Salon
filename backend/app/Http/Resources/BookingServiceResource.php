@@ -20,10 +20,9 @@ class BookingServiceResource extends JsonResource
             'service_id' => $this->service_id,
             'service_image' => $this->service->image,
             'booking_id' => $this->booking_id,
-            'total' => $this->quantity * $this->service->price,
+            'price' => $this->service->price,
             'discount' => $this->service->discount,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'duration' => $this->service->duration,
         ];
     }
 }

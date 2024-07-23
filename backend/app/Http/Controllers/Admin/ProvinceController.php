@@ -29,7 +29,7 @@ class ProvinceController extends Controller
      */
     public function index()
     {
-        $provinces = Province::paginate(4);
+        $provinces = Province::paginate(5);
 
         return view('province.index',['provinces'=>$provinces]);
     }
