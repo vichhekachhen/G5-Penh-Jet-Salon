@@ -1,6 +1,6 @@
-<!-- Welcome to Penh Jet Salon 2024
+ <!-- Welcome to Penh Jet Salon 2024 -->
 
-===============Backend Installation===============
+<!-- ===============Backend Installation===============
 To install the backend, follow these steps:
 
 Copy .env.example file and rename it to .env
@@ -29,7 +29,8 @@ To install the frontend, follow these steps:
 npm install or npm i
 npm run dev
 
-Good Luck !! -->
+Good Luck -->
+
 
 <!--      =====================Introduction=====================                                
 
@@ -40,7 +41,7 @@ Owner : owner@gmail.com , Password : password
 User : user@gmail.com , Password : password
 
 
- -->
+Thank you -->
 
 
 

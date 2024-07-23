@@ -1,27 +1,26 @@
 <template>
   <div class="bg-white p-5">
     <div class="row gap-4">
-      <div class="row gap-4 d-none d-sm-flex">
-        <h2 class="text-center mt-5 font-weight-bold ">Find us in your area</h2>
-        <div v-for="location in locations" :key="location.id"
-          class="card text-white col-12 col-md-3 shadow card-hover p-1 mb-3">
-          <router-link class="link-underline link-underline-opacity-0"
-            :to="{ name: 'listShop', params: { id: location.province_id } }">
-            <img class="card-img-top" :src="location.province_image" alt="" style="height: auto" />
-            <div class="card-img-overlay d-flex align-items-end justify-content-end">
-              <button class="btn bg-light text-dark" type="button">
-                <b>{{ location.province_name }}</b>
-              </button>
-            </div>
-          </router-link>
+      <h2 class="text-center mt-5 font-weight-bold col">Find us in your Area</h2>
+      <div class="d-none d-sm-flex row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+        <div v-for="location in locations" :key="location.id" class="col">
+          <div class="card text-white shadow card-hover p-2 h-100">
+            <router-link class="link-underline link-underline-opacity-0"
+              :to="{ name: 'listShop', params: { id: location.province_id } }">
+              <img class="card-img-top" :src="location.province_image" alt=""
+                style="height: 195px; object-fit: cover;" />
+              <div class="card-img-overlay d-flex align-items-end justify-content-end">
+                <button class="btn bg-light text-dark" type="button">
+                  <b>{{ location.province_name }}</b>
+                </button>
+              </div>
+            </router-link>
+          </div>
         </div>
       </div>
 
       <!-- Responsive layout for phone screens -->
       <div class="d-block d-sm-none">
-        <p class="font-weight-bold text-center fs-3">
-          Find us in your area
-        </p>
         <div class="d-flex flex-row  gap-4">
           <div v-for="location in locations" :key="location.id"
             class="card text-white col-12 shadow card-hover p-1 mb-3">
