@@ -26,45 +26,38 @@ class UserController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
+        /**
      * Update the specified resource in storage.
      */
-    // public function update(Request $request)
-    // {
-    //     $user = Auth::user();
+    public function updateUser(Request $request)
+    {
+        $user = Auth::user();
     
-    //     $request->validate([
-    //         'name' => 'required|string|max:255',
-    //         'email' => 'required|email|max:255|unique:users,email,' . $user->id,
-    //         'gender' => 'required|in:male,female,other',
-    //         'phone' => 'nullable|regex:/^0[0-9]{2}\s[0-9]{3}\s[0-9]{3}$/',
-    //         'birth' => 'nullable|date',
-    //         'location' => 'nullable|string|max:255',
-    //     ]);
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'gender' => 'required|in:male,female,other',
+            'phone' => 'nullable|regex:/^0[0-9]{2}\s[0-9]{3}\s[0-9]{3}$/',
+            'birth' => 'nullable|date',
+            'location' => 'nullable|string|max:255',
+        ]);
     
-    //     $user->name = $request->name;
-    //     $user->email = $request->email;
-    //     $user->gender = $request->gender;
-    //     $user->phone = $request->phone;
-    //     if ($request->birth){
-    //         $user->birth = $request->birth;
-    //     }
-    //     $user->location = $request->location;
-    //     $user->save();
-    //     return response()->json([
-    //         'success' => true,
-    //         'message' => 'User updated successfully',
-    //         'data' => $user
-    //     ]);
-    // }
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->gender = $request->gender;
+        $user->phone = $request->phone;
+        if ($request->birth){
+            $user->birth = $request->birth;
+        }
+        $user->location = $request->location;
+        $user->save();
+        return response()->json([
+            'success' => true,
+            'message' => 'User updated successfully',
+            'data' => $user
+        ]);
+    }
+
     public function update(Request $request)
     {
         $user = Auth::user();
