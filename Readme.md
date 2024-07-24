@@ -9,7 +9,7 @@ Update the DB_DATABASE with your database name connection in .env file
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=penh-jet-salon
+DB_DATABASE=g5_penh_jet_salon
 DB_USERNAME=root
 DB_PASSWORD=
 
