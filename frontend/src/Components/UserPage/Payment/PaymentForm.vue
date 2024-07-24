@@ -53,15 +53,17 @@
 
                     <div class="row mb-3">
                       <!-- Date -->
-                      <div class="col-md-6">
-                        <label for="date" class="form-label"><strong>Date:</strong></label>
-                        <input type="date" id="date" class="form-control" v-model="date" required min="{{ today }}" />
+                      <div class="col-12 col-md-6 mb-3 mb-md-0">
+                        <div class="form-group">
+                          <label for="date" class="form-label"><strong>Date:</strong></label>
+                          <input type="date" id="date" class="form-control" v-model="date" @input="updateDate" :min="minDate" required>
+                        </div>
                       </div>
                       <!-- Time -->
-                      <div class="col-md-6">
+                      <div class="col-12 col-md-6">
                         <label for="time" class="form-label"><strong>Time:</strong></label>
                         <input type="time" id="time" class="form-control" v-model="time" required min="08:00"
-                          max="22:00" />
+                          max="20:00" />
                       </div>
                     </div>
                     <div class="row mb-3">
@@ -182,6 +184,22 @@ const { value: date, errorMessage: dateError } = useField('date');
 const { value: time, errorMessage: timeError } = useField('time');
 const { value: pay, errorMessage: totalError } = useField('pay');
 
+const minDate = new Date().toISOString().split("T")[0];
+
+const updateDate = () => {
+  const selectedDate = new Date(date.value);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // Check if the selected date is before today
+  if (selectedDate < today) {
+    // Set the date value to today's date
+    date.value = today.toISOString().split("T")[0];
+  } else {
+    // Keep the selected date
+    date.value = selectedDate.toISOString().split("T")[0];
+  }
+};
 
 const bookingService = handleSubmit(async (values) => {
   try {

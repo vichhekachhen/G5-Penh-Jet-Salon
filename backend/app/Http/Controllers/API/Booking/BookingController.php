@@ -57,26 +57,24 @@ class BookingController extends Controller
         ]);
         //delete pre_bookings
         foreach ($pre_bookings as $pre_booking) {
-            //prevent delete of pre_bookings of this user
-            if ($booking) {
-                $cardItem = CardItem::find($pre_booking->id);
-                $cardItem->delete();
-            }
-
             $service = Service::find($pre_booking->service_id);
-            
-
+            $cardItem = CardItem::find($pre_booking->id);
             if ($service) {
                 $store_id = $service->store_id;
                 BookingService::create([
                     "booking_id" => $booking->id,
                     "service_id" => $pre_booking->service_id,
                 ]);
-                if ($service->discount !== null){
-                    $total_price += $service->discount;
+                if ($service->discount !== NULL){
+                    $total_price += $service->discount * $cardItem->quantity;
                 }else{
-                    $total_price += $service->price;
+                    $total_price += $service->price * $cardItem->quantity;
                 }
+            }
+             //prevent delete of pre_bookings of this user
+            if ($booking) {
+                $cardItem = CardItem::find($pre_booking->id);
+                $cardItem->delete();
             }
         }
         //pay to admin
