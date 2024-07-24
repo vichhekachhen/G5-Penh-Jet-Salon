@@ -37,8 +37,8 @@ Good Luck -->
 There are three role in this project:
  
 Admin : admin@gmail.com , Password : password
-Owner : owner@gmail.com , Password : password
-User : user@gmail.com , Password : password
+Owner : vichheka@gmail.com , Password : 12345678
+User : khav@gmail.com , Password : 12345678
 
 
 Thank you -->
