@@ -19,7 +19,7 @@
                 </svg>
                 <div class="ml-3">
                     <a href="{{ route('admin.users.index')}}">
-                        <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">Customer</h5>
+                        <h5 class="mb-2 text-2xl font-semibold tracking-tight text-purple-400 dark:text-white">Customer</h5>
                     </a>
                     <p class="mb-3 font-normal text-gray-500 dark:text-gray-400 font-bold">{{$countCustomer}}</p>
                 </div>
@@ -31,29 +31,30 @@
                 <div class="ml-3">
                     <a href="{{ route('admin.users.index')}}">
 
-                    <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">Owner</h5>
+                    <h5 class="mb-2 text-2xl font-semibold tracking-tight text-blue-400 dark:text-white">Owner</h5>
                     </a>
                     <p class="mb-3 font-normal text-gray-500 dark:text-gray-400 font-bold">{{$countOwner}}</p>
                 </div>
             </div>
-            <div class="flex max-w-sm p-3 bg-white border-l-4 border-purple-500 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                <svg class="w-12 h-12 text-purple-500 dark:text-gray-400 mb-3" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
-                    <path d="M40-272q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v32q0 33-23.5 56.5T600-160H120q-33 0-56.5-23.5T40-240v-32Zm698 112q11-18 16.5-38.5T760-240v-40q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v40q0 33-23.5 56.5T840-160H738ZM360-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm400-160q0 66-47 113t-113 47q-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113Z" />
+            <div class="flex max-w-sm p-3 bg-white border-l-4 border-green-500 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor" class="w-12 h-12 text-green-500 dark:text-green-400 mb-3">
+                    <path d="M120-160q-33 0-56.5-23.5T40-240v-400q0-17 11.5-28.5T80-680q17 0 28.5 11.5T120-640v400h640q17 0 28.5 11.5T800-200q0 17-11.5 28.5T760-160H120Zm160-160q-33 0-56.5-23.5T200-400v-320q0-33 23.5-56.5T280-800h560q33 0 56.5 23.5T920-720v320q0 33-23.5 56.5T840-320H280Zm80-80q0-33-23.5-56.5T280-480v80h80Zm400 0h80v-80q-33 0-56.5 23.5T760-400Zm-200-40q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35ZM280-640q33 0 56.5-23.5T360-720h-80v80Zm560 0v-80h-80q0 33 23.5 56.5T840-640Z" />
                 </svg>
                 <div class="ml-3">
                     <a href="{{ route('admin.payments.index') }}">
-                        <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">Balance</h5>
+                        <h5 class="mb-2 text-2xl font-semibold tracking-tight text-green-400 dark:text-white">Balance</h5>
                     </a>
                     <p class="mb-3 font-normal text-gray-500 dark:text-gray-400 font-bold">${{ $sumAmount }}</p>
                 </div>
             </div>
-            <div class="flex max-w-sm p-3 bg-white border-l-4 border-purple-500 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                <svg class="w-12 h-12 text-purple-500 dark:text-gray-400 mb-3" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
-                    <path d="M40-272q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v32q0 33-23.5 56.5T600-160H120q-33 0-56.5-23.5T40-240v-32Zm698 112q11-18 16.5-38.5T760-240v-40q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v40q0 33-23.5 56.5T840-160H738ZM360-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm400-160q0 66-47 113t-113 47q-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113Z" />
-                </svg>
+            <div class="flex max-w-sm p-3 bg-white border-l-4 border-yellow-500 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <svg class="w-12 h-12 text-yellow-500 dark:text-green-400 mb-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+                </path>
+            </svg>
                 <div class="ml-3">
                     <a href="{{route('admin.provinces.index')}}">
-                        <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">Provinces</h5>
+                        <h5 class="mb-2 text-2xl font-semibold tracking-tight text-yellow-400 dark:text-white">Provinces</h5>
                     </a>
                     <p class="mb-3 font-normal text-gray-500 dark:text-gray-400 font-bold">{{$countProvince}}</p>
                 </div>
@@ -139,10 +140,10 @@ document.addEventListener('DOMContentLoaded', function() {
             datasets: [{
                 label: 'System Distribution',
                 data: [
-                    <?php $countCustomer; ?>,
-                    <?php $countOwner ?>,
-                    <?php $countAllService ?>,
-                    <?php $countAllBooking ?>,
+                    {{ $countCustomer }},
+                    {{ $countOwner }},
+                    {{ $countAllService }},
+                    {{ $countAllBooking }},
                 ],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',

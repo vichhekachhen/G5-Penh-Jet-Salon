@@ -69,8 +69,8 @@ class ServiceController extends Controller
         $request->validate([
             'service_name' => 'required|string',
             'price' => 'required|integer',
-            'discription' => 'nullable|string|max:2048',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'discription' => 'nullable|string|max:14800',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:14800',
         ]);
 
         $data = $request->except('image');
@@ -142,7 +142,7 @@ class ServiceController extends Controller
     {
         $service = Service::find($id);
         $rules = [
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:14800',
         ];
 
         $request->validate($rules);

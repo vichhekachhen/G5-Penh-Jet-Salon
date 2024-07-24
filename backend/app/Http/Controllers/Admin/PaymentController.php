@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Payment;
 use App\Models\Store;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Stripe\Stripe;
@@ -34,6 +35,10 @@ class PaymentController extends Controller
     public function index()
     {
         $payments = Payment::paginate(4);
+        foreach ($payments as $key => $payment) {
+            $owner = User::findOrFail($payment->owner_id);
+            $payments[$key]->owner_name = $owner->name;
+        }
         return view('payment.index', ['payments' => $payments]);
     }
 
