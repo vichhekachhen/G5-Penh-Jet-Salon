@@ -65,7 +65,7 @@ Route::get('store/list/{provinceId}', [StoreController::class, 'GetStoreByProvin
 Route::get('service/list/{storeId}', [ServiceController::class, 'GetServiceByStoreId']);
 
 Route::middleware('auth:sanctum')->group(function () {
-    // Route::put('/updateInfo', [UserController::class, 'update']);
+    Route::put('/updateInfo', [UserController::class, 'updateUser']);
     Route::post('store/update', [StoreController::class, 'update']);
     Route::post('/update/infoOwner', [UserController::class, 'update']);
 
