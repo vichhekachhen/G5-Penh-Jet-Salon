@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('shop_name');
             $table->string('shop_profile')->nullable();
             $table->integer('address_id');
+            $table->decimal('to_admin',8,2)->default(0);
             $table->timestamps();
         });
     }

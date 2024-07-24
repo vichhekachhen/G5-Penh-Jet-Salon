@@ -1,12 +1,16 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Models\Province;
+use App\Models\Reply;
 use App\Models\Service;
 use App\Models\Slideshow;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -34,7 +38,7 @@ class ServiceController extends Controller
     public function index()
     {
         $userAuth = Auth::user();
-        $services = Service::where('store_id',$userAuth->store_id)->paginate(10);
+        $services = Service::where('store_id', $userAuth->store_id)->paginate(10);
 
         return view('service.index', compact('services'));
     }
@@ -65,8 +69,8 @@ class ServiceController extends Controller
         $request->validate([
             'service_name' => 'required|string',
             'price' => 'required|integer',
-            'discription' => 'nullable|string|max:2048',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'discription' => 'nullable|string|max:14800',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:14800',
         ]);
 
         $data = $request->except('image');
@@ -100,7 +104,18 @@ class ServiceController extends Controller
     public function show($id)
     {
         $service = Service::findOrFail($id);
-        return view('service.show', ['service' => $service]);
+        $comments = Comment::where('service_id', $id)->get();
+        foreach ($comments as $key => $comment) {
+            $user = User::findOrFail($comment->user_id);
+            $comments[$key]->user = $user;
+            $replies = Reply::where('comment_id', $comments[$key]->id)->get();
+            foreach ($replies as $key2 => $reply) {
+                $replyUser = User::findOrFail($reply->owner_id);
+                $replies[$key2]->owner = $replyUser;
+            }
+            $comments[$key]->replies = $replies;
+        }
+        return view('service.show', ['service' => $service, 'comments' => $comments]);
     }
 
     /**
@@ -112,7 +127,7 @@ class ServiceController extends Controller
     public function edit(Service $service)
     {
         $categories = Category::all();
-        return view('service.edit', ['service' => $service, 'categories'=> $categories]);	
+        return view('service.edit', ['service' => $service, 'categories' => $categories]);
     }
 
     /**
@@ -127,7 +142,7 @@ class ServiceController extends Controller
     {
         $service = Service::find($id);
         $rules = [
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:14800',
         ];
 
         $request->validate($rules);
@@ -143,7 +158,6 @@ class ServiceController extends Controller
         }
         $service->update($data);
         return redirect('/admin/services')->with('success', 'Service updated successfully !!!');
-
     }
 
     /**

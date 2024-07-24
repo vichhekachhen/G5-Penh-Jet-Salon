@@ -22,7 +22,9 @@ class BookingController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $bookings = Booking::where('user_id', $user->id)->get(); // tem change some code 
+        // print_r($user->id); die();
+        $bookings = Booking::where('user_id', $user->id)->get();
+        // $bookings = Booking::all();
         return response()->json([
             'success' => true,
             'message' => 'Bookings fetched successfully',
@@ -64,6 +66,7 @@ class BookingController extends Controller
             }
 
             $service = Service::find($pre_booking->service_id);
+            
 
             if ($service) {
                 $store_id = $service->store_id;
@@ -78,6 +81,11 @@ class BookingController extends Controller
                 }
             }
         }
+        //pay to admin
+        $store = Store::find($store_id);
+        $to_admin = (10* $total_price)/100;
+        $store->to_admin += $to_admin;
+        $store->save();
 
         if (abs($booking->pay - (float) $total_price) < 0.01) {
             $booking->status = "done";

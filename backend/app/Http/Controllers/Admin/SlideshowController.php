@@ -30,7 +30,7 @@ class SlideshowController extends Controller
      */
     public function index()
     {
-        $slideshows = Slideshow::paginate(4);
+        $slideshows = Slideshow::paginate(10);
 
         return view('slideshow.index', compact('slideshows'));
     }
@@ -57,7 +57,7 @@ class SlideshowController extends Controller
     {
         $request->validate([
             'title' => 'nullable|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:14800',
         ]);
 
         $data = $request->except('image');
@@ -109,7 +109,7 @@ class SlideshowController extends Controller
         $slideshow = Slideshow::findOrFail($id);
         $rules = [
             'title' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:14800',
         ];
 
         $request->validate($rules);

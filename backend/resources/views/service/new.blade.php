@@ -2,7 +2,12 @@
   <div>
     <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
       <div class="container mx-auto px-6 py-1 pb-16">
-        <div class="bg-white shadow-md rounded my-6 p-5">
+        <a href="{{ route('admin.services.store') }}">
+          <svg class="w-6 h-8 text-blue-800 transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+          </svg>
+        </a>
+        <div class="bg-white shadow-md rounded mb-6 mt-2 p-5">
           <div class="p-6 space-y-6">
             <form method="POST" action="{{ route('admin.services.store') }}" enctype="multipart/form-data">
               @csrf

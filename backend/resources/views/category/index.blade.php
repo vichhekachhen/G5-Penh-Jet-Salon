@@ -3,27 +3,29 @@
     <div class="container mx-auto px-6 py-2">
       <div class="text-right">
         @can('Province create')
-        <a href="{{route('admin.categories.create')}}" class="bg-blue-500 text-white font-bold px-5 py-1 rounded focus:outline-none shadow hover:bg-blue-500 transition-colors ">Add Province</a>
+        <a href="{{route('admin.categories.create')}}" class="bg-blue-500 text-white font-bold px-5 py-1 rounded focus:outline-none shadow hover:bg-blue-500 transition-colors ">Create Category</a>
         @endcan
       </div>
 
       <div class="bg-white shadow-md rounded my-6">
         <table class="text-left w-full border-collapse">
-          <thead>
+          <thead class="bg-blue-800 text-white">
             <tr>
-              <th class="py-4 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light">ID</th>
-              <th class="py-4 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light">Name</th>
-              <th class="py-4 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light text-right w-4/12">Actions</th>
+              <th class="py-2 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light">ID</th>
+              <th class="py-2 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light">Name</th>
+              @if (auth()->user()->roles[0]->name === 'admin')
+              <th class="py-2 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light text-right w-4/12">Actions</th>
+              @endif
             </tr>
           </thead>
           <tbody>
             @can('Category access')
             @foreach($categories as $key => $category)
             <tr class="hover:bg-grey-lighter">
-              <td class="py-4 px-6 border-b border-grey-light">{{ $key + 1}}</td>
-              <td class="py-4 px-6 border-b border-grey-light">{{ $category->name }}</td>
-              <td class="py-4 px-6 border-b border-grey-light text-right">
-
+              <td class="py-2 px-6 border-b border-grey-light">{{ $key + 1}}</td>
+              <td class="py-2 px-6 border-b border-grey-light">{{ $category->name }}</td>
+              @if (auth()->user()->roles[0]->name === 'admin')
+              <td class="py-2 px-6 border-b border-grey-light text-right">
                 @can('Category edit')
                 <a href="{{route('admin.categories.edit',$category->id)}}" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark text-blue-400">Edit</a>
                 @endcan
@@ -36,6 +38,7 @@
                 </form>
                 @endcan
               </td>
+              @endif
             </tr>
             @endforeach
             @endcan

@@ -5,6 +5,7 @@ use App\Http\Controllers\API\CardItem\CardController;
 use App\Http\Controllers\API\Category\CategoryController;
 use App\Http\Controllers\API\Comment\CommentController;
 use App\Http\Controllers\API\Comment\ReplyController;
+use App\Http\Controllers\API\Like\LikeController;
 use App\Http\Controllers\API\PaymentController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\APi\Province\ProvinceController;
@@ -16,6 +17,8 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StripePaymentController;
 use Illuminate\Http\Request;
+use App\Http\Controllers\API\BookingService\BookingServiceController;
+use App\Http\Controllers\API\Mail\MailController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\QR\QRController;
 
@@ -77,9 +80,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('{id}', [BookingController::class, 'destroy']);
     Route::get('/services/detail/{booking_id}', [BookingController::class, 'getBookingService']);
 
+    //like servie
+    Route::post('/like-service/{service_id}', [LikeController::class, 'store']);
+    Route::get('/like/isFav/{service_id}', [LikeController::class, 'isFavorited']);
 });
 
-Route::get('/category/list', [CategoryController::class, 'index']);
+Route::get('/booking/list/detail/{booking_id}', [BookingServiceController::class, 'index']);
+Route::delete('/delete/{id}', [BookingServiceController::class, 'delete']);
 
 //comment
 Route::middleware('auth:sanctum')->prefix('comment')->group(function () {
@@ -99,3 +106,12 @@ Route::get('reply/list/{comment_id}', [ReplyController::class, 'index']);
 //payment
 Route::post('/stripe/payment', [StripePaymentController::class, 'makePayment']);
 Route::get('/list/QR/{store_id}', [QRController::class, 'index']);
+
+//list likes
+Route::get('/like/list/{service_id}', [LikeController::class, 'index']);
+
+//category list
+Route::get('/category/list', [CategoryController::class, 'index']);
+
+//sent mail
+Route::post('/send-email', [MailController::class, 'sendEmail']);

@@ -31,7 +31,7 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        $permission= Permission::latest()->get();
+        $permission= Permission::latest()->paginate(10);
 
         return view('setting.permission.index',['permissions'=>$permission]);
     }
