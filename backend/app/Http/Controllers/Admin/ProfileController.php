@@ -42,7 +42,7 @@ class ProfileController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $user->id . ',id',
             'phone' => 'nullable|unique:users,phone,' . $user->id . ',id',
-            'profile' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validate image file
+            'profile' => 'image|mimes:jpeg,png,jpg,gif|max:14800', // Validate image file
             'birth' => 'required|date',
         ]);
 

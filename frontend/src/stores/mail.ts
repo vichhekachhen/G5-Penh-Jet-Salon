@@ -3,18 +3,18 @@ import { sentMail } from '@/api/mail'
 
 export const useMailStore = defineStore('email', {
   state: () => ({
-    isSent: '',
+    email:'',
+    successMessage: '',
+    errorMessage: ''
   }),
   actions: {
-    async toAdmin(email: string) {
-      try {
-        console.log(email);
-        
-        // const response = await sentMail(email)
-        // this.isSent = response.data.data
-        
+    async toAdmin(email: object) {
+      try {        
+        await sentMail(email)
+        this.successMessage = "Email sent successfully  !"
+        this.email = ''
       } catch (error) {
-        this.isSent = 'Cannot sent mail to administrator'  
+        this.errorMessage = 'Cannot sent mail to administrator'  
         console.error('Failed to sent mail:', error)
       }
     }

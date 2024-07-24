@@ -50,39 +50,12 @@ class ProvinceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    // public function store(Request $request)
-    // {
-    //     $request->validate([
-    //         'province_name' => 'required|string|unique:provinces,province_name',
-    //         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-    //     ]);
-    
-    //     // Get all input data
-    //     // $data = $request->all();
-    //     $data = $request->except('image');
-    
-    //     // Add user ID to the data
-    //     $data['user_id'] = Auth::user()->id;
-    
-    //     if ($request->hasFile('image')) {
-    //         $image = $request->file('image');
-    //         $path = $image->store('ProvinceImages', 'public');
-    //         $data['image'] = Storage::url($path);
-    //     }
-    
-    //     // Create a new Province record
-    //     $province = Province::create($data);
-    
-    //     // Redirect back with a success message
-    //     return redirect()->back()->with('success', 'Province created successfully !!!');
-    // }
-
     public function store(Request $request)
 {
     // Validate the request including the image
     $request->validate([
         'province_name' => 'required|string|unique:provinces,province_name',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:14800',
     ]);
 
     // Get all input data except for the image
@@ -143,7 +116,7 @@ class ProvinceController extends Controller
     $province = Province::findOrFail($id);
     $rules = [
         'province_name' => 'required|string',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:14800',
     ];
     // If the province name is being updated, add a unique constraint
     if ($request->province_name !== $province->province_name) {

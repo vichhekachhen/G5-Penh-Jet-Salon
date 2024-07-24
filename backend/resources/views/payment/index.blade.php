@@ -9,21 +9,21 @@
             <div class="bg-white shadow-md rounded my-6">
                 @if($payments->count() > 0)
                 <table class="text-left w-full border-collapse">
-                    <thead>
-                        <tr class="bg-blue-800 text-white">
-                            <th class="py-3 px-4 text-left font-medium text-white border-b border-gray-300 sm:rounded-tl">ID</th>
-                            <th class="py-3 px-4 text-left font-medium text-white border-b border-gray-300 sm:rounded-tl">OwnerID</th>
-                            <th class="py-3 px-4 text-left font-medium text-white border-b border-gray-300 sm:rounded-tl">Amount</th>
-                            <th class="py-3 px-4  font-medium text-white border-b border-gray-300 sm:rounded-tl">Status</th>
+                    <thead class="bg-blue-800 text-white">
+                        <tr>
+                            <th class="py-2 px-4 text-left font-medium text-white border-b border-gray-300 sm:rounded-tl">ID</th>
+                            <th class="py-2 px-4 text-left font-medium text-white border-b border-gray-300 sm:rounded-tl">Owner name</th>
+                            <th class="py-2 px-4 text-left font-medium text-white border-b border-gray-300 sm:rounded-tl">Amount</th>
+                            <th class="py-2 px-4  font-medium text-white border-b border-gray-300 sm:rounded-tl">Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($payments as $payment)
                         <tr>
-                            <td class="py-4 px-6 border-b border-gray-300 sm:rounded-bl">{{ $payment->id }}</td>
-                            <td class="py-4 px-6 border-b border-gray-300 sm:rounded-bl">{{ $payment->owner_id }}</td>
-                            <td class="py-4 px-6 border-b border-gray-300 sm:rounded-bl">${{ $payment->amount }}</td>
-                            <td class="py-4 px-6 border-b border-gray-300 sm:rounded-br">
+                            <td class="py-2 px-6 border-b border-gray-300 sm:rounded-bl">{{ $payment->id }}</td>
+                            <td class="py-2 px-6 border-b border-gray-300 sm:rounded-bl">{{ $payment->owner_name }}</td>
+                            <td class="py-2 px-6 border-b border-gray-300 sm:rounded-bl">${{ $payment->amount }}</td>
+                            <td class="py-2 px-6 border-b border-gray-300 sm:rounded-br">
                                 @if($payment->status === 'success')
                                 <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-green-500 rounded-full">Succeeded</span>
                                 @else

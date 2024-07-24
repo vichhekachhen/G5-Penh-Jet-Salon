@@ -50,7 +50,7 @@
       <div class="contact">
         <img class="w-100" style="height: 30rem" src="../../../Images/shop1.jpg" alt="Image" />
         <div class="card-img-overlay">
-          <div class="pl-10 cardRegister mt-120">
+          <div class="pl-10 cardRegister mt-100">
             <div class="card w-50 bg-light">
               <div class="card-body">
                 <h3 class="text-pink-500">Join your shop here!</h3>
@@ -75,8 +75,18 @@
                     v-model="email"
                     aria-describedby="helper-text-explanation"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-2 mb-2"
-                    placeholder="name@flowbite.com"
+                    placeholder="example@gmail.com"
                   />
+                  <small
+                    class="text-green-500 0 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-1 mb-1"
+                    v-if="successMessage != ''"
+                    >{{ successMessage }}</small
+                  >
+                  <small
+                    v-else
+                    class="text-red-500 0 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-1 mb-1"
+                    >{{ errorMessage }}</small
+                  >
                   <button
                     type="submit"
                     class="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded transition-colors duration-300"
@@ -95,18 +105,20 @@
 <script>
 import 'bootstrap/dist/js/bootstrap.bundle.js'
 import { useSlideStore } from '@/stores/slide'
-import {useMailStore} from '@/stores/mail'
+import { useMailStore } from '@/stores/mail'
 const slide = useSlideStore()
 import axiosInstance from '@/api/api'
 const base = axiosInstance
-const mail = useMailStore();
+const mail = useMailStore()
 
 export default {
   data() {
     return {
       slide: useSlideStore(),
       baseURL: '',
-      email:''
+      email: '',
+      successMessage: '',
+      errorMessage: ''
     }
   },
   methods: {
@@ -119,7 +131,13 @@ export default {
     },
 
     sentMail() {
-      mail.toAdmin(this.email);
+      const data = {
+        email: this.email
+      }
+      mail.toAdmin(data)
+      this.successMessage = mail.successMessage
+      this.errorMessage = mail.errorMessage
+      this.email = mail.email
     }
   },
   mounted() {
