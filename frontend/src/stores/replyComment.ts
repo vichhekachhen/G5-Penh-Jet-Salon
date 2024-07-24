@@ -7,7 +7,7 @@ export const useReplyStore = defineStore('replyComment', {
   }),
   actions: {
 
-    //get list replay id
+    //get list reply
     async fetchAllReplies(id:number) {
       try{
         const response = await fetchAllReplies(id);

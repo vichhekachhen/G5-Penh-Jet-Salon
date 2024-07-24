@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <img class="w-100 h-95" src="../../../Images/shop1.jpg" alt="Image"> -->
     <section>
       <div class="container px-4 px-lg-5 mt-3 pt-3">
         <div class="input-group mb-3">
@@ -40,7 +39,7 @@
                   <div class="d-flex justify-content-start">
                     <span
                       class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">Open</span>
-                    <div class="text-gray-700 font-bold">Hours 8:00 AM - 7:00 PM</div>
+                    <div class="text-gray-700 font-bold">Hours 8:00 AM - 8:00 PM</div>
                   </div>
                 </div>
               </div>

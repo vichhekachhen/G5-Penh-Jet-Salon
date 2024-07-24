@@ -22,9 +22,7 @@ class BookingController extends Controller
     public function index()
     {
         $user = Auth::user();
-        // print_r($user->id); die();
         $bookings = Booking::where('user_id', $user->id)->get();
-        // $bookings = Booking::all();
         return response()->json([
             'success' => true,
             'message' => 'Bookings fetched successfully',

@@ -14,10 +14,8 @@ class BookingServiceController extends Controller
      */
     public function index(string|int $id)
     {
-        //
-        // $bookingServices = BookingService::All();
+    
         $bookingServices = BookingService::where('booking_id', $id)->get();
-        // return BookingServiceResource::collection($bookingServices);
         return response()->json([
             "success" => true,
             "data" => BookingServiceResource::collection($bookingServices)
